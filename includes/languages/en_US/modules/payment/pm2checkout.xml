@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<language>
+  <definitions>
+    <definition>
+      <key>payment_pm2checkout_title</key>
+      <value><![CDATA[2CheckOut]]></value>
+      <group>modules-payment</group>
+    </definition>
+    <definition>
+      <key>payment_pm2checkout_description</key>
+      <value><![CDATA[Credit Cards and Alternatives]]></value>
+      <group>modules-payment</group>
+    </definition>
+    <definition>
+      <key>payment_pm2checkout_method_title</key>
+      <value><![CDATA[2Checkout]]></value>
+      <group>modules-payment</group>
+    </definition>
+    <definition>
+      <key>payment_pm2checkout_text_error_message</key>
+      <value><![CDATA[There has been an error processing your credit card. Please try again.]]></value>
+      <group>modules-payment</group>
+    </definition>
+    <definition>
+      <key>payment_pm2checkout_text_warning_demo_mode</key>
+      <value><![CDATA[In Review: Transaction performed in demo mode.]]></value>
+      <group>modules-payment</group>
+    </definition>
+    <definition>
+      <key>payment_pm2checkout_text_warning_transaction_order</key>
+      <value><![CDATA[In Review: Transaction total did not match order total.]]></value>
+      <group>modules-payment</group>
+    </definition>
+  </definitions>
+</language>

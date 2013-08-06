@@ -1,0 +1,258 @@
+/*
+  $Id: stylesheet.css 1498 2007-03-29 14:04:50Z hpdl $
+
+  osCommerce, Open Source E-Commerce Solutions
+  http://www.oscommerce.com
+
+  Copyright (c) 2005 osCommerce
+
+  This program is free software; you can redistribute it and/or modify
+  it under the terms of the GNU General Public License v2 (1991)
+  as published by the Free Software Foundation.
+*/
+
+/* reset */
+* {
+  margin: 0;
+  padding: 0;
+}
+
+/* MARKUP */
+body {
+  font-family:  "Lucida Grande", Verdana, Arial, "Bitstream Vera Sans", sans-serif;
+  font-size: 12px;
+  color: #000000;
+  line-height: 120%;
+  background: #FFFFFF;
+}
+
+h1 {
+  font-size: 18px;
+  color: #ac3235;
+  font-weight: normal;
+  margin: 5px 0 15px 0;
+}
+
+h2 {
+  color: #898989;
+  font-size: 16px;
+  margin: 5px 0 10px 0;
+}
+
+h3 {
+  font-size: 12px;
+  margin-top: 0px;
+}
+
+table {
+  margin: 0px 0px 10px 0px;
+}
+
+th {
+  text-align: left;
+  padding: 5px 0px 5px 0px;
+}
+
+td {
+  text-align: left;
+  padding: 2px 0px 2px 0px;
+}
+
+p {
+  font-size: 12px;
+  color: #000000;
+  line-height: 1.5;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+a:link, a:visited { 
+	color: #5C5C5C; text-decoration: underline; 
+}
+
+a:hover { 
+	color: #5C5C5C; text-decoration: underline; 
+}
+
+#wapper {
+	width: 960px;
+	margin:0 auto;
+}
+
+#pageHeader {
+  background: #ffffff;
+}
+
+#pageContent {
+  margin-top: 5px;
+  padding: 10px;
+  border: 1px solid #DDDDDD;  
+}
+
+#pageNav {
+  float: left;
+  width: 17%;
+}
+
+#mainBlock {
+  float: right;
+  width: 74%;
+  background: #FFFFFF;
+  padding: 0 2px 0 0;
+}
+
+.contentBlock {
+  border: 1px solid #DDDDDD;
+  padding: 15px;
+  margin-bottom: 15px;
+}
+
+#pageFooter {
+  clear: both;
+  text-align: center;
+  margin-top: 30px;
+  line-height: 1.5;
+}
+
+.infoPane {
+  background: #ffedd1;
+  border: 1px #f7c77a solid;
+  margin-top: 20px;
+  padding: 10px;
+}
+
+.infoPaneContents {
+  padding: 0px 10px 10px 10px;
+}
+
+.clear {
+  clear: both;
+}
+
+hr {
+  margin: 4px 0px 4px 0px;
+}
+
+#mBox {
+  float: left;
+  clear: both;
+  margin-top: 10px;
+  margin-left: 10px;
+  visibility: hidden;
+  display: none;
+}
+
+#mBoxContents {
+  width: 198px;
+  background: #ffedd1;
+  border: 1px #f0a42a solid;
+  padding: 10px;
+}
+
+.noticeBox {
+  background: #FFD6D3;
+  border: 1px #FF958C solid;
+  padding: 10px;
+}
+
+#pageHeader A:link, #pageHeader A:visited { color: #000000; text-decoration: none; }
+#pageHeader A:hover { color: #000000; text-decoration: underline; }
+
+.inputForm {background-color: #e7ebf5; border: 1px #d0d7e8 solid;}
+.inputForm td{padding: 2px 5px 2px 5px; line-height: 1.5;}
+.inputForm span{color: #5C5C5C; font-weight: normal;}
+.inputField {font-weight: bold; width: 40%;}
+
+input.text { color: #000000; width: 95%; }
+select { font: 8pt verdana, arial, helvetica; color: #000000; width: 95%; }
+
+.autoComplete {
+  position: absolute;
+  background-color: #f7f7f5;
+  border: 1px #b3b6b0 solid;
+  font-family: Verdana, Arial, sans-serif;
+  font-size: 11px;
+  color: #000000;
+  line-height: 1.5;
+  margin: 0px;
+  padding: 0px;
+  visibility: hidden;
+  display: none;
+  z-index: 2;
+}
+
+.autoComplete ul {
+  list-style-type: none;
+  margin: 0px;
+  padding: 2px;
+  white-space: nowrap;
+}
+
+.autoComplete a:link, .autoComplete a:visited, .autoComplete a:hover {
+  color: #000000;
+  text-decoration: none;
+  font-weight: normal;
+}
+
+.autoComplete .selected {
+  background-color: #ffffbb;
+  font-weight: bold;
+}
+
+/* pageNav*/
+#pageNav ul {width: 220px; padding: 0 10px;}
+
+#pageNav ul li {
+  margin: 0;
+  padding: 10px 10px 4px 10px;
+  display: block;
+  height: 24px;
+  color: #817b7b;
+  font-weight: bold;
+  font-size: 12px;
+  border-left: 1px solid #e5e5e5;
+  border-right: 1px solid #e5e5e5;
+  border-bottom: 1px solid #e5e5e5;
+  list-style-type: none;
+  vertical-align: middle;
+}
+
+#pageNav li.title {
+	color: #5C5C5C;
+	font-size: 18px;
+  border-top: 1px solid #e5e5e5;
+  font-weight: normal;
+}
+
+#pageNav ul .current {
+  margin-left: -12px;
+  margin-top: -5px;
+  padding-left: 25px;
+  border: 0;
+  color: #FFFFFF;
+  height: 30px;
+  background: url(../../images/left_li_background.png) no-repeat;
+}
+
+#pageNav ul .last {
+  margin-left: -12px;
+  margin-top: -6px;
+  padding-left: 25px;
+  border: 0;
+  color: #FFFFFF;
+  height: 30px;
+  padding-top:18px;
+  background: url(../../images/left_li_last.png) no-repeat;
+}
+
+.license {
+  font-size: 12px;
+	border: 1px solid #dddddd;
+  background: #fbfbf3;
+  width:99%;
+  height:350px;
+  padding-left:10px;
+  overflow-y:auto;
+  overflow:auto;
+  text-align:left;
+}

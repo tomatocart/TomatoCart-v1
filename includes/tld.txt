@@ -1,0 +1,28 @@
+# $Id: tld.txt $
+#
+# TomatoCart Open Source Shopping Cart Solutions
+# http://www.tomatocart.com
+#
+# Copyright (c) 2009 Wuxi Elootec Technology Co., Ltd  Copyright (c) 2007 osCommerce
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License v2 (1991)
+# as published by the Free Software Foundation.
+#
+# Original 7 TLDs
+com     # all are eligible to register
+edu     # degree-granting educational institutions of higher education
+gov     # United States Government
+int     # organizations established by international treaties
+mil     # United States Military
+net     # all are eligible to register
+org     # noncommercial community, all are eligible to register
+
+# Recent additions
+aero    # members of the air-transport industry
+biz     # businesses
+coop    # cooperative associations
+info    # all are eligible to register
+museum  # museums
+name    # individuals
+pro     # credentialed professionals

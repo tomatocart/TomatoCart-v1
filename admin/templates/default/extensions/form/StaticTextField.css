@@ -1,0 +1,8 @@
+.ux-form-statictextfield {
+	background: transparent;
+	border: none;
+	padding-top: 2px !important;
+	padding-bottom: 2px !important;
+	color: #333;
+	/*text-indent: 10px;*/
+}
