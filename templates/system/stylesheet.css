@@ -1,0 +1,243 @@
+/*
+  $Id: stylesheet.php $
+  TomatoCart Open Source Shopping Cart Solutions
+  http://www.tomatocart.com
+
+  Copyright (c) 2009 Wuxi Elootec Technology Co., Ltd;
+
+  This program is free software; you can redistribute it and/or modify
+  it under the terms of the GNU General Public License v2 (1991)
+  as published by the Free Software Foundation.
+*/ /* reset */
+* {
+	margin: 0;
+	padding: 0;
+}
+
+/* MARKUP */
+BODY {
+	background: #FFFFFF url(images/body_bg.png) repeat-x left top;
+	margin: 0 auto;
+	padding: 0;
+	font-family: Arial, Verdana, Tahoma, 'Trebuchet MS', sans-serif;
+	font-size: 12px;
+}
+
+H1 {
+	color: #333333;
+	font-family: Tahoma, 'Trebuchet MS', Verdana, Arial, sans-serif;
+	font-size: 18px;
+	font-weight: normal;
+	margin: 5px 0 15px 0;
+}
+
+H2 {
+	color: #8C8C8C;
+	font-family: Tahoma, 'Trebuchet MS', Verdana, Arial, sans-serif;
+	font-size: 14px;
+	font-weight: bold;
+	white-space: nowrap;
+	margin: 5px 0 10px 0;
+}
+
+TABLE {
+	margin: 10px 0px 10px 0px;
+}
+
+TD,P {
+	font-family: Tahoma, 'Trebuchet MS', Verdana, Arial, sans-serif;
+	font-size: 12px;
+	line-height: 1.5;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	color: #000000;
+}
+
+IMG {
+	border: 0;
+}
+
+FORM {
+	margin-top: 0;
+	margin-bottom: 0;
+}
+
+FORM OL {
+	margin: 0;
+	padding: 0;
+}
+
+FORM OL LI {
+	list-style: none;
+	margin: 0;
+	clear: left;
+}
+
+FORM LABEL {
+	float: left;
+	width: 160px;
+	margin: 5px;
+}
+
+FORM LABEL.fieldLabel {
+	float: none;
+}
+
+FORM EM {
+	color: #FF0000;
+	font-size: 9px;
+	margin-left: 2px;
+}
+
+INPUT[TYPE=TEXT],INPUT[TYPE=PASSWORD],SELECT {
+	border: 1px solid #B6B6B6;
+	height: 20px;
+}
+
+TEXTAREA {
+	border: 1px solid #B6B6B6;
+}
+
+UL,OL {
+	padding: 0px;
+	margin: 0px;
+	list-style: none;
+}
+
+LI {
+	margin: 0;
+	padding: 3px 0px 3px 0px;
+}
+
+A {
+	color: #616060;
+	text-decoration: none;
+	noFocusLine: expression(this . onFocus = this . blur() )
+}
+
+* :focus {
+	outline: none;
+}
+
+.clear {
+	clear: both;
+	height: 15px;
+}
+
+/* OFFLINE */
+#offline #pageContent {
+	margin: 120px auto;
+	width: 500px;
+	padding: 20px;
+	border: 1px #868585 solid;
+}
+
+#offline #pageContent .content {
+	margin: 0 auto;
+	width: 350px;
+	text-align: center;
+}
+
+#offline form {
+	padding-left: 20px;
+	margin: 20px 0;
+}
+
+#offline form label {
+	float: left;
+	width: 100px;
+	margin: 5px;
+}
+
+/* moduleBox */
+.moduleBox {
+	width: 100%;
+	color: #000000;
+	margin-bottom: 10px;
+}
+
+.moduleBox h1,.moduleBox h6 {
+	padding: 0;
+	margin: 0;
+	height: 26px;
+	line-height: 26px;
+	border-left: 1px solid #80858c;
+	border-right: 1px solid #80858c;
+	color: #ffffff;
+	font-size: 12px;
+	font-weight: bolder;
+	text-indent: 15px;
+	background: #f3f3f3 url(images/content_header_bg.png) repeat-x left top;
+}
+
+.moduleBox h6 a {
+	color: #ffffff;
+}
+
+.moduleBox .content {
+	padding: 5px 10px;
+	margin-bottom: 5px;
+	background-color: #F3F3F3;
+	border-top: 1px solid #DDDDDD;
+	border-left: 1px solid #DDDDDD;
+	border-right: 1px solid #DDDDDD;
+	border-bottom: 1px solid #8b8a8a;
+}
+
+.moduleBox .content h6 {
+	background: none;
+	color: #000000;
+	border: none;
+	text-indent: 0;
+}
+
+/* message box */
+.messageStack {
+	border-width: 1px;
+	border-style: dotted;
+	border-color: #C8AD91;
+	background-color: #FFFCF5;
+	font-family: Tahoma, 'Trebuchet MS', Verdana, Arial, sans-serif;
+	color: #465584;
+	width: 100%;
+	margin: 0px auto;
+}
+
+.messageStack ul li {
+	list-style-position: inside;
+	padding: 2px 2px 2px 4px;
+}
+
+.messageBox {
+	font-family: Tahoma, 'Trebuchet MS', Verdana, Arial, sans-serif;
+	font-size: 10px;
+}
+
+.messageStackError,.messageStackWarning {
+	font-family: Tahoma, 'Trebuchet MS', Verdana, Arial, sans-serif;
+	font-size: 10px;
+	background-color: #ffb3b5;
+}
+
+.messageStackSuccess {
+	font-family: Tahoma, 'Trebuchet MS', Verdana, Arial, sans-serif;
+	font-size: 10px;
+	background-color: #99ff00;
+}
+
+#submit {
+	-moz-border-radius: 6px 6px 6px 6px;
+	-moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
+	background-color: #1B6CA2;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+	color: #FFFFFF;
+	cursor: pointer;
+	display: inline-block;
+	padding: 5px 10px 6px;
+	position: relative;
+	text-decoration: none;
+	text-shadow: 0 -1px 1px rgba(0, 0, 0, 0.25);
+  font-size: 13px;
+  font-weight: bold;
+  line-height: 1;
+}

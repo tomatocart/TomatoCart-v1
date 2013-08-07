@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<language>
+  <definitions>
+    <definition>
+      <key>payment_sage_pay_form_title</key>
+      <value><![CDATA[Sage Pay Form]]></value>
+      <group>modules-payment</group>
+    </definition>
+    <definition>
+      <key>payment_sage_pay_form_description</key>
+      <value><![CDATA[Sage Pay Form]]></value>
+      <group>modules-payment</group>
+    </definition>
+    <definition>
+      <key>payment_sage_pay_form_method_title</key>
+      <value><![CDATA[Credit Card or Bank Card (Processed by Sage Pay)]]></value>
+      <group>modules-payment</group>
+    </definition>
+    <definition>
+      <key>payment_sage_pay_form_error_general</key>
+      <value><![CDATA[Please try again and if problems persist, please try another payment method.]]></value>
+      <group>modules-payment</group>
+    </definition>
+    <definition>
+      <key>payment_sage_pay_form_error_title</key>
+      <value><![CDATA[There has been an error processing your order transaction.]]></value>
+      <group>modules-payment</group>
+    </definition>
+  </definitions>
+</language>

@@ -1,0 +1,495 @@
+VERSION V1.1.8.4
+-- BUG FIX
+#112 Price of out of stock variant doesn't change in frontend
+#111 Upcoming Products doesn't work
+#107 PHP 5.4 Strict Warning Issue
+#106 Missing wait.gif file in error log
+#84 Danish Language - Problems with ordering
+#81 Product Variants sort order
+#73 Paypal Express - coupon, gift certificate not discounted
+#62 Shipping weights not(correctly) calculated
+#58 Paypal Express Module Passing Incorrect Data 
+#53 out of stock - checkout possibility 
+#21 smtp password not encrypted
+
+
+VERSION V1.1.8.3.1
+-- BUG FIX
+#102 Ajax add to cart not work in products listing page of glass gray 
+#103 Ajax add to cart not work in specials page of glass gray template
+
+VERSION v1.1.8.3
+-- BUG FIX
+#95, #90 remove piwik
+         The piwik is removed and the web report is also removed. Probably we will include the google analytics API
+#86 Shipping modules do not work - UPS & USPS - cant calculate shipping
+#82 Default currency for specified language doesn't work Feature
+#79 Languages not changing in invoices/orders prints Enhancement
+    Will not fix, this is not bug. 
+#78 Specials - Add batch sub category not working Bug 1.1.8.1 Solved
+#77 Syntax (semi colons) errors Bug 1.1.8.1
+#75 Users can 'steal' other users their print orders Bug Security 1.1.8.1
+#74 Language My Account Information - Customer Group information doesn't change on multiple languages Bug 1.1.8.1
+#70 Images added to product jpeg is not visable in lightbox popup Bug 1.1.8.1
+#65 Friendly URL error search box Bug 1.1.8.1
+#59 Default Currency problem Bug 1.1.8.1
+#55 PDF invoice error when logo is jpg instead of png Bug 1.1.8.1
+#26 backend - module ideal should be removed Bug 1.1.8.1
+    The ideal module is removed
+#25 backend Addshoppers not working Feature
+    The addshoppers is removed
+#24 backend - Transaction History Bug 1.1.8.1
+#22 Datepicker Jquery Bug 1.1.8.1
+
+VERSION v1.1.8.2
+--
+
+VERSION V1.1.8.1
+--BUG FIX FOR SECURITY
+1. Add the captcha code into the create account section to prevent the Bots registering as users
+2. Recreate the session as the store owner login to the admin panel to prevent the session fixation attack. 
+3. Pass the correct session id to the admin system when the cookie is diabled or works incorrectly to prevent the issue that the administrator can't login into the admin panel.
+4. Block access to the directories in the system except the normal script that could be executed.For example, if accessing your store via www.youdomain.com/includes, a blank page will be returned to prevent from exposing your files structure on your web server.
+5. Prevent the CSRF Vulnerabilities in the json.php, pdf.php and callback.php
+6. In the store front, when the user login into the store, create an account or logged out, a new session will be recreated. The old session will be destroyed and removed from the database to prevent the session table crashed. This is the effective way to prevent the session fixation attack.
+7. Remove the ext/securimage/example_form.ajax.php to prevent the "processForm()" Cross-Site Scripting Vulnerability. And also remove the example_from.php,  securimage_show_example.php, securimage_show_example.php2 bceause they are useless.
+8. Remove the ext/securimage/securimage_play.php to prevent the authentication bypass. And remove the securimage_play.swf too because it is useless.
+9. Prevent the js error in the checkout one page on some web server.
+
+VERSION V1.1.8
+--BUG FIX
+* Fix the bug - The coupon feature is not available for the virtual product - once click the redeem button, the customer is directed to the shopping cart page
+* Fix the bug - Breadcrumbs sometimes do not show the whole path
+* Fix the bug - Make the store run normally in IE9
+* Fix the bug - Primary / Default address not being passed to billing information and shipping information in the checkout one page
+* Fix the bug - When the user edit the address book. the js error happened
+* Fix the bug - Compare products - for the variants products, the product image is wrong and the add to cart button is not usable. The layout is improved
+* Fix the bug - Share My wishlist bug - When the 'Allow guest to tell a friend' is false, the guest still could share the list to multiple friends
+* Fix the bug - When click the image of the variant product in the wishlist, the produt displayed in the product info page is different
+* Fix the bug - Js error thrown when the ajax shopping cart is disabled
+* Fix the bug - The tabs in the product info page is not displayed normally in IE7, IE8 and IE9
+* Fix the bug - When variants stock in product info (front website) are 0, error in script
+* Fix the bug - When the mouse over or leave from the popup quickly, sometimes it may cause the popup cart to be disabled
+* Fix the bug - Error happened in the rss page when the product hasn't set any image
+* Fix the bug - If there is any variant product in the product listing, the sort by price doesn't work properly
+* Fix the bug - Cart box glitch when changing languages
+* Fix the bug - Articles added via the Information module do not appear in sitemap
+* Fix the bug - When the product is out of stock and the allow checkout is set to false in the admin, the customer still could go to checkout one page
+* Fix the bug - Variants products shows the "out of stock" without the SKU and the price
+* Fix the bug - Fatal error happened when enabling and disabling parent category in the admin panel
+* Fix the bug - Reviews can only be submitted when logged in and are submitted and displayed reguardless of how the Review Level and Moderate Reviews option set
+* Fix the bug - Ajax shopping cart box is not working properly in Opera browser
+* Fix the bug - The sitemap does not include the faqs
+* Fix the bug - Information articles also displaying under Articles
+* Fix the bug - UPS can not work. Add the multiselection feature for the ups configuration screen
+* Fix the bug - When there is any default address book for the customer, the js error will be thrown as createing the new address book
+* Fix the bug - Error happened as using the paypal express payment module- Payment_paypal_express_error_title Invalid shipping total, it should be equal with the shipping amount of the selected shipping option when using the free shipping module
+* Fix the bug - Can not login into the admin panel in French or German language
+* Fix the bug - PayPal Express Checkout Not Working for Downloadable Products
+* Fix the bug - When creating a sub category in a parent category and adding products to it, the store front product list pages display the wrong product counts in the menu and listingPageLinks
+* Fix the bug - Make the checkout success page support the downloadable products
+* Fix the bug - When delete serveral orders with checking the restock checkbox in the admin panel, a php fatal error will be thrown that result in the action failed
+* Fix the bug - The customer without default address shouldn't be allowed to uncheck create new billing address in the checkout one page
+* Fix the bug - When a product has any required customization field and the ajax shopping cart box is disabled, the error message shown in the product details page is not correct as adding the product into the cart
+* Fix the bug - Advanced search didn't check the search field - if set the price from greater than price to in the advance search, the system didn't check it and no error message thrown
+* Fix the bug - The captcha code layout isn't normal in the IE8 and IE9
+* Fix the bug - The height of textarea in the opera, IE, safari is not normal
+* Fix the bug - In the checkout one page, if the user click the continue button and go back, the coninue button is not displayed
+* Fix the bug - It is impossible to search the customer with email address in the customers module of the admin panel
+* Fix the bug - Can not get email after creating account and order
+* Fix the bug - If the breadcrumb service is dsiabled, fatal error happened when clicking the product in the product listing searched by any manufacturer
+
+--IMPROVEMENTS
+* Improvement - Move scripts from head tag to bottom of template to enhance the performance
+* Improvement - Shopping Cart Synchronism With Database
+* Improvement - Make the popup cart compatible with firefox, IE, chrome, safari and opera
+* Improvement - Enhance the security of wishlist
+* Improvement - Make the view of the box or content module could be overrided in the templates
+* Improvement - Add the telephone number into the order details
+* Improvement - Make it possible to override the views of shipping method, checkout method, shipping information and billing information for the checkout one page in the template
+* Improvement - Add the timezone setting under admin panel-ConfiguMake Atributes filter display in the product listing page for the searching manufacturer and the customer could enable or disable the product attributes filter under Admin Panel -> Configuration ->Configuration -> Product Listing Sort Order. In addition, after seaching the products with the attributes filter, the customer could filter the search results with the category or manufacturer filter box.Add the telephone number into the order details
+* Improvement - Make it possilbe to send extra order emails to several peoples
+
+VERSION V1.1.7
+--BUG FIX
+* fix the bug - Polls Not Working.
+* fix the bug - Zoom image error in Chrome and Safari.
+* fix the bug - Fix the problem about the order total in ajax shopping cart.
+* fix the bug - Seach function doesn*t work in orders module.
+* fix the bug - The wrong notification in the payment method form.
+* fix the bug - when there isn't any alternative payment methods on the shopping cart page, the 'or' is displayed too.
+* fix the bug - TomatoCart keywords meta info bug no comma between keywords.
+* fix the bug - Fix the issues about the state Synchronization Between Checkout And Ajax Shopping Cart and improve this section.
+* fix the bug - when add more than 2 variants for the compare product, the warning error will be thrown.
+* fix the bug - there is a gray line at the cetner of the body in chrome.
+* fix the bug - when set the weight up to 1000 in the Zone 1 Shipping Table, the shipping rates is wrong.
+* fix the bug - when set the total cose or weight up to 1000 and the table method is weight, the shipping cost calculated is wrong.
+
+--IMPROVEMENTS
+* Improve the shop by price module to make it search the products in the subcatalogs. It is possible to enable or disable the feature in the admin panel.
+* Improve the catalog section to make it display the subcatalogs and the products in  the subcatalogs. It is possible to enable or disable the feature in the admin panel.
+* Improve the PayPal Standard Websites Payment Module to automatically update the Order Status by IPN and the error notification. Remove the unnecessary configurations in the admin panel and fix the incorrectly formatted item amount.
+* Improve the Paypal Express Module to make it available in the checkout one page and pass the shipping cost to the paypal. The error notification mechanism for this module was improved too.
+* Improve the cart item is not displayed normally in the ajax shopping cart for the chrome. And remove the redundant padding space at the top of the cart
+* Switch the usps shipping api to Rates API(V4) and International Rates API(V2)
+* Adjustment - Only the rigister customer could access checkout one page
+
+--INTEGRATION
+* Integrate the cod fee order total module. This mod allows to add a fee to the total (amount +shippingcost+tax) for Cash on Delivery payments.
+* Integrate the 2checkout payment module.
+* Integrate the usable Authorizenet SIM payment module.
+* Integrate the usable Authorizenet AIM payment module.
+* Integrate the usable sagepay form payment module.
+
+VERSION V1.1.6
+--BUG FIX
+* fix the bug  --  state/Province drop down not loading.
+* fix the bug - The page tags display in the head tag incorrectly.
+* fix the bug - Customizations result in js error.
+* fix the bug - Customer Groups set with discount - in product info with variants the discount isn't viewable.
+* fix the bug - Wrong verification code in guest book module.
+* fix the bug - Captcha stopped working on Contact page.
+* fix the bug - removing item from compare products box. 
+* fix the bug - Can not login in the admin panel anymore. 
+* fix the bug - The navigationbar gives wrong number of products in product listing page. 
+* fix the bug - Customer name with more than 2 parts, only 2 parts are displayed. 
+* fix the bug - Autocompleter searchbox not working. 
+* fix the bug - Cart Box: make smaller (by arrow up) works only on the selected page.
+* fix the bug - When creating new address in address book - State/Province: drop down not loading. 
+* fix the bug - Delete order with variants and restock doesn't work. 
+* fix the bug - Text in checkout process - Shipping information wrong. 
+* fix the bug - zoom image display wrong large scale image. 
+* fix the bug -> Paypal Direct sends 'Authorisation' when it should send 'sale'. 
+* fix the bug -> Specials page - select menu is not working correctly.  
+
+VERSION 1.1.5
+--BUG FIX
+ * fix bug #521 -- Problem with displaying product pages in BG lang.
+ * fix bug #496 -- When a categorie is disabled in another categorie - image categorie still viewable
+ * the sql strict mode is switched off
+ * fix bug #487 -- Products Variants Table has Not Null on filename and cache_filename(the sql strict is switched off)
+ * fix bug #496 -- When a categorie is disabled in another categorie - image categorie still viewable
+ * fix bug #500 -- admin can not login. If the cookie domian does not match the host in the url. Such as www.mysite.com/admin and mysite.com/admin.
+ * fix bug #504 -- The navigation bar on hover image change works in Internet Explorer 9 but not in Google Chrome
+ * fix bug #384 -- Ajax Picture doesn't work with chrome
+ * fix bug #295 -- Categorie Tree Object Disable causes php Core
+ * fix bug #465 -- Can't given Space after any Currency Sign
+ * fix bug #445 -- Variants without stock gives wrong display in product info V1.1.4
+ * add google analytics support
+ * Since v1.1.5 piwik will be deactived by default since it generate large log data
+ * fix bug #401 -- Cant view the content and read received emails
+ * fix bug #448 -- View Cart Error
+ * fix bug #449 -- Cannot get past Step 1 in Checkout Process
+                   This bug is caused by more clicked on the payment installation button. Try to remove all the payment module and reinstall them again, then the problem will be resolved.
+ * fix bug #463 -- When deleting product in the Compare box - actions not correct
+ * fix bug #481 -- Payments Module does not set Order Status Correctly
+ * fix bug #486 -- Product Notification box only visible when a user isLoggedOn()
+ * fix bug #494 -- Desktop >> Module Setting >> Autorun doesn't work for created administrators
+ * mask the panel when the user click on the install button to prevent user click on the install button several times for modules:
+   shipping, payments, order_total, geoip, templates and templates_modules. If the module are installed several time.. it will cause store front crash
+ * fix bug #480 -- Cannot disable service "Category Path"
+                   Does not allow core modules to be uninstalled
+ * fix bug #491 -- Variant price doesn't change when changing currency
+ * fix bug #472 -- Include Tax in price does not show in products with variants
+ * fix bug #473 -- Special price not displayed for product in info.php
+ * fix bug #424 -- ON Front page error, check both not null and is array to database cache content
+ * fix bug #456 -- Cannot send email through Newsletter or Product Notifications module
+ * fix bug #447 -- If the zone is enabled in Paypal Standard & Express then paypal will not be shown in the payment list.
+ * fix bug #460 -- wrong configuration constant in includes/modules/boxes/popular_search_terms_tag_cloud.php
+ * fix bug #445 -- Polls - if votes are 0 and by clicking "result" in frontpage - always loading
+ * fix bug #455 -- Warning: number_format() expects parameter 1 to be double, string given in C:\...
+ * fix bug #466 -- Restrictions on coupons doesn't work causing serious issues!!
+ * fix bug #432 -- Coupon Code for Downloadable Product
+
+VERSION 1.1.4
+--BUG FIX
+ * fix bug #340 -- Please Waiting - English correction needed
+ * fix bug #358 -- TocVariants, add backslashes before characters that need to be quoted in thetxtInStock, txtOutOfStock constant string.
+ * fix bug #372 -- Create account link
+ * fix bug #379 -- FAQ box went wrong [MAJOR CACHE PROBLEM]
+ * fix bug #419 -- product description bullets and numbering
+ * fix bug #421 -- Categories count off still doesn't work in v1.1.3
+ * fix bug #422 -- Logout in Admin V1.1.3 doesn't work
+ * fix bug #389 -- Cusomization error when editing
+ * fix bug #420 -- Polls broken in admin v1.1.3
+ * fix bug #398 -- Template Installation problem + Template List missing
+ * fix bug #386 -- When creating an account, newsletter subscription won't work
+ * fix bug #391 -- Link in the order status from email is invalid
+ * fix bug #395 -- Create account - privacy notice issue
+ * fix bug #414 -- when product is deactived, it is still in the feature product
+ * fix bug #405 -- Deactivate product creates buggy product in saved cart
+ * fix bug #412 -- debug code alert('a'); in homepage info save action 
+ * Strip comma (,) from the end of product attribute values
+ * correct products edit dialog button translation, and fix bug: when user click several times the SaveAndContinue button the variants data will gone.
+ * increase ajax timeout for image resize in case of large number of images
+ * add translation for submit
+ * add translation for new product title
+ * Supresses image resize error report
+ * add missing slide images
+ * implement cache mechanism to products, faq and guest book
+ * improve the live feed feature, display the live feed only once
+ * improve import/export function. 
+   --support multiple categories import
+   --support multiple images upload (upload image to _upload folder via FTP or zipped image file)
+   --Use products_id as the flag to indicate new product(pid == -1) or old product (pid > 0). If the pid exists in the db, the product will be omit.
+   
+ VERSION 1.1.3
+--BUG FIX
+ * fix bug #314 -- HomePage information not saving?
+ * fix bug #297 -- Email From Field is not set in Header
+ * fix bug #309 -- Default Currencies can not be set
+ * fix bug #322 -- The gift code can't be added or deleted
+ * fix bug #296 -- Seo plugin generates wrong .html file
+ * correnct english translation for error_gift_certificate_exist
+ * convert line delimiters to unix style
+ * missing translation of module title in case of uninstallation?
+ 
+VERSION 1.1.2
+--BUG FIX
+ * fix bug #263 -- Website in Maintenance
+ * fix bug #300 -- When seo is activated the contact us form does not work
+ * fix bug #301 -- When seo is activated the product customization does not work
+ * fix bug #277 -- Guest Book translation
+ * fix bug #274 -- Weird Visual Error of the right column in IExplorer
+ * fix bug #278 -- Gift Wrapping Mssage
+ * fix bug #261 -- Order pdf print does not support long product name
+ * fix bug #285 -- Set wallpaper failed
+ * fix bug #284 -- Live feed window can not automatically close
+ * fix bug #283 -- tiny_mce cause permission denied error in IE
+ * fix bug #250 -- Adding/editing Categories js error in IE
+ * fix bug -- table name prefix failure: use "CREATE TABLE" instead of "CREATE TABLE IF NOT EXISTS"
+ * fix bug -- add check to disallow currency duplicate 
+
+--FEATURE
+ * Replace &shy; with &nbsp;
+ * use default extjs editor instead of tinymce editor to increase performance
+ * save telephone in order
+ * move product creation in PRODUCT_LIST_PRICE to improve performance 
+ * improve category drap & drop feature 
+ * add category tree to products list grid window enable category and product manipulation at the same time enable category drap & drop and product drap & drop 
+ * add IE8 compatible for start menu and image upload
+ * remove redundant image files/categories file/download file/third party library/js library
+ * sever side sort support for products grid
+
+VERSION 1.1.1
+--BUG FIX
+ * Can not open categories window in IE, Opera
+ * include box modules when _has_box_modules is true and content modules when _has_content_modules is true
+ * fix bug for invalid token when downloading from admin(backup, email, file manager etc)
+ * correct install.sql to meet the mysql strict mysql mode
+ * initialize Ext.BLANK_IMAGE_URL or prevent system load blank image url from extjs.com
+ * Add variants product to cart error in IE
+ * Sometimes all slide images are gone due to the error of getimagesize function. Check whether slide images exist before get image size 
+ * 1st time the product page is loaded, when you click on the product image within the zoon-in area, the product image will be opened in the current window replacing the whole page instead of displaying it in the Lightbox Layer.
+ * Paypal express, debug information is display during checkout. Remove var_dump information
+ * calculate number of products bug in products categories
+ * import language error for articles, clone articles table failed
+ * telephone is not saved
+ 
+--FEATURE
+ * Use light box to compare products instead of popup a new windows
+
+VERSION 1.1
+ * Polls
+ * Guest Book
+ * Department Email Management
+ * Website bookmark
+ * Recaptcha for Contact Us Form & Guest Book
+ * Allow user customize the contact us form. Enable user define different email topic and assign different email address to different email topic
+ * Different language in admin panel and store front
+ * Image watermark for products and articles
+
+ * Gift wrapping
+ * Order edit support for gift warpping
+
+ * Pop up categories menu 
+ * Product image zoom + light box to display large image
+ * Product rating
+ * Product attachment
+ * Products Customizations to allow customers customise product with sel-defined field
+ * Product accessories
+ * Products duplicate
+ * Tinymec Editor Intergrated which enable admin to put flash, movies and images in product description and article description  
+ * Save and Continue Edit Button for product
+ * New layout for product variants
+ * Allow to manage single variant
+ * Default Variant supported
+ * Allow associate each produt variant with a product image
+ * Downloadable product support for product variant
+
+ * Implements cache in following modules: 
+    articles categories, information, manufacturer, popular search term, feature products, image menu,slide show
+    
+ * SEO improvements:
+    Enable admin to control page title, meta keywords and meta description for home page, articles categories, articles, manufacturers
+    Update the page title = page title + "-" + store name
+    Add a meta page field in template class to separate the page title with the meta page title
+    URL link style improved such as:
+      categories: http://{webiste}/{cateogires_id}-{categories_name}
+      manufacturers: http://{webiste}/{manufacturers_id}_{manufacturers_name}
+      articles categories: http://{webiste}/{articles_categories_id}--{articles_categories_name}
+      products: http://{webiste}/{cateogires_id}-{categories_name}/{products_id}-{products_name}.html
+      products: http://{webiste}/{manufacturers_id}_{categories_name}/{products_id}-{products_name}.html
+      articles: http://{webiste}/{articles_categories_name}/{articles_id}-{articles_name}.html
+      
+ * Ajax shopping cart support for:
+    Product Customization Fields
+    Gift certificate
+    Product Variants
+
+ * Payment modules:
+    Moneybookers
+    Amazon
+    Google Checkout
+    eWay
+    Paypal Standard
+    Paypal Direct Pay
+    Paypal Express
+    Paypal UK Direct Pay
+    Paypal UK Express
+    inPay
+    Nochex
+    Western Union
+    
+ * [SECURITY] Add a token to every extjs connection to against Cross-Site Request Forgery (CSRF) attack
+ * [Bug] Fix the problem redeclare posix_getpwuid()
+ * [Bug] Bug fix breadcrumb. The subcategory is not displayed.   
+ * [Bug] Bug fixed about breadcumb. The top link and the online shop link is repeated. 
+ 
+2010/6/21 VERSION 1.01
+ * Remove Chinese Simplified Language for default installation
+ * Remove chinese simplified font support from PDF Print to reduce memory usage
+ * Allow remove product category image from admin panel
+ * [Bug] Even a product is deleted, it should still exists in orders  
+ * [Bug] Fixed the error "'articles_last_modified' doesn't have a default value" in installation script
+ * [Bug] Remove chinese font support for PDF to eliminate the memory limit problem
+
+2010/5/15 VERSION 1.0
+ * Forgot Password for Administrators
+ * SSL support for Frontend and Admin Panel
+ * Admin directory customizable for better security
+ * Feature products in front page
+ * Migration tool for osCommerce Online Merchant v2.2 Release Candidate 2a
+ * Enable adding and deleting articles in the Information module
+ * Improve the Shop by Price module, applying price range for categories and search result
+ * Display correct category or manufacturer path for products in Breadcrumb
+ * Separate customer comment and administrator comment on orders
+ * New installation layout
+ * New configuration to control whether to allow customers to return products or not
+ * Who's online: display traffic source, identify administrators
+ * Shipping module: self pickup
+ * Payment module: bank transfer, check
+ * Front page Meta keyword & Meta description
+ * Integrate Piwik web analytics report:
+   - - Visits overview
+   - - Visits location
+   - - Referring Sites
+   - - Search engines
+ * Upgrade Piwik to the newest version (0.55)
+ * Order in PDF and invoice print in the My Account area at front end
+ * UTF8 support for Database tables
+ * UTF8 support for PDF documents (Invoice, Order)
+ * Allow multiple image upload for new products
+ * New configuration to place websites offline for maintenance
+ * Allow customers to set a maximum order quantity for each product
+ * Add published/unpublished column in the Products grid list at backend
+ * Add batch move and publish/unpublished features to the Products list
+ * Short Description of products
+ * Use transparent background rather than white-color background when resizing images
+ * Replace Product Model by SKU
+ * Automatically assign the default SKU to product variants SKU
+ * Use combo box for product variants instead of complete variant combination list
+ * Allow users to change the page size for grid view in the admin panel
+ * Allow administrators to activate/deactivate publicity, gift certificate, downloadable product, and return flag in order status
+ * Add translation in the Languages module
+ * Allow to upload several images when creating a new product
+ * Remove PHP4 compatibility functions
+ * Add ~E_DEPRECATED to error_reporting function to hide the deprecate information (the deprecate function will be removed later)
+ * Disable variants when the product type is downloadable product or gift certificate
+ * Disable tax class combo box when product type is gift certificate
+ * Apply weight to each variant combination
+ 
+Security issue
+ * Backup vulnerability; disable anonymous access to the admin/backup directory
+
+The stable release fixes the following bugs:
+ * [BO] Order editor: fail to change SKU, product quantity and price in the Products grid
+ * [Install] Fail to change the database table prefix
+ * [FO] Skip shipping method if there are all non-physical products in the shopping cart
+ * [FO] Save billing address and shipping address; set billing address to primary address when there is no primary address.
+ * [BO] When a decimal price is input, it is changed into an integer. 
+ * [FO] Return request is disabled when the product is already returned.
+ * [FO] Wrong Go Back link in the return request page
+ * [FO] Shipping address remains when physical products are removed from the shopping cart
+ * [BO] Fix the window title for product unit class
+ * [BO] Fix the window title for coupon send email window
+ * [BO] When dialog window is maximized, the bottom button bar is missing.
+ * [BO] When sidebar is collapsed, dialog window is maximized and the bottom button bar missing.
+ * [BO] When web analytics report is maximized, it does not fill in the whole desktop area
+ * [BO] Coupon type Free Shipping does not work
+
+
+2010/3/19 VERSION 1.0 alpha5
+This release adds several new features including:
+  * Account approval
+  * Customer registration IP recorded
+  * Abandoned cart
+  * Quick Create order, customer, product function in Email Module
+  * Vista Sidebar
+  * Order Tracking No.
+  * RSS feed
+  * Popular Search Terms
+  * Products/Customers Import & Export
+  * Order Editor at admin panel
+  * Tree structure in File manager
+  
+2010/01/08 VERSION 1.0 alpha4
+This release adds several new features including:
+  * Who's online
+  * Google Sitemap
+  * Banner Manger
+  * Language Package Upload & Install
+  * SMTP mail server authentication support
+  * Meta information for products and categories
+  * Administration log
+  * File manager
+  * Product comparisons
+  * A brand new layout for store front 
+  * CRM(Email) Module
+  
+2009/11/12 VERSION 1.0 alpha3
+This release adds several new features including:
+  * Downloadable products
+  * Gift vouchers
+  * Virtual & service products
+  * Minimum order quantity per product
+  * Order increment per product
+  * Meta information for products and categories
+  * Coupons
+  * Customer Store Credit
+  * Change product attributes to product variants
+  * Change product extra fields to products attributes
+  * Return merchandise authorization (RMA)
+  * One page checkout
+  * Wishlist
+  * PDF order, invoice, shipping slip, return slip
+
+2009/07/13 VERSION 1.0 alpha2
+This is a bug fix release to solve the problem when TomatoCart is runing under http://localhost, users can 
+not login to administation panel. This is because the domain parameter of PHP setcookie function is "localhost", 
+setcookie can not write value to cookie.  
+According to the ExtJS lisence NU General Public License v3, we are allowed to ExtJS in our release.
+Therefore ExtJS 2.2.1 is included in this release. 
+
+2009/06/15 Tomatocart 1.0 alpha1
+
+After more than a half year of development time and testing it's finally there! 
+This is first release of Tomatocart project.We start the first step to our aim, 
+and it is our milestone.
+
+We are excited to present Tomatocart to you. This is the first time that Ext JS 
+technology is  used in eCommerce. We completely rewrite osCommerce 3 administration 
+panel with ExtJS. Equipped with modern technology AJAX and ExtJS, TomatoCart offer 
+significant usability improvements and make interacting with the web interfaces 
+faster and more efficient.
+

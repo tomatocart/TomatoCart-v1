@@ -1,0 +1,38 @@
+/*IE8 FIX*/
+
+/*START: Fix the menu issue about the width in IE8*/
+.x-menu li {
+	line-height: 100%;
+}
+
+.x-menu .ux-start-menu-apps-panel a.x-menu-item {
+	color: #000000 !important;
+}
+
+.x-menu a.x-menu-item {
+  color: #222222;
+  cursor: pointer;
+  display: block;
+  line-height: 16px;
+  outline: 0 none;
+  padding: 3px 21px 3px 27px;
+  position: relative;
+  white-space: nowrap;
+}
+  
+.x-menu a {
+	text-decoration: none !important;
+}
+
+.x-menu {
+	min-width: 170px;
+}
+/*END:Fix menu*/
+
+/*START: Fix the upload file field in the new product window*/          
+#products-img-upload input {
+	filter: alpha(opacity=0);
+	-moz-opacity: 0;
+	opacity: 0;
+}
+/*END: Fix the upload Field*/

@@ -1,0 +1,14 @@
+VERSION V1.0
+--BUG FIX FOR SECURITY
+#27 Product extra images not automatic scaled
+    The original image group is used for the popup window, if the original images is too big the whole screen is filled. So the large image group is used instead.
+#28 product variants no change of price/image
+#31 items in cart - redirect to shopping cart
+    Ajax Shopping Cart is implemented
+#32 popup shopping cart stays open
+#33 Checkout - shopping cart - alignment
+#88 Feature and New Products Ajax add to cart feature
+    Shoppingcart box module - checkout button does not work 
+    Other issues noticed - could use a space in between the item count and the text item(s) 
+    Manufacturers box module - manufacturer images could be aligned to the centre!
+    Collapsed cart - displays $osC_Language->get('text_items') 

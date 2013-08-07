@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Themes>
+  <Theme>
+    <Code><![CDATA[vistablack]]></Code>
+    <Name><![CDATA[Vista Black]]></Name>
+    <Author><![CDATA[]]></Author>
+    <Url><![CDATA[]]></Url>
+    <Thumbnail><![CDATA[templates/default/desktop/themes/xtheme-vistablack/xtheme-vistablack.png]]></Thumbnail>
+    <Path><![CDATA[templates/default/desktop/themes/xtheme-vistablack/css/xtheme-vistablack.css]]></Path>
+  </Theme>
+  <Theme>
+    <Code><![CDATA[vistablue]]></Code>
+    <Name><![CDATA[Vista Blue]]></Name>
+    <Author><![CDATA[]]></Author>
+    <Url><![CDATA[]]></Url>
+    <Thumbnail><![CDATA[templates/default/desktop/themes/xtheme-vistablue/xtheme-vistablue.png]]></Thumbnail>
+    <Path><![CDATA[templates/default/desktop/themes/xtheme-vistablue/css/xtheme-vistablue.css]]></Path>
+  </Theme>
+  <Theme>
+    <Code><![CDATA[vistaglass]]></Code>
+    <Name><![CDATA[Vista Glass]]></Name>
+    <Author><![CDATA[]]></Author>
+    <Url><![CDATA[]]></Url>
+    <Thumbnail><![CDATA[templates/default/desktop/themes/xtheme-vistaglass/xtheme-vistaglass.png]]></Thumbnail>
+    <Path><![CDATA[templates/default/desktop/themes/xtheme-vistaglass/css/xtheme-vistaglass.css]]></Path>
+  </Theme>
+</Themes>

@@ -1,0 +1,477 @@
+/*
+  $Id: sidebar.css $
+  TomatoCart Open Source Shopping Cart Solutions
+  http://www.tomatocart.com
+
+  Copyright (c) 2009 Wuxi Elootec Technology Co., Ltd;
+
+  This program is free software; you can redistribute it and/or modify
+  it under the terms of the GNU General Public License v2 (1991)
+  as published by the Free Software Foundation.
+*/
+
+#ux-sidebar {
+  width: 180px !important;
+  height: 96%;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+#sidebar-panel-site-logo {
+  position: absolute;
+  left: 25px;
+  top: -5px;
+}
+
+#ux-sidebar-background {
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: -1;
+  background: #FFFFFF;
+}
+
+div#ux-sidebar div.sidebar-top-bar {
+  float: left;
+  width: 185px;
+  padding-top: 60px;
+  margin: 20px 0px 5px 46px;
+  height: 25px;
+  border: none !important;
+  background: url(../images/default/sidebar/sidebar_tbar_bg.png) no-repeat left 58px !important;
+}
+
+#ux-sidebar .x-layout-split {
+  background: url(../images/default/sidebar/sidebar_right_side.png) no-repeat right top !important;
+  border: none;
+}
+
+#ux-sidebar .sidebar {
+  background: url(../images/default/sidebar/sidebar_right_side.png) no-repeat left top !important;
+}
+
+#ux-sidebar .x-layout-mini {
+	left: 4px;
+}
+
+#ux-sidebar .x-layout-collapsed .x-layout-mini {
+  left: 0;
+}
+
+.sidebar-transparency {
+  -moz-opacity: 1;
+  opacity: .100;
+  filter: alpha(opacity=100);
+}
+
+.sidebar-items-panel {  
+  width: 160px;
+  height: auto;
+  margin: 10px auto;
+}
+
+/*sidebar topbar css*/
+.sidebar-tbar-add {
+	position: relative;
+	left: 5px;
+	top: -2px;
+  background: url(../images/default/sidebar/sidebar_tbar_add.png) left center no-repeat;
+}
+
+.sidebar-tbar-add:hover {
+  background: url(../images/default/sidebar/sidebar_tbar_add_hover.png) left center no-repeat;
+}
+
+.sidebar-tbar-previous, .sidebar-top-bar .sidebar-tbar-previous-disabled:hover {
+	position: relative;
+	left: 17px;
+	top: -3px;
+  background: url(../images/default/sidebar/sidebar_tbar_left_arrow.png) left 63% no-repeat;
+}
+
+.sidebar-tbar-previous:hover {
+  background: url(../images/default/sidebar/sidebar_tbar_left_arrow_hover.png) left 63% no-repeat;
+}
+
+.sidebar-tbar-next, .sidebar-top-bar .sidebar-tbar-next-disabled:hover {
+	position: relative;
+	left: 17px;
+	top: -3px;
+  background: url(../images/default/sidebar/sidebar_tbar_right_arrow.png) left 63% no-repeat;
+}
+
+.sidebar-tbar-next:hover {
+  background: url(../images/default/sidebar/sidebar_tbar_right_arrow_hover.png) left 63% no-repeat;
+}
+
+.sidebar-tbar-close {
+	position: relative;
+	left: 20px;
+  background: url(../images/default/sidebar/sidebar_tbar_close_btn.png) 2px 38% no-repeat;
+}
+
+.sidebar-tbar-close:hover {
+  background: url(../images/default/sidebar/sidebar_tbar_close_btn.png) -11px 38% no-repeat;
+}
+
+/*gadgets css*/
+.x-gadget {
+  margin-top: 20px;
+  position: relative;
+  height: 163px;
+  font-size: 8px;
+}
+
+.x-gadget .x-panel-header {
+	width: 20px;
+  height: 10px;
+  border: none;
+  background: none;
+ 	visibility: hidden;
+  position: absolute;
+  right: -8px;
+  top: 3px;
+  z-index: 30000;
+}
+
+.x-gadget .x-grid3 {
+  color: #FFFFFF;
+  background-color: transparent;
+}
+
+.x-gadget .x-panel-body {
+  border-width: 0 0;
+  height: 145px;
+}
+
+.x-gadget .x-grid3-header {
+  height: 28px;
+  padding-left: 10px;
+  margin-top: 12px;
+}
+
+.x-gadget .x-grid3-body {
+  margin: 0 auto;
+}
+
+.x-gadget .x-grid3-row {
+  border: none;
+}
+
+.x-gadget .x-grid3-row-over {
+  background: #6FC5FF !important;
+  cursor: pointer;
+}
+
+.x-gadget .x-grid3-row-selected, .x-gadget .x-grid3-row-selected .x-grid3-cell-inner {
+  background: transparent !important;
+}
+
+.x-gadget .x-grid3-hd-row td {
+  border: none;
+  font-weight: bold;
+}
+
+.x-gadget .x-grid3-hd-inner {
+  padding-top: 4px;
+  padding-left: 13px;
+}
+
+.x-gadget .x-grid3-hd-inner a {
+  text-decoration: none;
+  color: #000000;
+}
+
+.x-gadget .x-grid3-hd-inner a:hover {
+  color: #196BD1;
+}
+
+.x-gadget .x-tool {
+  height: 20px;
+  background-image: url(../images/default/sidebar/sidebar_close_btn.png);
+}
+
+#clock-container .x-panel-body {
+  height: 150px !important;
+}
+
+#clock-container .x-panel-header-noborder {
+  border-bottom: none;
+}
+
+#clock-container .x-panel-header {
+  right: -4px;
+  top: 20px;
+}
+
+#sidebar_new_customers {
+  background: url(../images/default/sidebar/sidebar_customers_bg.png) no-repeat left top !important;
+}
+
+#sidebar_new_customers .x-grid3-hd-inner a {
+  color: #1e3148;
+}
+
+#sidebar_new_customers .x-grid3-hd-inner a:hover {
+  color: #317B9F;
+}
+
+#sidebar_new_customers .x-grid3-header {
+  background: none !important;
+}
+
+#sidebar_new_customers .x-grid3-scroller {
+  background: none !important;
+  height: 120px !important;
+}
+
+#sidebar_new_customers .x-grid3-body {
+	width: 130px !important;
+	height: 115px;
+}
+
+#sidebar_new_customers .x-grid3-row {
+  width: 113px !important;
+  padding: 6px 0;
+  margin-left: 9px;
+}
+
+#sidebar_new_customers .x-grid3-body span.date {
+  color: #1c435c;
+  padding: 0;
+}
+
+#sidebar_new_customers div.x-grid3-row-first,  #sidebar_new_customers div.x-grid3-row-last {
+  padding: 5px 0;
+}
+
+#sidebar_new_customers .x-grid3-cell-inner {
+  padding: 0;
+}
+
+#sidebar_new_customers .x-grid3-cell-inner {
+  width: 80%;
+}
+
+#sidebar_new_customers .x-grid3-body span {
+  width: 100%;
+  display: block;
+  padding-left: 18px;
+}
+
+#sidebar_new_customers .x-grid3-body span.f {
+  background: url(../images/default/sidebar/customer_female.png) no-repeat left 3px;
+}
+
+#sidebar_new_customers .x-grid3-body span.m {
+  background: url(../images/default/sidebar/customer_male.png) no-repeat left 3px;
+}
+
+#sidebar_new_orders {
+  background: url(../images/default/sidebar/sidebar_orders_bg.png) no-repeat left top;
+}
+
+#sidebar_new_orders .x-grid3 {
+  color: #000000;
+}
+
+#sidebar_new_orders .x-grid3-row {
+  width: 116px !important;
+  padding: 5px 0;
+  margin-left: 13px;
+}
+
+#sidebar_new_orders .x-grid3-row span.order-date, #sidebar_new_orders .x-grid3-row span.order-status {
+  color: #6b7886;
+}
+
+#sidebar_new_orders div.x-grid3-row-first {
+  margin-top: 1px;
+}
+
+#sidebar_new_orders div.x-grid3-row-last {
+  padding-top: 3px;
+}
+
+#sidebar_new_orders div.x-grid3-col-1 {
+  width: 40px;
+  padding-left: 2px;
+  padding-right: 2px;
+}
+
+#sidebar_new_orders .x-grid3-header {
+  background: none !important;
+  margin-top: 12px;
+}
+
+#sidebar_new_orders .x-grid3-col {
+  width: 60px !important;
+}
+
+#sidebar_new_orders .x-grid3-scroller .x-grid3-cell-last {
+	width: 40px;
+  padding-left: 10px;
+  display: block !important;
+}
+
+#sidebar_new_orders  .x-grid3-cell-inner {
+  padding: 0 0 0 2px;
+  width: 58px;
+}
+
+#sidebar_new_orders .x-grid3-hd-inner {
+	padding-top: 8px;
+}
+
+#sidebar_new_orders .x-grid3-hd-inner a {
+  color: #000000;
+}
+
+#sidebar_new_orders .x-grid3-hd-inner a:hover {
+  color: #0072CF;
+}
+
+#sidebar_emails {
+  background: url(../images/default/sidebar/sidebar_email_bg.png) no-repeat left top !important;
+}
+
+#sidebar_emails .x-grid3-header {
+  background: none !important;
+}
+
+#sidebar_emails a {
+  color: #FFFFFF;
+}
+
+#sidebar_emails a:hover {
+  color: #1A1F2F;
+}
+
+#sidebar_emails .x-grid3-scroller {
+  background: none;
+  height: 115px !important;
+}
+
+#sidebar_emails .x-grid3-row {
+  margin-left: 8px;
+  margin-top: 3px;
+  width: 127px !important;
+}
+
+#sidebar_emails .x-grid3-row span.email-address {
+  color: #8E98AF;
+}
+
+#sidebar_emails div.x-grid3-row-first {
+  padding-top: 0;
+}
+
+#sidebar_emails div.x-grid3-row-last {
+  margin-top: 6px;
+}
+
+#sidebar_overview {
+  background: url(../images/default/sidebar/sidebar_overview.png) no-repeat left top;
+}
+
+#sidebar_overview .x-grid3-header {
+  background: none;
+  height: 25px;
+  margin-top: 11px;
+}
+
+#sidebar_overview div.x-grid3-row-first {
+  margin-top: 0;
+}
+
+#sidebar_overview .x-grid3-row {
+  width: 128px !important;
+  height: 24px;
+  margin-left: 6px;
+  padding-top: 1px;
+}
+
+#sidebar_overview .x-grid3-scroller {
+  background: none !important;
+}
+
+#sidebar_overview .x-grid3-cell-inner img {
+  width: 10px;
+  height: 10px;
+  float: left;
+}
+
+/*Gadgets Dataview css*/
+#gadgets-view .x-panel-header {
+	color: #000000;
+	font-weight: bold;
+	padding-left: 22px;
+}
+
+#gadgets-view .x-panel-body {
+	background: white;
+	font: 11px Arial, Helvetica, sans-serif;
+}
+
+#gadgets-view .thumb-wrap{
+	float: left;
+	margin: 5px 0 0 17px;
+	padding: 5px;
+	text-align: center;
+}
+
+#gadgets-view .thumb {
+	height: 80px;
+	width: 80px;
+}
+
+#gadgets-view .thumb-wrap span {
+  display: block;
+  padding-top: 5px;
+}
+
+#gadgets-view .x-view-over, #gadgets-view .x-view-selected {
+	background: #DDDDDD url(../images/default/sidebar/gadget_over_bg.png) no-repeat;
+}
+
+#gadgets-view .loading-indicator {
+	font-size:11px;
+	padding-left:20px;
+	margin:10px;
+	background-image:url('../../resources/images/default/grid/loading.gif');
+	background-repeat: no-repeat;
+	background-position: left;
+}
+
+.gedgets-not-allowed-drop {
+  display: none;
+}
+
+/*fix the height compatibility IE7.0, IE8.0 , FF3.5*/
+#gadgets-view .x-fieldset {
+  padding:0;
+  height: 250px !important;
+}
+
+#sidebar-display-setting {
+  margin: 0 0 10px 0;
+  padding: 0;
+  height: 120px !important;
+}
+
+#sidebar-display-setting .x-fieldset-body {
+  height: 100px !important;
+  padding:0;
+  margin:0;
+}
+
+/*fix start-menu-bug*/
+div.ux-start-menu-tools-panel {
+  top: 0 !important;
+}
+
+/*fix click outline*/
+*:focus {
+  outline: none;
+}
