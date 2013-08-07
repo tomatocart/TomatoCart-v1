@@ -1,0 +1,17 @@
+
+TomatoCart V1.0 alpha
+
+Copyright (c) 2009, Elootec Technology Co,.Ltd.
+
+All rights reserved.
+
+This program is protected by copyright law and the TomatoCart license.
+
+
+Open Source License
+------------------------------------------------------------------------------------------
+TomatoCart is licensed under the terms of the Open Source GPL 3.0 license. For more details please visit:
+
+http://www.gnu.org/licenses/gpl.html
+
+If you have any questions about licensing you can send an e-mail to info@tomatocart.com

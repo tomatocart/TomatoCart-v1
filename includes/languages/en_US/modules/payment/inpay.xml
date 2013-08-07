@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<language>
+  <definitions>
+    <definition>
+      <key>payment_inpay_title</key>
+      <value><![CDATA[Inpay - instant online bank transfers]]></value>
+      <group>modules-payment</group>
+    </definition>
+    <definition>
+      <key>payment_inpay_method_title</key>
+      <value><![CDATA[Pay with your online bank - instant and 100% secure]]></value>
+      <group>modules-payment</group>
+    </definition>
+  </definitions>
+</language>

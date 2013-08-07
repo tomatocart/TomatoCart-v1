@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<language>
+  <definitions>
+    <definition>
+      <key>payment_moneyorder_title</key>
+      <value><![CDATA[Check/Money Order]]></value>
+      <group>modules-payment</group>
+    </definition>
+    <definition>
+      <key>payment_moneyorder_description</key>
+      <value><![CDATA[Make Payable To:&nbsp;%s<br /><br />Send To:<br />%s<br /><br />Your order will not ship until we receive payment.]]></value>
+      <group>modules-payment</group>
+    </definition>
+    <definition>
+      <key>payment_moneyorder_email_footer</key>
+      <value><![CDATA[Make Payable To: %s
+
+Send To:
+%
+
+Your order will not ship until we receive payment.]]></value>
+      <group>modules-payment</group>
+    </definition>
+  </definitions>
+</language>

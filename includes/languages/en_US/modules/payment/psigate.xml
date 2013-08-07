@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<language>
+  <definitions>
+    <definition>
+      <key>payment_psigate_title</key>
+      <value><![CDATA[PSiGate]]></value>
+      <group>modules-payment</group>
+    </definition>
+    <definition>
+      <key>payment_psigate_description</key>
+      <value><![CDATA[Credit Card Test Info:<br /><br />CC#: 4111111111111111<br />Expiry: Any]]></value>
+      <group>modules-payment</group>
+    </definition>
+    <definition>
+      <key>payment_psigate_credit_card_owner</key>
+      <value><![CDATA[Credit Card Owner:]]></value>
+      <group>modules-payment</group>
+    </definition>
+    <definition>
+      <key>payment_psigate_credit_card_number</key>
+      <value><![CDATA[Credit Card Number:]]></value>
+      <group>modules-payment</group>
+    </definition>
+    <definition>
+      <key>payment_psigate_credit_card_expiry_date</key>
+      <value><![CDATA[Credit Card Expiry Date:]]></value>
+      <group>modules-payment</group>
+    </definition>
+    <definition>
+      <key>payment_psigate_credit_card_type</key>
+      <value><![CDATA[Type:]]></value>
+      <group>modules-payment</group>
+    </definition>
+    <definition>
+      <key>payment_psigate_js_credit_card_number</key>
+      <value><![CDATA[* The credit card number must be at least ' . CC_NUMBER_MIN_LENGTH . ' characters.\n]]></value>
+      <group>modules-payment</group>
+    </definition>
+    <definition>
+      <key>payment_psigate_error_message</key>
+      <value><![CDATA[There has been an error processing your credit card. Please try again.]]></value>
+      <group>modules-payment</group>
+    </definition>
+    <definition>
+      <key>payment_psigate_error</key>
+      <value><![CDATA[Credit Card Error!]]></value>
+      <group>modules-payment</group>
+    </definition>
+  </definitions>
+</language>

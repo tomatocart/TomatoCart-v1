@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="utf-8"?>
+<language>
+  <definitions>
+    <definition>
+      <key>shipping_usps_title</key>
+      <value><![CDATA[United States Postal Service (USPS)]]></value>
+      <group>modules-shipping</group>
+    </definition>
+    <definition>
+      <key>shipping_usps_description</key>
+      <value><![CDATA[United States Postal Service<br /><br />You will need to have registered an account with USPS at http://www.uspsprioritymail.com/et_regcert.html to use this module<br /><br />USPS expects you to use pounds as weight measure for your products.]]></value>
+      <group>modules-shipping</group>
+    </definition>
+    <definition>
+      <key>shipping_usps_error</key>
+      <value><![CDATA[An error occured with the USPS shipping calculations.<br />If you prefer to use USPS as your shipping method, please contact the store owner.]]></value>
+      <group>modules-shipping</group>
+    </definition>
+    <definition>
+      <key>shipping_usps_status_text</key>
+      <value><![CDATA[Enable USPS Shipping]]></value>
+      <group>modules-shipping</group>
+    </definition>
+    <definition>
+      <key>shipping_usps_status_description</key>
+      <value><![CDATA[Do you want to offer USPS shipping?]]></value>
+      <group>modules-shipping</group>
+    </definition>
+    <definition>
+      <key>shipping_usps_user_id_text</key>
+      <value><![CDATA[* User ID]]></value>
+      <group>modules-shipping</group>
+    </definition>
+    <definition>
+      <key>shipping_usps_user_id_description</key>
+      <value><![CDATA[Enter the USPS USERID assigned to you]]></value>
+      <group>modules-shipping</group>
+    </definition>
+    <definition>
+      <key>shipping_usps_user_password_text</key>
+      <value><![CDATA[User Password(Optional)]]></value>
+      <group>modules-shipping</group>
+    </definition>
+     <definition>
+      <key>shipping_usps_user_password_description</key>
+      <value><![CDATA[Enter the USPS USER PASSWORD assigned to you.]]></value>
+      <group>modules-shipping</group>
+    </definition>
+    <definition>
+      <key>shipping_usps_zip_code_text</key>
+      <value><![CDATA[* Zip Code:]]></value>
+      <group>modules-shipping</group>
+    </definition>
+    <definition>
+      <key>shipping_usps_zip_code_description</key>
+      <value><![CDATA[Enter the Origination Zip code. It must be valid.]]></value>
+      <group>modules-shipping</group>
+    </definition>
+    <definition>
+      <key>shipping_usps_domestic_services_text</key>
+      <value><![CDATA[Domestic Services:]]></value>
+      <group>modules-shipping</group>
+    </definition>
+    <definition>
+      <key>shipping_usps_international_services_text</key>
+      <value><![CDATA[International Services:]]></value>
+      <group>modules-shipping</group>
+    </definition>
+    <definition>
+      <key>shipping_usps_size_text</key>
+      <value><![CDATA[Size:]]></value>
+      <group>modules-shipping</group>
+    </definition>
+    <definition>
+      <key>shipping_usps_container_text</key>
+      <value><![CDATA[Container:]]></value>
+      <group>modules-shipping</group>
+    </definition>
+    <definition>
+      <key>shipping_usps_machinable_text</key>
+      <value><![CDATA[Machinable:]]></value>
+      <group>modules-shipping</group>
+    </definition>
+    <definition>
+      <key>shipping_usps_dimensions_width_text</key>
+      <value><![CDATA[Dimensions Width:]]></value>
+      <group>modules-shipping</group>
+    </definition>
+    <definition>
+      <key>shipping_usps_dimensions_width_description</key>
+      <value><![CDATA[Average package dimensions width for shipping package.]]></value>
+      <group>modules-shipping</group>
+    </definition>
+    <definition>
+      <key>shipping_usps_dimensions_height_text</key>
+      <value><![CDATA[Dimensions Height:]]></value>
+      <group>modules-shipping</group>
+    </definition>
+    <definition>
+      <key>shipping_usps_dimensions_height_description</key>
+      <value><![CDATA[Average package dimensions height for shipping package.]]></value>
+      <group>modules-shipping</group>
+    </definition>
+    <definition>
+      <key>shipping_usps_dimensions_length_text</key>
+      <value><![CDATA[Dimensions Length:]]></value>
+      <group>modules-shipping</group>
+    </definition>
+    <definition>
+      <key>shipping_usps_dimensions_length_description</key>
+      <value><![CDATA[Average package dimensions length for shipping package.]]></value>
+      <group>modules-shipping</group>
+    </definition>
+    <definition>
+      <key>shipping_usps_girth_text</key>
+      <value><![CDATA[Girth:]]></value>
+      <group>modules-shipping</group>
+    </definition>
+    <definition>
+      <key>shipping_usps_girth_description</key>
+      <value><![CDATA[To find the girth of your package, measure the distance around the thickest part of the non-rectangular package]]></value>
+      <group>modules-shipping</group>
+    </definition>
+    <definition>
+      <key>shipping_usps_display_delivery_time_text</key>
+      <value><![CDATA[Display Delivery Time:]]></value>
+      <group>modules-shipping</group>
+    </definition>
+    <definition>
+      <key>shipping_usps_display_delivery_time_description</key>
+      <value><![CDATA[Do you want to display the shipping time? (e.g. Ships within 3 to 5 days)]]></value>
+      <group>modules-shipping</group>
+    </definition>
+    <definition>
+      <key>shipping_usps_display_delivery_weight_text</key>
+      <value><![CDATA[Display Delivery Weight:]]></value>
+      <group>modules-shipping</group>
+    </definition>
+    <definition>
+      <key>shipping_usps_display_delivery_weight_description</key>
+      <value><![CDATA[Do you want to display the shipping weight? (e.g. Delivery Weight : 2.7674 Kg\'s)]]></value>
+      <group>modules-shipping</group>
+    </definition>
+    <definition>
+      <key>shipping_usps_weight_class_text</key>
+      <value><![CDATA[Weight Classes:]]></value>
+      <group>modules-shipping</group>
+    </definition>
+    <definition>
+      <key>shipping_usps_weight_class_description</key>
+      <value><![CDATA[Must be set to Pound.]]></value>
+      <group>modules-shipping</group>
+    </definition>
+    
+    <definition>
+      <key>shipping_usps_server_mode_text</key>
+      <value><![CDATA[Server Mode:]]></value>
+      <group>modules-shipping</group>
+    </definition>
+    <definition>
+      <key>shipping_usps_server_mode_description</key>
+      <value><![CDATA[With Testing mode to test the API]]></value>
+      <group>modules-shipping</group>
+    </definition>
+    <definition>
+      <key>shipping_usps_debug_email_text</key>
+      <value><![CDATA[Debug Email:]]></value>
+      <group>modules-shipping</group>
+    </definition>
+    <definition>
+      <key>shipping_usps_debug_email_description</key>
+      <value><![CDATA[Send request data and recv data from usps api server to the debug email]]></value>
+      <group>modules-shipping</group>
+    </definition>
+    <definition>
+      <key>shipping_usps_handling_fee_text</key>
+      <value><![CDATA[Handling Fee]]></value>
+      <group>modules-shipping</group>
+    </definition>
+    <definition>
+      <key>shipping_usps_handling_fee_description</key>
+      <value><![CDATA[Handling fee for this shipping method.]]></value>
+      <group>modules-shipping</group>
+    </definition>
+    <definition>
+      <key>shipping_usps_tax_classes_text</key>
+      <value><![CDATA[Tax Class]]></value>
+      <group>modules-shipping</group>
+    </definition>
+    <definition>
+      <key>shipping_usps_tax_classes_description</key>
+      <value><![CDATA[Use the following tax class on the shipping fee.]]></value>
+      <group>modules-shipping</group>
+    </definition>
+    <definition>
+      <key>shipping_usps_zone_text</key>
+      <value><![CDATA[Shipping Zone]]></value>
+      <group>modules-shipping</group>
+    </definition>
+    <definition>
+      <key>shipping_usps_zone_description</key>
+      <value><![CDATA[If a zone is selected, only enable this shipping method for that zone.]]></value>
+      <group>modules-shipping</group>
+    </definition>
+    <definition>
+      <key>shipping_usps_sort_order_text</key>
+      <value><![CDATA[Sort Order]]></value>
+      <group>modules-shipping</group>
+    </definition>
+    <definition>
+      <key>shipping_usps_sort_order_description</key>
+      <value><![CDATA[Sort order of display.]]></value>
+      <group>modules-shipping</group>
+    </definition>
+    <definition>
+      <key>shipping_usps_error</key>
+      <value><![CDATA[Sorry! We are unable to obtain a Shipping Cost value at this time due to a Communication Problem with USPS API Server. Please call the Store Owner at:]]></value>
+      <group>modules-shipping</group>
+    </definition>
+    <definition>
+      <key>shipping_usps_debug_mode_text</key>
+      <value><![CDATA[Enable the debug mode]]></value>
+      <group>modules-shipping</group>
+    </definition>
+    <definition>
+      <key>shipping_usps_debug_mode_description</key>
+      <value><![CDATA[Enable the debug mode to display the error from USPS in the checkout]]></value>
+      <group>modules-shipping</group>
+    </definition>
+     <definition>
+      <key>shipping_usps_estimated_time</key>
+      <value><![CDATA[Estimated Time:]]></value>
+      <group>modules-shipping</group>
+    </definition>
+    <definition>
+      <key>shipping_usps_weight_text</key>
+      <value><![CDATA[Weight:]]></value>
+      <group>modules-shipping</group>
+    </definition>
+  </definitions>
+</language>

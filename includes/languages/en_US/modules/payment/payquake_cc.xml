@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<language>
+  <definitions>
+    <definition>
+      <key>payment_payquake_cc_title</key>
+      <value><![CDATA[PayQuake Credit Card]]></value>
+      <group>modules-payment</group>
+    </definition>
+    <definition>
+      <key>payment_payquake_cc_description</key>
+      <value><![CDATA[PayQuake Credit Card Transactions]]></value>
+      <group>modules-payment</group>
+    </definition>
+    <definition>
+      <key>payment_payquake_cc_method_title</key>
+      <value><![CDATA[Credit Card]]></value>
+      <group>modules-payment</group>
+    </definition>
+    <definition>
+      <key>payment_payquake_cc_credit_card_owner</key>
+      <value><![CDATA[Credit Card Owner:]]></value>
+      <group>modules-payment</group>
+    </definition>
+    <definition>
+      <key>payment_payquake_cc_credit_card_number</key>
+      <value><![CDATA[Credit Card Number:]]></value>
+      <group>modules-payment</group>
+    </definition>
+    <definition>
+      <key>payment_payquake_cc_credit_card_expiry_date</key>
+      <value><![CDATA[Credit Card Expiry Date:]]></value>
+      <group>modules-payment</group>
+    </definition>
+    <definition>
+      <key>payment_payquake_cc_credit_card_cvc</key>
+      <value><![CDATA[Credit Card Check Number (CVC):]]></value>
+      <group>modules-payment</group>
+    </definition>
+    <definition>
+      <key>payment_payquake_cc_js_credit_card_owner</key>
+      <value><![CDATA[* The owner's name of the credit card must be at least %s characters.]]></value>
+      <group>modules-payment</group>
+    </definition>
+    <definition>
+      <key>payment_payquake_cc_js_credit_card_number</key>
+      <value><![CDATA[* The credit card number must be at least %s characters.]]></value>
+      <group>modules-payment</group>
+    </definition>
+    <definition>
+      <key>payment_payquake_cc_js_credit_card_not_accepted</key>
+      <value><![CDATA[* This credit card type is not accepted. Please try again with another card or payment method.]]></value>
+      <group>modules-payment</group>
+    </definition>
+    <definition>
+      <key>payment_payquake_cc_js_credit_card_cvc</key>
+      <value><![CDATA[* The credit card check number (CVC) must be at least 3 characters.]]></value>
+      <group>modules-payment</group>
+    </definition>
+    <definition>
+      <key>payment_payquake_cc_error_general</key>
+      <value><![CDATA[There was a problem processing this credit card. Please check the card information and try again.]]></value>
+      <group>modules-payment</group>
+    </definition>
+    <definition>
+      <key>payment_payquake_cc_error_not_accepted</key>
+      <value><![CDATA[This credit card type is not accepted. Please try again with another card or payment method.]]></value>
+      <group>modules-payment</group>
+    </definition>
+    <definition>
+      <key>payment_payquake_cc_error_invalid_expiry_date</key>
+      <value><![CDATA[The credit card expiration date is invalid. Please check the card information and try again.]]></value>
+      <group>modules-payment</group>
+    </definition>
+    <definition>
+      <key>payment_payquake_cc_error_expired</key>
+      <value><![CDATA[The credit card has expired. Please try again with another card or payment method.]]></value>
+      <group>modules-payment</group>
+    </definition>
+  </definitions>
+</language>

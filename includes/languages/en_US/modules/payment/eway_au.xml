@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<language>
+  <definitions>
+    <definition>
+      <key>payment_eway_au_title</key>
+      <value><![CDATA[eWAY Payment]]></value>
+      <group>modules-payment</group>
+    </definition>
+    <definition>
+      <key>payment_eway_au_description</key>
+      <value><![CDATA[eWAY Payment]]></value>
+      <group>modules-payment</group>
+    </definition>
+    <definition>
+      <key>payment_eway_au_method_title</key>
+      <value><![CDATA[eWAY Payment]]></value>
+      <group>modules-payment</group>
+    </definition>
+   <definition>
+      <key>payment_eway_au_credit_card_owner</key>
+      <value><![CDATA[Credit Card Owner:]]></value>
+      <group>modules-payment</group>
+    </definition>
+    <definition>
+      <key>payment_eway_au_credit_card_number</key>
+      <value><![CDATA[Credit Card Number:]]></value>
+      <group>modules-payment</group>
+    </definition>
+    <definition>
+      <key>payment_eway_au_credit_card_expiry_date</key>
+      <value><![CDATA[Credit Card Expiry Date:]]></value>
+      <group>modules-payment</group>
+    </definition>
+    <definition>
+      <key>payment_eway_au_credit_card_cvv</key>
+      <value><![CDATA[CVV Number:]]></value>
+      <group>modules-payment</group>
+    </definition>
+    <definition>
+      <key>payment_eway_eu_js_credit_card_owner</key>
+      <value><![CDATA[* The owner's name of the credit card must be at least %s characters.]]></value>
+      <group>modules-payment</group>
+    </definition>
+    <definition>
+      <key>payment_eway_eu_js_credit_card_number</key>
+      <value><![CDATA[* The credit card number must be at least %s characters.]]></value>
+      <group>modules-payment</group>
+    </definition>
+    <definition>
+      <key>payment_eway_eu_cc_js_credit_card_cvc</key>
+      <value><![CDATA[* The credit card check number (CVC) must be at least 3 characters.]]></value>
+      <group>modules-payment</group>
+    </definition>
+  </definitions>
+ 
+</language>

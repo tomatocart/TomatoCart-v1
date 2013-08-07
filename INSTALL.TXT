@@ -1,0 +1,41 @@
+
+TomatoCart 1.1.8.4
+
+Welcome to TomatoCart Installation! We hope you will enjoy it.
+
+THE FOLLOWING IS A VERY SIMPLIFIED INSTALLATION DOCUMENT.
+
+INSTALLATION
+
+To install TomatoCart open a browser and go to the URL where you put the TomatoCart files and follow instructions. 
+
+TomatoCart has a built-in automatic installation system. However to use this you must first unpack the code to a web server.
+
+The web server can either be on your local computer or on an internet host.
+
+To start off, you should have to extract the TomatoCart ZIP file.Once extracted, you will have a {tomatocart-directory}containing the TomatoCart scripts. 
+
+The contents of this {tomatocart-directory}needs to be moved to your webserver, either by copying the directory or by using an FTP progam.
+
+You will then need to run the install script. To do this you need to open a browser and type in the URL.
+
+If you are running on a your own computer, this will be
+
+   http://localhost/{tomatocart-directory}/install/
+
+or if on a live server:
+
+   http://{www.mydomain.com}/install/
+
+
+You then only need to follow the prompts and fill in blanks to install TomatoCart.
+
+For more detailed installation instructions, please send an email to info@tomatocart.com.
+
+SYSTEM REQUIREMENTS
+
+-Linux, Windows
+-PHP v5.2.0+ (with MySQLi extension) 
+-MySQL v4.1.13+ or v5.0.7+ 
+
+Have fun!
