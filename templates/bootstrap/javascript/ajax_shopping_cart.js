@@ -110,7 +110,7 @@ var AjaxShoppingCart = new Class({
           }
 
           //variants
-          var selects = $$('tr.variantCombobox select');
+          var selects = $$('div.variantCombobox select');
           if ($defined(selects)) {
             var variants = '';
             
