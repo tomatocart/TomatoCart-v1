@@ -35,7 +35,7 @@
   require('../includes/toc_constants.php');  
     
 // Define the project version
-  define('PROJECT_VERSION', 'TomatoCart v1.1.8.4.1');
+  define('PROJECT_VERSION', 'TomatoCart v1.1.8.5');
 
 // set the type of request (secure or not)
   $request_type = (isset($_SERVER['HTTPS']) && (strtolower($_SERVER['HTTPS']) == 'on')) ? 'SSL' : 'NONSSL';
