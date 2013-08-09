@@ -1437,6 +1437,19 @@ CREATE TABLE toc_templates_boxes_to_pages (
   KEY templates_boxes_id (templates_boxes_id,templates_id,content_page,boxes_group)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+CREATE TABLE IF NOT EXISTS toc_variants_specials (
+  variants_specials_id int(11) NOT NULL AUTO_INCREMENT,
+  products_variants_id int(11) NOT NULL,
+  variants_speicals_price decimal(15,4) NOT NULL,
+  specials_date_added datetime DEFAULT NULL,
+  specials_last_modified datetime DEFAULT NULL,
+  start_date datetime DEFAULT NULL,
+  expires_date datetime DEFAULT NULL,
+  date_status_change datetime DEFAULT NULL,
+  status tinyint(1) NOT NULL DEFAULT '1',
+  PRIMARY KEY (variants_specials_id)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
 
 DROP TABLE IF EXISTS toc_weight_classes;
 CREATE TABLE toc_weight_classes (

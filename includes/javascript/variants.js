@@ -119,7 +119,7 @@ var TocVariants = new Class({
 	        var result = JSON.decode(response);
 	        
 	        if (result.success == true) {
-	          $('productInfoPrice').set('text', result.formatted_price + ' ' + this.options.lang.txtTaxText);
+	          $('productInfoPrice').set('html', result.formatted_price + ' ' + this.options.lang.txtTaxText);
 	        }else {
 	          alert(result.feedback);
 	        }

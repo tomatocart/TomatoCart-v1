@@ -659,30 +659,48 @@
       $product_price = round($product_price * (1 - $qty_discount/100) * (1 - $customer_grp_discount/100), 2);
       return $product_price;
     }
-
-    function getPriceFormated($with_special = false, $variants = array()) {
+    
+      function getPriceFormated($with_special = false, $variants = array()) {
       global $osC_Services, $osC_Specials, $osC_Currencies;
-
+    
       $price = '';
       if ($this->isGiftCertificate() && $this->isOpenAmountGiftCertificate()) {
         $price = $osC_Currencies->displayPrice($this->_data['open_amount_min_value'], $this->_data['tax_class_id']) . ' ~ ' . $price = $osC_Currencies->displayPrice($this->_data['open_amount_max_value'], $this->_data['tax_class_id']);
       } else {
-        if (($with_special === true) && is_object($osC_Services) && $osC_Services->isStarted('specials') && ($new_price = $osC_Specials->getPrice($this->_data['id']))) {
+        //get the new special price - support the variants specials
+        $new_price = null;
+        
+        if (($with_special === true) && is_object($osC_Services) && $osC_Services->isStarted('specials')) {
           if ($this->hasVariants()) {
-            $speical_percentage = round($new_price / $this->_data['price'], 2);
+            if (is_array($variants) && !empty($variants)) {
+              $products_variants_id = $this->getProductVariantsId($variants);
+            }else {
+              $products_variants_id = $this->_data['default_variant']['variants_id'];
+            }
             
-            $price = '<s>' . $osC_Currencies->displayPrice($this->getPrice($variants), $this->_data['tax_class_id']) . '</s> <span class="productSpecialPrice">' . $osC_Currencies->displayPrice($this->getPrice($variants) * $speical_percentage, $this->_data['tax_class_id']) . '</span>';
+            //variants specials price
+            $new_price = $osC_Specials->getVariantsPrice($products_variants_id);
+            if ($new_price !== null) {
+              $price = '<s>' . $osC_Currencies->displayPrice($this->getPrice($variants), $this->_data['tax_class_id']) . '</s> <span class="productSpecialPrice">' . $osC_Currencies->displayPrice($new_price, $this->_data['tax_class_id']) . '</span>';
+            }
           }else {
-            $price = '<s>' . $osC_Currencies->displayPrice($this->_data['price'], $this->_data['tax_class_id']) . '</s> <span class="productSpecialPrice">' . $osC_Currencies->displayPrice($new_price, $this->_data['tax_class_id']) . '</span>';
-          }
-        } else {
+            //general special price
+            $new_price = $osC_Specials->getPrice($this->_data['id']);
+            if ($new_price !== null) {
+              $price = '<s>' . $osC_Currencies->displayPrice($this->_data['price'], $this->_data['tax_class_id']) . '</s> <span class="productSpecialPrice">' . $osC_Currencies->displayPrice($new_price, $this->_data['tax_class_id']) . '</span>';
+            }
+          } 
+        }
+        
+        //not to find the new special price
+        if ($new_price == null) {
           $price = $osC_Currencies->displayPrice($this->getPrice($variants), $this->_data['tax_class_id']);
         }
       }
-
+    
       return $price;
     }
-    
+
     function getCategoryID() {
       return $this->_data['category_id'];
     }

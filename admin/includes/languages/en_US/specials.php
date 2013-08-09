@@ -24,6 +24,7 @@ table_heading_status = Status
 
 action_heading_batch_delete_specials = Batch Delete Specials
 
+field_variants = Variants:
 field_product = Product:
 field_price_net = Special Price (Net):
 field_price_net_percentage = Special Price (Net) / Percentage:
@@ -50,6 +51,7 @@ top_manufacturers = --Manufacturers--
 button_search = Search
 
 specials_by_category_title = Specials By Category
+field_products_type = Products Type:
 field_manufacturer = Manufacturer:
 field_cPath = Categories:
 field_specials_percentage_title = Special Price (Net) / Percentage:
@@ -57,6 +59,9 @@ field_status = Status:
 field_date_start = Start Date:
 field_date_expires =Expires On:
 field_heading_products_model = Products Model
+
+products_type_general = General Products
+products_type_variants = Variants Products
 
 top_manufacturers = --Manufacturers--
 top_category = --Top Category--
