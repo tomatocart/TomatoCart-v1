@@ -173,11 +173,9 @@
             }
           }
           
-          $result['products'][] = $product;
+          $result[] = $product;
         }
       }
-      
-      $result['total'] = $Qproducts->getBatchSize();
       
       return $result;
     }
@@ -198,7 +196,7 @@
       
       //filter categories
       if (count($in_categories) > 0) {
-        $Qspecials = $osC_Database->query('select vs.*, pv.products_price, p.products_id, pd.products_name from :table_variants_specials vs inner join :table_products_variants pv on vs.products_variants_id = pv.products_variants_id inner join :table_original_products p on pv.products_id = p.products_id inner join :table_products_description pd on (p.products_id = pd.products_id and pd.language_id = :language_id) inner join :table_products_to_categories ptc on (p.products_id = p2c.products_id and p2c.categories_id in (:categories_id))');
+        $Qspecials = $osC_Database->query('select vs.*, pv.products_price, p.products_id, pd.products_name from :table_variants_specials vs inner join :table_products_variants pv on vs.products_variants_id = pv.products_variants_id inner join :table_original_products p on pv.products_id = p.products_id inner join :table_products_description pd on (p.products_id = pd.products_id and pd.language_id = :language_id) inner join :table_products_to_categories p2c on (p.products_id = p2c.products_id and p2c.categories_id in (:categories_id))');
         $Qspecials->bindTable(':table_products_to_categories', TABLE_PRODUCTS_TO_CATEGORIES);
         $Qspecials->bindRaw(':categories_id', implode(',', $in_categories));
       } else {
@@ -225,7 +223,7 @@
       $Qspecials->setExtBatchLimit($start, $limit);
       $Qspecials->execute();
       
-      $result = array();
+      $result = array('total' => $Qspecials->getBatchSize(), 'special_products' => array());
       if ($Qspecials->numberOfRows() > 0) {
         while($Qspecials->next()) {
           $special_product = array('specials_id' => $Qspecials->valueInt('variants_specials_id'),
@@ -253,8 +251,6 @@
           $result['special_products'][] = $special_product;
         }
       }
-      
-      $result['total'] = $Qspecials->getBatchSize();
       
       return $result;
     }
@@ -324,7 +320,7 @@
       
       //variants specials
       if ($data['variants'] == 'on') {
-        $Qproduct = $osC_Database->query('select products_price from :table_products_variants where products_variants_id = :products_id limit 1');
+        $Qproduct = $osC_Database->query('select products_price, products_id from :table_products_variants where products_variants_id = :products_id limit 1');
         $Qproduct->bindTable(':table_products_variants', TABLE_PRODUCTS_VARIANTS);
       }else {
         $Qproduct = $osC_Database->query('select products_price from :table_products where products_id = :products_id limit 1');
@@ -391,8 +387,8 @@
 
       if ( $error === false ) {
         if ($data['variants'] == 'on') {
-          osC_Cache::clear('variant-product-' . $data['products_id']);
-          osC_Cache::clear('variant-product-specials-' . $data['products_id']);
+          osC_Cache::clear('product-' . $Qproduct->valueInt('products_id'));
+          osC_Cache::clear('product-variants-specials-' . $data['products_id']);
         }else {
           osC_Cache::clear('product-' . $data['products_id']);
           osC_Cache::clear('product-specials-' . $data['products_id']);
@@ -441,23 +437,23 @@
       
       //delete variants specials
       if ($products_type == 2) {
-        $Qproduct = $osC_Database->query('select products_variants_id from :table_variants_specials where variants_specials_id = :specials_id');
+        $Qproduct = $osC_Database->query('select vs.products_variants_id, pv.products_id from :table_variants_specials vs inner join :table_products_variants pv on vs.products_variants_id = pv.products_variants_id where variants_specials_id = :specials_id');
         $Qproduct->bindTable(':table_variants_specials', TABLE_VARIANTS_SPECIALS);
+        $Qproduct->bindTable(':table_products_variants', TABLE_PRODUCTS_VARIANTS);
         $Qproduct->bindInt(':specials_id', $id);
-        $Qproduct->setLogging($_SESSION['module'], $id);
         $Qproduct->execute();
         
         $variant_products_id = $Qproduct->valueInt('products_variants_id');
+        $products_id = $Qproduct->valueInt('products_id');
         
         $Qspecial = $osC_Database->query('delete from :table_variants_specials where variants_specials_id = :specials_id');
         $Qspecial->bindTable(':table_variants_specials', TABLE_VARIANTS_SPECIALS);
         $Qspecial->bindInt(':specials_id', $id);
-        $Qspecial->setLogging($_SESSION['module'], $id);
         $Qspecial->execute();
         
         if ( !$osC_Database->isError() ) {
-          osC_Cache::clear('variant-product-' . $variant_products_id);
-          osC_Cache::clear('variant-product-specials-' . $variant_products_id);
+          osC_Cache::clear('product-' . $products_id);
+          osC_Cache::clear('product-variants-specials-' . $variant_products_id);
         
           return true;
         }

@@ -637,6 +637,23 @@
       return $this->_data['unit_class'];
     }
     
+    function getSpecialPrice($variants = array()) {
+      global $osC_Specials;
+      
+      $new_price = null;
+      if (count($variants) < 1) {
+        $new_price = $osC_Specials->getPrice($this->_data['id']);
+      }else {
+        //get the new special price - support the variants specials
+        $products_variants_id = $this->getProductVariantsId($variants);
+        
+        //variants specials price
+        $new_price = $osC_Specials->getVariantsPrice($products_variants_id);
+      }
+      
+      return $new_price;
+    }
+    
     function getPrice($variants = null, $quantity = 1) {
 
       //get product price
@@ -652,6 +669,7 @@
           }
         }
       }
+      
 
       $qty_discount = $this->getQuantityDiscount($quantity);
       $customer_grp_discount = is_numeric($this->_customer_group_discount) ? $this->_customer_group_discount : 0;
@@ -660,7 +678,7 @@
       return $product_price;
     }
     
-      function getPriceFormated($with_special = false, $variants = array()) {
+    function getPriceFormated($with_special = false, $variants = array()) {
       global $osC_Services, $osC_Specials, $osC_Currencies;
     
       $price = '';

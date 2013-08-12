@@ -373,7 +373,7 @@
                           'special_price' => 0);
     }
 
-    $response = array(EXT_JSON_READER_TOTAL => $Qproducts->getBatchSize(),
+    $response = array(EXT_JSON_READER_TOTAL => count($products),
                       EXT_JSON_READER_ROOT => $products); 
   
     echo $toC_Json->encode($response);
@@ -409,7 +409,7 @@
     //load the variants products
     $result = osC_Specials_Admin::loadVariantsProducts($in_categories, $manufacturer, $products_sku, $products_name);
     
-    $response = array(EXT_JSON_READER_TOTAL => $result['total'], EXT_JSON_READER_ROOT => $result['products']);
+    $response = array(EXT_JSON_READER_TOTAL => count($result), EXT_JSON_READER_ROOT => $result);
     
     echo $toC_Json->encode($response);
   }
