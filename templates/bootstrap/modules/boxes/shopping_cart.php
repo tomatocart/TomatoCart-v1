@@ -37,7 +37,7 @@ global $osC_Session, $osC_Language;
                 <ul class="products collapsed" id="ajaxCartContentProducts"></ul>
                 <p id="ajaxCartContentNoProducts" class="collapsed"><?php echo $osC_Language->get('No products'); ?></p>
                 <div id="ajaxCartButtons">
-                	<a class="btn btn-mini" href="<?php echo osc_href_link(FILENAME_CHECKOUT); ?>"><i class="icon-shopping-cart icon-white"></i> <?php echo $osC_Language->get('checkout');?>&nbsp;</a>
+                	<a class="btn btn-mini" href="<?php echo osc_href_link(FILENAME_CHECKOUT, 'checkout'); ?>"><i class="icon-shopping-cart icon-white"></i> <?php echo $osC_Language->get('checkout');?>&nbsp;</a>
                     <div style="visibility:hidden"> 
                     	<span>clear-bug-div</span>
                     </div>
