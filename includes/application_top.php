@@ -74,7 +74,7 @@
 // make a connection to the database... now
   $osC_Database = osC_Database::connect(DB_SERVER, DB_SERVER_USERNAME, DB_SERVER_PASSWORD);
   $osC_Database->selectDatabase(DB_DATABASE);
-
+  
 // set the application parameters
 
   $Qcfg = $osC_Database->query('select configuration_key as cfgKey, configuration_value as cfgValue from :table_configuration');
@@ -104,6 +104,11 @@ if (defined('STORE_TIME_ZONE') && STORE_TIME_ZONE) {
   $osC_Services = new osC_Services();
 
   $osC_Services->startServices();
+  
+// check database connection
+  if (!$osC_Database->isConnected()) {
+    $messageStack->add('db_error', $osC_Language->get('db_connection_failed'));
+  }
 
 // Maintenance Mode
   if(MAINTENANCE_MODE == 1) {

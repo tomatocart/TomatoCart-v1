@@ -174,6 +174,16 @@ require_once 'helper.php';
 ?>
 <!--  END: slideshow  -->
 
+<!--  Database Connection failed  -->
+<?php 
+  if ($messageStack->size('db_error') > 0) {
+?>
+<div class="container"><?php echo  $messageStack->output('db_error'); ?></div>
+<?php
+  }
+?>
+<!--  END: Database Connection failed  -->
+
 <div id="pageWrapper" class="container">
 	<div class="row-fluid">
         <?php

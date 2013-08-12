@@ -159,6 +159,15 @@
 </div>
 
 <div id="pageWrapper">
+  <!--  Database Connection failed  -->
+  <?php 
+    if ($messageStack->size('db_error') > 0) {
+  ?>
+  <div><?php echo  $messageStack->output('db_error'); ?></div>
+  <?php
+    }
+  ?>
+  
   <div id="pageBlockLeft">
   <?php
     if (!empty($content_left)) {
