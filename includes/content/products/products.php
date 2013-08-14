@@ -139,16 +139,7 @@
         $link_prefix = HTTP_SERVER . DIR_WS_HTTP_CATALOG;
       }
       
-      $js = '<script type="text/javascript">
-              window.addEvent("domready", function() {
-                $(document).getElement("head").adopt(new Element("link", {
-                  "rel": "canonical",
-                  "href": "' . $link_prefix . $product_link . '"
-                }));
-              });
-            </script>';
-      
-      $this->addJavascriptBlock($js);
+      $this->rel_canonical = '<link rel="canonical" href="' . $link_prefix . $product_link . '"/>';
     }
   }
 ?>

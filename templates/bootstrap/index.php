@@ -52,6 +52,14 @@ require_once 'helper.php';
     if ($osC_Template->hasStyleSheet()) {
         $osC_Template->getStyleSheet();
     }
+    
+    /**
+     * general the rel_canonical link to remove the duplication content
+     * [#123]Two Different SEO link for one product
+     */
+    if (isset($osC_Template->rel_canonical)) {
+      echo $osC_Template->rel_canonical;
+    }
 ?>
 	<meta name="Generator" content="TomatoCart" />
 </head>

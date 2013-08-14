@@ -79,6 +79,15 @@
  */
 
     var $_page_image;
+    
+/**
+ * Holds the rel=”canonical” link to remove the duplication content
+ * [#123]Two Different SEO link for one product 
+ *
+ * @var string
+ * @access public
+ */
+    var $rel_canonical;
 
 /**
  * Holds the filename of the content to be added to the page
@@ -115,7 +124,7 @@
  */
 
     var $_page_tags = array('generator' => array('TomatoCart -- Open Source Shopping Cart Solution'));
-
+    
 /**
  * Holds javascript filenames to be included in the page
  *
