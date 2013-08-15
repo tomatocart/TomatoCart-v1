@@ -12,6 +12,8 @@ heading_title = Google Sitemaps
 
 action_heading_google_sitemaps_generation = Google Sitemaps Generation
 
+introduction_create_google_sitemaps = <p><b>NOTE:</b> Please ensure your tomatocart directory is writable to create the sitemaps for each language except english. After the creation, you should make it unwritable for the security.</p>
+
 introduction_google_sitemaps_submission  = <b>NOTE:</b> The location of the Sitemap is included in the robots.txt file so that Google and other search engines know about your sitemap. But Google still recommend that the sitemaps should be submitted through Google Webmaster Tools account so you can make sure that the Sitemap was processed without any issues, and to get additional statistics about your site. <br/><br/>Please ensure that you has registered with Google Sitemaps, and submitted your initial sitemap before proceeding the following step.
 
 google_sitemaps_infobox_title = What is Google Sitemaps?
@@ -29,4 +31,6 @@ field_year = Yearly
 
 button_create_sitemaps = Create Sitemaps
 button_submit_sitemaps = Submit Sitemaps to Google
+
+error_directory_not_writable = Your tomatocart directory is not writable. Please make it writable to create the sitemap.
 
