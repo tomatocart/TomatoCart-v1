@@ -38,6 +38,14 @@ Forums
 
 You can also discuss, help and contribute with TomatoCart community on [our forums][4]
 
+Collaborators
+--------
+-- int2k
+-- nazrulworld
+-- adietuk
+-- KonzolozZ
+
+
 
 Thanks for downloading and using TomatoCart e-commerce Open-source solution! We look forward to working with you in improving and extending TomatoCart v1.
 
