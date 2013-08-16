@@ -307,11 +307,8 @@
       
       if (!empty($this->_response)) {
         //filter the xml entities
-        $this->_response = str_replace('&amp;lt;sup&amp;gt;&amp;amp;reg;&amp;lt;/sup&amp;gt;', '', $this->_response);
-        $this->_response = str_replace('&amp;lt;sup&amp;gt;&amp;amp;trade;&amp;lt;/sup&amp;gt;', '', $this->_response);
-        $this->_response = str_replace('**', '', $this->_response);
-        $this->_response = str_replace("\r\n", '', $this->_response);
-        $this->_response = str_replace('\"', '"', $this->_response);
+        $this->_response = preg_replace('/&amp;lt;sup&amp;gt;&amp;#\d+;&amp;lt;\/sup&amp;gt;/', '', $this->_response);
+        $this->_response = str_replace(array('**', "\r\n", '\"'), array('', '', '"'), $this->_response);
         
         //load the xml
         $dom = new DOMDocument('1.0', 'UTF-8');
