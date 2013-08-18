@@ -456,7 +456,8 @@ ul.grid li div.left p.description {
 ul.grid li div.right span.price { 
     display: block; 
     margin-bottom: 5px; 
-    font-size: 15px; 
+    font-size: 15px;
+    height: 10px; 
     float: left;
 }
 ul.grid li div.right span.price s { 
