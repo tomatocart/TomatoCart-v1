@@ -16,12 +16,14 @@
   class toC_Importer{
     var $_csv_delimiter = '',
         $_csv_enclosure = '',
+        $_csv_line_length = 1000,
         $_type = '',
         $_tmp_file;
 
     function toC_Importer($parameters){
       $this->_csv_delimiter = $parameters['csv_field_seperator'];
       $this->_csv_enclosure = $parameters['csv_field_enclosed'];
+      $this->_csv_line_length = $parameters['csv_line_length'];
       $this->_file_type = strtolower($parameters['file_type']);
       $this->_compression_type = strtolower($parameters['compression_type']);
       $this->_type = strtolower($parameters['type']);
@@ -148,7 +150,7 @@
 
       if ($handle) {
         $first_row = true;
-        while (($cells = fgetcsv($handle, 1000, ",")) !== FALSE) {
+        while (($cells = fgetcsv($handle, $this->_csv_line_length, $this->_csv_delimiter, $this->_csv_enclosure)) !== FALSE) {
           
           if ($first_row == true) {
             $columns = $cells;
@@ -435,7 +437,7 @@
 
       if ($handle) {
         $first_row = true;
-        while (($cells = fgetcsv($handle, 1000, ",")) !== FALSE) {
+        while (($cells = fgetcsv($handle, $this->_csv_line_length, $this->_csv_delimiter, $this->_csv_enclosure)) !== FALSE) {
 
         if($first_row == true) {
             $columns = $cells;
