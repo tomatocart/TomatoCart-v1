@@ -435,7 +435,7 @@
 
       if ($handle) {
         $first_row = true;
-        while (($cells = fgetcsv($handle, 1000, ",")) !== FALSE) {
+        while ((fgetcsv($handle, 1000, $this->_csv_delimiter, $this->_csv_enclosure)) !== FALSE) {
 
         if($first_row == true) {
             $columns = $cells;
