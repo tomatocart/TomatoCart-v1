@@ -1,0 +1,58 @@
+# $Id: .htaccess $
+#
+# This is used with Apache WebServers
+#
+# For this to work, you must include the parameter 'Options' to
+# the AllowOverride configuration
+#
+# Example:
+#
+# <Directory "/usr/local/apache/htdocs">
+#   AllowOverride Options
+# </Directory>
+#
+# 'All' with also work. (This configuration is in the
+# apache/conf/httpd.conf file)
+
+# The following makes adjustments to the SSL protocol for Internet
+# Explorer browsers
+
+<IfModule mod_setenvif.c>
+  <IfDefine SSL>
+    SetEnvIf User-Agent ".*MSIE.*" \
+             nokeepalive ssl-unclean-shutdown \
+             downgrade-1.0 force-response-1.0
+  </IfDefine>
+</IfModule>
+
+# Fix certain PHP values
+# (commented out by default to prevent errors occuring on certain
+# servers)
+
+#<IfModule mod_php4.c>
+#  php_value session.use_trans_sid 0
+#  php_value magic_quotes_gpc 0
+#</IfModule>
+
+# Active the rewrite engine to support the search friendly URL
+RewriteEngine on
+
+# By default, mod_rewrite maps a URL to a filesystem root path, if you put TomatoCart in 
+# a subfolder, please put subfolder here
+RewriteBase /
+
+RewriteRule ^([0-9]+)--(.*)$ info.php?articles_categories&articles_categories_id=$1&%{QUERY_STRING} [L]
+RewriteRule ^([a-zA-Z0-9-]*)/([0-9]+)--(.*)$ info.php?articles&articles_id=$2&%{QUERY_STRING} [L]
+RewriteRule ^([0-9]+)-f-(.*).html$ info.php?faqs&faq_id=$1&%{QUERY_STRING} [L]
+RewriteRule ^([0-9_]+)-([a-zA-Z0-9-]*)/([0-9]+)\-([a-zA-Z0-9-]*)\.html$ products.php?$3&cPath=$1&%{QUERY_STRING} [L]
+RewriteRule ^([0-9]+)_([a-zA-Z0-9-]*)/([0-9]+)\-([a-zA-Z0-9-]*)\.html$ products.php?$3&manufacturers=$1&%{QUERY_STRING} [L]
+RewriteRule ^([a-zA-Z0-9-]*)/([0-9]+)\-([a-zA-Z0-9-]*)\.html$ products.php?$2&%{QUERY_STRING} [L]
+RewriteRule ^new\-products.html$ products.php?new&%{QUERY_STRING} [L]
+RewriteRule ^specials.html$ products.php?specials&%{QUERY_STRING} [L]
+RewriteRule ^([0-9]+)-t-(.*).html$ products.php?tell_a_friend&$1&%{QUERY_STRING} [L]
+RewriteRule ^([0-9]+)-(.*).html$ products.php?$1&%{QUERY_STRING} [L]
+RewriteRule ^([0-9_]+)-(.*)$ index.php?cPath=$1&%{QUERY_STRING} [L]
+RewriteRule ^([0-9]+)_(.*)$ index.php?manufacturers=$1&%{QUERY_STRING} [L]
+RewriteRule ^contact.html$ info.php?contact&%{QUERY_STRING} [L]
+RewriteRule ^sitemap.html$ info.php?sitemap&%{QUERY_STRING} [L]
+RewriteRule ^faqs.html$ info.php?faqs&%{QUERY_STRING} [L]

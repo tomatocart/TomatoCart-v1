@@ -38,6 +38,14 @@
   if ($osC_Template->hasStyleSheet()) {
     $osC_Template->getStyleSheet();
   }
+  
+  /**
+   * general the rel_canonical link to remove the duplication content
+   * [#123]Two Different SEO link for one product
+   */
+  if (isset($osC_Template->rel_canonical)) {
+    echo $osC_Template->rel_canonical;
+  }
 ?>
 
 <meta name="Generator" content="TomatoCart" />
@@ -159,6 +167,15 @@
 </div>
 
 <div id="pageWrapper">
+  <!--  Database Connection failed  -->
+  <?php 
+    if ($messageStack->size('db_error') > 0) {
+  ?>
+  <div><?php echo  $messageStack->output('db_error'); ?></div>
+  <?php
+    }
+  ?>
+  
   <div id="pageBlockLeft">
   <?php
     if (!empty($content_left)) {

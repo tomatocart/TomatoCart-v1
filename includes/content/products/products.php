@@ -77,6 +77,12 @@
               $breadcrumb->add($osC_Manufacturer->getTitle(), osc_href_link(FILENAME_DEFAULT, 'manufacturers=' . $_GET['manufacturers'])); 
               $breadcrumb->add($osC_Product->getTitle(), osc_href_link(FILENAME_PRODUCTS, $osC_Product->getID()));  
             }
+            
+            //Using rel=”canonical” links to remove the duplication - same product info page
+            //To fix the bug - [#123] Two Different SEO link for one product
+            if (isset($osC_Services) && $osC_Services->isStarted('sefu')) {
+              $this->_add_canonical($osC_Product->getID());
+            }
           } else { 
             if ($osC_Services->isStarted('breadcrumb')) {
               $Qcategories = $osC_Database->query('select categories_id, categories_name from :table_categories_description where categories_id in (:categories_id) and language_id = :language_id');
@@ -110,6 +116,30 @@
         $this->_page_title = $osC_Language->get('product_not_found_heading');
         $this->_page_contents = 'info_not_found.php';
       }
+    }
+    
+    /**
+     * Using rel=”canonical” links to remove the duplication - same product info page
+     * To fix the bug - [#123] Two Different SEO link for one product
+     * 
+     * @access private
+     * @param int $products_id
+     * @return void
+     */
+    function _add_canonical($products_id) {
+      global $toC_Sefu, $request_type;
+      
+      //get the product link to be stored by the search engine
+      $product_link = $toC_Sefu->getProductCategoryLink($products_id);
+      
+      //get the link prefix
+      if ( ($request_type == 'SSL') && (ENABLE_SSL === true) ) {
+        $link_prefix = HTTPS_SERVER . DIR_WS_HTTPS_CATALOG;
+      } else {
+        $link_prefix = HTTP_SERVER . DIR_WS_HTTP_CATALOG;
+      }
+      
+      $this->rel_canonical = '<link rel="canonical" href="' . $link_prefix . $product_link . '"/>';
     }
   }
 ?>

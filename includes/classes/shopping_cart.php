@@ -190,7 +190,8 @@
         if ($osC_Services->isStarted('specials')) {
           global $osC_Specials;
 
-          if ($new_price = $osC_Specials->getPrice(osc_get_product_id($Qproducts->value('products_id')), $variants_array)) {
+          //support variants specials
+          if ($new_price = $osC_Product->getSpecialPrice($variants_array)) {
             $price = $new_price;
           }
         }
@@ -411,8 +412,8 @@
             
             if ($osC_Services->isStarted('specials')) {
               global $osC_Specials;
-  
-              if ($new_price = $osC_Specials->getPrice($products_id, $variants)) {
+              
+              if ($new_price = $osC_Product->getSpecialPrice($variants)) {
                 $price = $new_price;
               }
             }       
@@ -429,7 +430,7 @@
             $toC_Customization_Fields->remove($products_id);
           }
           
-// update database
+          // update database
           if ($osC_Customer->isLoggedOn()) {
             $Qupdate = $osC_Database->query('update :table_customers_basket set customers_basket_quantity = :customers_basket_quantity, gift_certificates_data = :gift_certificates_data, customizations = :customizations where customers_id = :customers_id and products_id = :products_id');
             $Qupdate->bindTable(':table_customers_basket', TABLE_CUSTOMERS_BASKET);
@@ -492,12 +493,12 @@
             if ($osC_Services->isStarted('specials')) {
               global $osC_Specials;
   
-              if ($new_price = $osC_Specials->getPrice($products_id, $variants)) {
+              if ($new_price = $osC_Product->getSpecialPrice($variants)) {
                 $price = $new_price;
               }
             }          
           }
-
+          
           $this->_contents[$products_id_string] = array('id' => $products_id_string,
                                                         'name' => $osC_Product->getTitle(),
                                                         'type' => $osC_Product->getProductType(),

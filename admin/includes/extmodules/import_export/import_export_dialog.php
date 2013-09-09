@@ -20,7 +20,7 @@ Toc.import_export.ImportExportDialog = function (config) {
   config.title = '<?php echo $osC_Language->get("heading_title"); ?>';
   config.layout = 'fit';
   config.width = 700;
-  config.height = 370;
+  config.height = 390;
   config.iconCls = 'icon-import_export-win';
   config.items = this.buildForm();
   
@@ -190,7 +190,7 @@ Ext.extend(Toc.import_export.ImportExportDialog, Ext.Window, {
       title: '<?php echo $osC_Language->get('subsection_export'); ?>',
       layoutConfig: { labelSeparator: ''},
       width: 320,
-      height: 220,
+      height: 270,
       labelWidth: 120,
       labelSeparator: ' ',
       defaults: {
@@ -231,9 +231,11 @@ Ext.extend(Toc.import_export.ImportExportDialog, Ext.Window, {
           if(this.cboCustomersImportFileType.getValue() == 'xml'){
             this.txtCustomersImportSeperator.disable();
             this.txtCustomersImportEnclosed.disable();
+            this.txtCustomersImportLineLength.disable();
           } else {
             this.txtCustomersImportSeperator.enable();
             this.txtCustomersImportEnclosed.enable();
+            this.txtCustomersImportLineLength.enable();
           }
         },
         scope: this
@@ -267,12 +269,19 @@ Ext.extend(Toc.import_export.ImportExportDialog, Ext.Window, {
       allowBlank: false
     });
     
+    this.txtCustomersImportLineLength = new Ext.form.NumberField({
+      fieldLabel: '<?php echo $osC_Language->get('field_line_length'); ?>', 
+      name: 'line_length', 
+      value: 1000, 
+      allowBlank: false
+    });
+    
     var fsCustomersImport = new Ext.form.FieldSet({
       title: '<?php echo $osC_Language->get('subsection_import'); ?>',
       layoutConfig: { labelSeparator: ''},
       labelWidth: 120,
       width: 320,
-      height: 220,    
+      height: 270,    
       defaults: {
         anchor: '97%'
       },
@@ -280,6 +289,7 @@ Ext.extend(Toc.import_export.ImportExportDialog, Ext.Window, {
         this.cboCustomersImportFileType, 
         this.txtCustomersImportSeperator, 
         this.txtCustomersImportEnclosed, 
+        this.txtCustomersImportLineLength,
         this.cboCustomersImportCompression,
         {xtype: 'fileuploadfield', fieldLabel: '<?php echo $osC_Language->get('field_import_file');?>', buttonText:'...', name: 'files', allowBlank: false}
       ],
@@ -363,7 +373,7 @@ Ext.extend(Toc.import_export.ImportExportDialog, Ext.Window, {
       title: '<?php echo $osC_Language->get('field_export'); ?>',
       layoutConfig: { labelSeparator: ''},
       width: 320,
-      height: 250,
+      height: 270,
       labelWidth: 120,
       defaults: {
         anchor: '97%'
@@ -371,7 +381,7 @@ Ext.extend(Toc.import_export.ImportExportDialog, Ext.Window, {
       items: [
         this.cboProductsExportFileType, 
         this.txtProductsExportSeperator, 
-        this.txtProductsExportEnclosed, 
+        this.txtProductsExportEnclosed,
         this.cboProductsExportCompression
       ],
       buttons: [{
@@ -403,9 +413,11 @@ Ext.extend(Toc.import_export.ImportExportDialog, Ext.Window, {
           if(this.cboProductsImportFileType.getValue() == 'xml'){
             this.txtProductsImportSeperator.disable();
             this.txtProductsImportEnclosed.disable();
+            this.txtProductsImportLineLength.disable();
           } else {
             this.txtProductsImportSeperator.enable();
             this.txtProductsImportEnclosed.enable();
+            this.txtProductsImportLineLength.enable();
           }
         },
         scope: this
@@ -439,12 +451,19 @@ Ext.extend(Toc.import_export.ImportExportDialog, Ext.Window, {
       allowBlank: false
     });
     
+    this.txtProductsImportLineLength = new Ext.form.NumberField({
+      fieldLabel: '<?php echo $osC_Language->get('field_line_length'); ?>', 
+      name: 'line_length', 
+      value: 1000, 
+      allowBlank: false
+    });
+    
     var fsProductsImport = new Ext.form.FieldSet({
       title: '<?php echo $osC_Language->get('field_import'); ?>',
       layoutConfig: { labelSeparator: ''},
       labelWidth: 120,
       width: 320,
-      height: 250,    
+      height: 270,    
       defaults: {
         anchor: '97%'
       },
@@ -452,6 +471,7 @@ Ext.extend(Toc.import_export.ImportExportDialog, Ext.Window, {
         this.cboProductsImportFileType, 
         this.txtProductsImportSeperator, 
         this.txtProductsImportEnclosed, 
+        this.txtProductsImportLineLength,
         this.cboProductsImportCompression,
         {xtype: 'fileuploadfield', fieldLabel: '<?php echo $osC_Language->get('field_import_file');?>', buttonText:'...', name: 'files', allowBlank: false},
         {xtype: 'fileuploadfield', fieldLabel: '<?php echo $osC_Language->get('field_products_import_image_file');?>', buttonText:'...', name: 'image_zip'}

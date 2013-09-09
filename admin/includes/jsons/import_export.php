@@ -62,6 +62,7 @@ class toC_Json_Import_Export {
                    'image_file' => $_FILES['image_zip'],
                    'csv_field_seperator' => $_REQUEST['seperator'],
                    'csv_field_enclosed' => $_REQUEST['enclosed'],
+    			   'csv_line_length' => $_REQUEST['line_length'],
                    'file_type' => $_REQUEST['file_type'],
                    'compression_type' => $_REQUEST['compression']);
 

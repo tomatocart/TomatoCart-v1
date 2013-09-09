@@ -40,7 +40,12 @@
       
       $osC_Language->set($language_code);
       
-      $this->_file_name = "sitemaps_{$language_code}_";
+      if ($language_code !== 'en_US') {
+        $this->_file_name = "sitemaps_{$language_code}_";
+      }else {
+        $this->_file_name = "sitemaps";
+      }
+      
       $this->_save_path = DIR_FS_CATALOG;
       $this->_base_url = HTTP_SERVER . DIR_WS_HTTP_CATALOG;
       $this->_max_file_size = 10 * 1024 * 1024;
@@ -117,8 +122,17 @@
     }
 
     function _createUrlElement($url, $last_mod, $change_freq, $priority) {
+      global $osC_Language;
+      
       $xml = "\t" . '<url>' . "\n";
-      $xml .= "\t\t" . '<loc>' . $url . '</loc>' . "\n";
+      
+      //multiple language
+      if (count($osC_Language->getAll() > 0)) {
+        $xml .= "\t\t" . '<loc>' . $url . '?language=' . $osC_Language->getCode() . '</loc>' . "\n";
+      }else {
+        $xml .= "\t\t" . '<loc>' . $url . '</loc>' . "\n";
+      }
+      
       $xml .= "\t\t" . '<lastmod>' . $last_mod . '</lastmod>' . "\n";
       $xml .= "\t\t" . '<changefreq>' . $change_freq . '</changefreq>' . "\n";
       $xml .= "\t\t" . '<priority>' . $priority . '</priority>' . "\n";

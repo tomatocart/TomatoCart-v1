@@ -58,6 +58,37 @@ Toc.specials.SpecialsGrid = function (config) {
   ]);  
   config.autoExpandColumn = 'specials_products_name';
   
+  var dsProductsType = new Ext.data.SimpleStore({
+    fields: ['id', 'text'],
+    data: 
+      [
+        ['<?php echo PRODUCTS_TYPE_GENERAL; ?>','<?php echo $osC_Language->get('products_type_general'); ?>'],
+        ['<?php echo PRODUCTS_TYPE_VARIANTS; ?>','<?php echo $osC_Language->get('products_type_variants'); ?>'],
+      ]
+  });
+  
+  this.productsType = '<?php echo PRODUCTS_TYPE_GENERAL; ?>';
+  
+  this.cboProductsType = new Ext.form.ComboBox({
+    fieldLabel: '<?php echo $osC_Language->get('field_products_type'); ?>',
+    xtype: 'combo', 
+    store: dsProductsType, 
+    name: 'products_type', 
+    mode: 'local',
+    width: 150,
+    hiddenName: 'products_type', 
+    displayField: 'text', 
+    valueField: 'id', 
+    triggerAction: 'all', 
+    editable: false,
+    forceSelection: true,      
+    value: '<?php echo PRODUCTS_TYPE_GENERAL; ?>',
+    listeners: {
+      select: this.onProductsTypeSelect,
+      scope: this
+    }
+  });
+  
   dsManufacturers = new Ext.data.Store({
     url: Toc.CONF.CONN_URL,
     baseParams: {
@@ -77,6 +108,7 @@ Toc.specials.SpecialsGrid = function (config) {
   });
   
   config.cboManufacturers = new Ext.form.ComboBox({
+    width: 150,
     store: dsManufacturers,
     displayField: 'manufacturers_name',
     mode: 'remote',
@@ -109,6 +141,7 @@ Toc.specials.SpecialsGrid = function (config) {
   });
     
   config.cboCategories = new Toc.CategoriesComboBox({
+    width: 150,
     store: dsCategories,
     mode: 'remote',
     emptyText: '<?php echo $osC_Language->get("top_category"); ?>',
@@ -123,7 +156,7 @@ Toc.specials.SpecialsGrid = function (config) {
   });
   
   config.txtSearch = new Ext.form.TextField({
-    width: 100,
+    width: 150,
     hideLabel: true
   });
   
@@ -141,13 +174,6 @@ Toc.specials.SpecialsGrid = function (config) {
       handler: this.onBatchAdd,
       scope: this
     },
-    '-', 
-    {
-      text: TocLanguage.btnDelete,
-      iconCls: 'remove',
-      handler: this.onBatchDelete,
-      scope: this
-    },
     '-',
     {
       text: TocLanguage.btnRefresh,
@@ -155,12 +181,14 @@ Toc.specials.SpecialsGrid = function (config) {
       handler: this.onRefresh,
       scope: this
     },
-    '->', 
-    config.txtSearch, 
+    '->',
+    this.cboProductsType, 
     ' ', 
     config.cboManufacturers, 
     ' ', 
     config.cboCategories, 
+     ' ',
+    config.txtSearch, 
     ' ', 
     {
       iconCls: 'search',
@@ -210,8 +238,11 @@ Toc.specials.SpecialsGrid = function (config) {
 Ext.extend(Toc.specials.SpecialsGrid, Ext.grid.GridPanel, {
   
   onAdd: function () {
-    var dlg = this.owner.createSpecialsDialog();
+    var dlg = this.owner.createSpecialsDialog({'productsType': this.productsType});
     dlg.setTitle('<?php echo $osC_Language->get("action_heading_new_special"); ?>');
+    
+    //attach event for supporting variants specials
+    this.attachAddVariantsEvent(dlg);
     
     dlg.on('saveSuccess', function() {
       this.getStore().reload();
@@ -224,6 +255,9 @@ Ext.extend(Toc.specials.SpecialsGrid, Ext.grid.GridPanel, {
     var dlg = this.owner.createBatchSpecialsDialog();
     dlg.setTitle('<?php echo $osC_Language->get("action_heading_new_specials"); ?>');
     
+    //attach event for supporting variants specials
+    this.attachAddVariantsEvent(dlg);
+    
     dlg.on('saveSuccess', function() {
       this.getStore().reload();
     }, this);  
@@ -233,7 +267,10 @@ Ext.extend(Toc.specials.SpecialsGrid, Ext.grid.GridPanel, {
   
   onEdit: function (record) {
     var specialsId = record.get('specials_id');
-    var dlg = this.owner.createSpecialsDialog();
+    
+    //support the variants speicals
+    var dlg = this.owner.createSpecialsDialog({'productsType' : this.productsType});
+    
     dlg.setTitle(record.get('products_name'));
     
     dlg.on('saveSuccess', function() {
@@ -257,7 +294,8 @@ Ext.extend(Toc.specials.SpecialsGrid, Ext.grid.GridPanel, {
             params: {
               module: 'specials',
               action: 'delete_special',
-              specials_id: specialsId
+              specials_id: specialsId,
+              products_type: this.productsType
             },
             callback: function (options, success, response) {
               var result = Ext.decode(response.responseText);
@@ -298,7 +336,8 @@ Ext.extend(Toc.specials.SpecialsGrid, Ext.grid.GridPanel, {
               params: {
                 module: 'specials',
                 action: 'delete_specials',
-                batch: batch
+                batch: batch,
+                products_type: this.productsType
               },
               callback: function (options, success, response) {
                 var result = Ext.decode(response.responseText);
@@ -347,6 +386,56 @@ Ext.extend(Toc.specials.SpecialsGrid, Ext.grid.GridPanel, {
         this.onEdit(record);
         break;
     }
+  },
+  
+  onProductsTypeSelect: function(combo, record) {
+    var type = record.get('id');
+    
+    if (this.productsType != type) {
+      this.productsType = type;
+      
+      this.resetGrid();
+    }
+  },
+  
+  resetGrid: function() {
+    //reset the manufactuers, category and search field
+    this.cboManufacturers.reset();
+    this.cboCategories.reset();
+    this.txtSearch.setValue('');
+    
+    var store = this.getStore();
+    
+    delete store.baseParams['search'];
+    delete store.baseParams['manufacturers_id'];
+    delete store.baseParams['category_id'];
+    
+    switch(this.productsType) {
+      case '<?php echo PRODUCTS_TYPE_GENERAL;?>':
+        store.baseParams['action'] = 'list_specials';
+        break;
+        
+      case '<?php echo PRODUCTS_TYPE_VARIANTS; ?>':
+        store.baseParams['action'] = 'list_variants_specials';
+        break;
+      default:
+        store.baseParams['action'] = 'list_specials';
+    }
+    
+    store.reload();
+  },
+  
+  attachAddVariantsEvent: function(dlg) {
+    dlg.on('addVariants', function(variantsChk) {
+      if (variantsChk == 1) {
+        this.cboProductsType.setValue('<?php echo PRODUCTS_TYPE_VARIANTS; ?>');
+        this.productsType = '<?php echo PRODUCTS_TYPE_VARIANTS; ?>';
+      }else {
+        this.cboProductsType.setValue('<?php echo PRODUCTS_TYPE_GENERAL; ?>');
+        this.productsType = '<?php echo PRODUCTS_TYPE_GENERAL; ?>';
+      }
+      
+      this.resetGrid();
+    }, this);
   }
-}
-);
+});

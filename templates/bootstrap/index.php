@@ -52,6 +52,14 @@ require_once 'helper.php';
     if ($osC_Template->hasStyleSheet()) {
         $osC_Template->getStyleSheet();
     }
+    
+    /**
+     * general the rel_canonical link to remove the duplication content
+     * [#123]Two Different SEO link for one product
+     */
+    if (isset($osC_Template->rel_canonical)) {
+      echo $osC_Template->rel_canonical;
+    }
 ?>
 	<meta name="Generator" content="TomatoCart" />
 </head>
@@ -173,6 +181,16 @@ require_once 'helper.php';
     }
 ?>
 <!--  END: slideshow  -->
+
+<!--  Database Connection failed  -->
+<?php 
+  if ($messageStack->size('db_error') > 0) {
+?>
+<div class="container"><?php echo  $messageStack->output('db_error'); ?></div>
+<?php
+  }
+?>
+<!--  END: Database Connection failed  -->
 
 <div id="pageWrapper" class="container">
 	<div class="row-fluid">
@@ -350,7 +368,9 @@ window.addEvent('domready', function() {
 if (typeof jQuery != 'undefined') {
     (function($) {
         $(document).ready(function(){
-            $('.carousel').each(function(index, element) {
+            $('.carousel').carousel({
+                interval: 3000
+            }).each(function(index, element) {
             	$(this)[index].slide = null;
             });
         });

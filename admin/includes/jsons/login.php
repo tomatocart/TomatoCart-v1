@@ -52,7 +52,14 @@
         } 
       }
       
-      $response = array('success' => false, 'feedback' => $osC_Language->get('ms_error_login_invalid'));
+      // check database connection
+      if (!$osC_Database->isConnected()) {
+        $feedback = $osC_Language->get('ms_error_db_connection_failed');
+      }else {
+        $feedback = $osC_Language->get('ms_error_login_invalid');
+      }
+      
+      $response = array('success' => false, 'feedback' => $feedback);
       echo $toC_Json->encode($response);
     }
     

@@ -18,7 +18,7 @@ Toc.specials.SpecialsDialog = function (config) {
     
 	config.id = 'specials-dialog-win';
 	config.layout = 'fit';
-	config.width = 525;
+	config.width = 800;
 	config.autoheight = true;
 	config.modal = true;
 	config.iconCls = 'icon-specials-win';
@@ -42,7 +42,7 @@ Toc.specials.SpecialsDialog = function (config) {
     }
   ];
   
-	this.addEvents({'saveSuccess': true});
+	this.addEvents({'saveSuccess': true, 'addVariants': true});
   
 	Toc.specials.SpecialsDialog.superclass.constructor.call(this, config);
 }
@@ -53,11 +53,24 @@ Ext.extend(Toc.specials.SpecialsDialog, Ext.Window, {
 		this.frmSpecials.form.reset();
     this.frmSpecials.form.baseParams['specials_id'] = specialsId;
     
+    //support variants specials
+    switch(this.productsType) {
+      case '<?php echo PRODUCTS_TYPE_GENERAL;?>':
+        var action = 'load_specials';
+        break;
+        
+      case '<?php echo PRODUCTS_TYPE_VARIANTS; ?>':
+        var action = 'load_variants_specials';
+        break;
+      default:
+        var action = 'load_specials';
+    }
+    
 		if (specialsId > 0) {
 			this.frmSpecials.load({
 				url: Toc.CONF.CONN_URL,
 				params: {
-					action: 'load_specials'
+					action: action
 				},
 				success: function (form, action) {
 				  var netValue = action.result.data.specials_new_products_price;
@@ -90,7 +103,6 @@ Ext.extend(Toc.specials.SpecialsDialog, Ext.Window, {
         module: 'specials',
         action: 'list_products'
       },
-      autoLoad: true,
       reader: new Ext.data.JsonReader({
         root: Toc.CONF.JSON_READER_ROOT,
         totalProperty: Toc.CONF.JSON_READER_TOTAL_PROPERTY,
@@ -100,7 +112,8 @@ Ext.extend(Toc.specials.SpecialsDialog, Ext.Window, {
           'products_name',
           'rate'
         ]
-      })
+      }),
+      autoLoad: true
     });
   
     this.cboProducts = new Ext.form.ComboBox({
@@ -108,7 +121,7 @@ Ext.extend(Toc.specials.SpecialsDialog, Ext.Window, {
       fieldLabel: '<?php echo $osC_Language->get("field_product"); ?>',
       allowBlank: false,
       displayField: 'products_name',
-      mode: 'remote',
+      mode: 'local',
       valueField: 'products_id',
       hiddenName: 'products_id',
       triggerAction: 'all',
@@ -145,6 +158,15 @@ Ext.extend(Toc.specials.SpecialsDialog, Ext.Window, {
 			defaults: {anchor: '97%'},
       labelWidth: 200,
 			items: [
+			  this.chkVariants = new Ext.form.Checkbox({
+          fieldLabel: '<?php echo $osC_Language->get('field_variants'); ?>',
+          name: 'variants',
+          checked: false,
+          listeners: {
+            check: this.onChkVariantsChecked,
+            scope: this
+          }
+        }),
         this.cboProducts,
         this.txtPriceNet, 
         this.txtPriceGross, 
@@ -227,6 +249,22 @@ Ext.extend(Toc.specials.SpecialsDialog, Ext.Window, {
       }
     }
     return rate;  
+  },
+  
+  onChkVariantsChecked: function(checkbox, checked) {
+    var store = this.cboProducts.getStore();
+    
+    if (checked) {
+      store.baseParams['variants'] = 1;
+      
+      this.fireEvent('addVariants', 1);
+    } else {
+      store.baseParams['variants'] = 0;
+      
+      this.fireEvent('addVariants', 0);
+    }
+    
+    store.reload();
   },
   
 	submitForm: function () {

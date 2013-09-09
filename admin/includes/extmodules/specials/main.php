@@ -11,6 +11,9 @@
   as published by the Free Software Foundation.
 */
 
+  define('PRODUCTS_TYPE_GENERAL', 1);
+  define('PRODUCTS_TYPE_VARIANTS', 2);
+
   echo 'Ext.namespace("Toc.specials");';
   
   include('specials_grid.php');
@@ -30,7 +33,7 @@ Ext.override(TocDesktop.SpecialsWindow, {
       win = desktop.createWindow({
         id: 'specials-win',
         title: '<?php echo $osC_Language->get('heading_title'); ?>',
-        width: 800,
+        width: 900,
         height: 400,
         iconCls: 'icon-specials-win',
         layout: 'fit',
@@ -41,12 +44,12 @@ Ext.override(TocDesktop.SpecialsWindow, {
     win.show();
   },
     
-  createSpecialsDialog: function() {
+  createSpecialsDialog: function(config) {
     var desktop = this.app.getDesktop();
     var dlg = desktop.getWindow('specials-dialog-win');
     
     if(!dlg){
-      dlg = desktop.createWindow({}, Toc.specials.SpecialsDialog);
+      dlg = desktop.createWindow(config, Toc.specials.SpecialsDialog);
     }
     
     return dlg;

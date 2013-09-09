@@ -246,7 +246,7 @@
       $total_tax = $osC_ShoppingCart->getTax() - $shipping_tax;
       
       if ($total_tax > 0) {
-        $params['x_tax'] = $osC_Currencies->formatRaw($tax_value);
+        $params['x_tax'] = $osC_Currencies->formatRaw($total_tax);
       }
       
       $params['x_freight'] = $osC_Currencies->formatRaw($osC_ShoppingCart->getShippingMethod('cost'));

@@ -43,17 +43,17 @@ class toC_Sefu {
     $this->_iniManufacturersCache();
   }
 
-  function generateURL($link, $page){
+  function generateURL($link, $page, $parameters){
     if (SERVICES_KEYWORD_RICH_URLS == '0') {
       $link = str_replace(array('?', '&', '='), array('/', '/', ','), $link);
     } else if(SERVICES_KEYWORD_RICH_URLS == '1'){
-      $link = $this->generateRichKeywordURL($link, $page);
+      $link = $this->generateRichKeywordURL($link, $page, $parameters);
     }
 
     return $link;
   }
 
-  function generateRichKeywordURL($link, $page){
+  function generateRichKeywordURL($link, $page, $parameters){
     //cPath
     if ( preg_match("/index.php\?cPath=([0-9_]+)(.*)/", $link, $matches) > 0 ) {
       $categories = @explode('_', $matches[1]);
@@ -93,15 +93,12 @@ class toC_Sefu {
     //products
     else if ( preg_match("/products.php\?([0-9]+)(.*)/", $link, $matches) > 0 ) {
       if ( (strpos($link, 'action=compare_products_add') === false) && (strpos($link, 'action=wishlist_add') === false) ) {
-        $categories = $this->getCategoryUrl($this->getProductCategory($matches[1]));
-        if (empty($categories)) {
-          $link = $matches[1] . $this->_reg_anchors['products_id'] . $this->getProductUrl($matches[1]) . '.html';
-        } else {
-          $link = $this->getCategoryUrl($this->getProductCategory($matches[1])) . '/' . 
-                  $matches[1] . $this->_reg_anchors['products_id'] . $this->getProductUrl($matches[1]) . '.html';          
-        }
-
-        if( !empty($matches[2]) ) {
+        
+        //Modify the code to make the product url in the new products page, specials page same as the product url in the catalog
+        //To fix the bug - [#123] Two Different SEO link for one product
+        $link = $this->getProductCategoryLink($matches[1]);
+        
+        if(isset($matches[2]) &&  !empty($matches[2])) {
           $link .= '?' . substr($matches[2], 1);
         }
       }
@@ -112,7 +109,27 @@ class toC_Sefu {
       if ( !empty($matches[2]) ) {
         $link .= '?' . substr($matches[2], 1);
       }
-    } 
+    //new products
+    }else if (preg_match("/products.php\?new/", $link) > 0) {
+      $link = 'new-products.html';
+      
+      $parameters = str_replace(array('new', '&'), '', $parameters);
+      
+      if (!empty($parameters)) {
+        $link .= '?' . $parameters;
+      }
+    //specials  
+    }else if (preg_match("/products.php\?specials/", $link) > 0) {
+      $link = 'specials.html';
+      
+      if (!empty($parameters)) {
+         $parameters = str_replace(array('specials', '&'), '', $parameters);
+         
+         if (!empty($parameters)) {
+           $link .= '?' . $parameters;
+         }
+      }
+    }
     //article categories  
     else if ( preg_match("/\?(.*)articles_categories_id=([0-9]+)(.*)/", $link, $matches) > 0 ) {
       $link = $this->makeUrl($page, $this->getArticleCategoryUrl($matches[2]), 'articles_categories_id', $matches[2], '');
@@ -176,13 +193,37 @@ class toC_Sefu {
     $data = explode('#', $data);
     return $data[0];
   }
-
+  
+  /**
+   * Get full category link for the product
+   * Modify the code to make the product url in the new products page, specials page same as the product url in the catalog
+   * To fix the bug - [#123] Two Different SEO link for one product
+   * 
+   * @access private
+   * @param int $products_id
+   * @return string
+   */
+  function getProductCategoryLink($products_id) {
+    global $osC_CategoryTree;
+    
+    $link = '';
+    
+    $product_category = $this->getProductCategory($products_id);
+    $category_url = $this->getCategoryUrl($product_category);
+    $full_category_path = $osC_CategoryTree->getFullcPath($product_category);
+    
+    $link .= $full_category_path . $this->_reg_anchors['cPath'] . $category_url . '/' .
+             $products_id . $this->_reg_anchors['products_id'] . $this->getProductUrl($products_id) . '.html';
+    
+    return $link;
+  }
+  
   function getCategoryUrl($cPath) {
     global $osC_CategoryTree;
     
     return $osC_CategoryTree->getCategoryUrl($cPath);
   }
-    
+  
   function getProductUrlViaReviews($reviews_id) {
     return $this->getProductUrl($this->_products_reviews_cache[$reviews_id]);
   }

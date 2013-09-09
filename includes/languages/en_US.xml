@@ -45,6 +45,11 @@
       <value><![CDATA[Contact Us]]></value>
       <group>general</group>
     </definition>
+     <definition>
+      <key>db_connection_failed</key>
+      <value><![CDATA[Databases Error: Database connection failed.]]></value>
+      <group>general</group>
+    </definition>
     <definition>
       <key>enter_captcha_code</key>
       <value><![CDATA[Enter Captcha Code:]]></value>

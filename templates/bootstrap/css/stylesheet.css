@@ -367,6 +367,10 @@ ul.autocompleter-choices li.autocompleter-selected span.autocompleter-queried{co
 #boxManufacturers .boxContents {text-align:center;}
 #boxManufacturers .boxContents li {margin:5px;border-bottom:none;}
 
+/** box-review**/
+.boxReview {word-break:break-all;}
+.boxReview a {display:block;}
+
 /*******************************************
  *            Module Box
 *******************************************/
@@ -423,7 +427,6 @@ ul.grid li {
     float: left; 
     width: 33.333333%; 
     *width: 27.43%;
-    height: 270px; 
     border-right: 1px solid #CDCDCD; 
     border-bottom: 1px solid #CDCDCD; 
     padding: 10px 20px; 
@@ -442,7 +445,7 @@ ul.grid li div.left h3 {
     color: #333333; 
     font-size: 13px; line-height: 18px; 
     margin-bottom: 5px;
-    max-height: 36px;
+    height: 40px;
     overflow: hidden;
 }
 ul.grid li div.left p.description { 
@@ -453,7 +456,8 @@ ul.grid li div.left p.description {
 ul.grid li div.right span.price { 
     display: block; 
     margin-bottom: 5px; 
-    font-size: 15px; 
+    font-size: 15px;
+    height: 10px; 
     float: left;
 }
 ul.grid li div.right span.price s { 

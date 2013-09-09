@@ -24,6 +24,10 @@ Ext.override(TocDesktop.GoogleSitemapWindow, {
      
     if(!win){
       win = desktop.createWindow(null, Toc.google_sitemap.GoogleSitemapDialog);
+      
+      win.on('saveSuccess', function(feedback) {
+        this.app.showNotification({title: TocLanguage.msgSuccessTitle, html: feedback});
+      }, this);
     }
     
     win.show();
