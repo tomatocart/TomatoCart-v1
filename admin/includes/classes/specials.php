@@ -394,6 +394,8 @@
           osC_Cache::clear('product-specials-' . $data['products_id']);
         }
         
+        osC_Cache::clear('new_products');
+        
         return true;
       }
 

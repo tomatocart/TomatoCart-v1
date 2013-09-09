@@ -1617,6 +1617,7 @@
       $Qstatus->execute();
       
       if(!$osC_Database->isError()) {
+      	osC_Cache::clear('new_products');
         osC_Cache::clear('feature-products');
         
         return true;
