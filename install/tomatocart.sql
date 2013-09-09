@@ -1437,6 +1437,19 @@ CREATE TABLE toc_templates_boxes_to_pages (
   KEY templates_boxes_id (templates_boxes_id,templates_id,content_page,boxes_group)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+CREATE TABLE IF NOT EXISTS toc_variants_specials (
+  variants_specials_id int(11) NOT NULL AUTO_INCREMENT,
+  products_variants_id int(11) NOT NULL,
+  variants_speicals_price decimal(15,4) NOT NULL,
+  specials_date_added datetime DEFAULT NULL,
+  specials_last_modified datetime DEFAULT NULL,
+  start_date datetime DEFAULT NULL,
+  expires_date datetime DEFAULT NULL,
+  date_status_change datetime DEFAULT NULL,
+  status tinyint(1) NOT NULL DEFAULT '1',
+  PRIMARY KEY (variants_specials_id)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
 
 DROP TABLE IF EXISTS toc_weight_classes;
 CREATE TABLE toc_weight_classes (
@@ -1539,7 +1552,7 @@ INSERT INTO toc_configuration (configuration_title, configuration_key, configura
 INSERT INTO toc_configuration (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, use_function, set_function, date_added) VALUES ('Maintenance mode', 'MAINTENANCE_MODE', '-1', 'Maintenance Mode', '1', '23', 'osc_cfg_use_get_boolean_value', 'osc_cfg_set_boolean_value(array(1, -1))', now());
 INSERT INTO toc_configuration (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, use_function, set_function, date_added) VALUES ('Use TinyMCE Editor', 'USE_WYSIWYG_TINYMCE_EDITOR', '-1', 'Use TinyMCE Editor', '1', '24', 'osc_cfg_use_get_boolean_value', 'osc_cfg_set_boolean_value(array(1, -1))', now());
 INSERT INTO toc_configuration (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, use_function, set_function, date_added) VALUES ('Display Products in the subcatalogs recursively', 'DISPLAY_SUBCATALOGS_PRODUCTS', '1', 'Display the products in the subcatalogs recursively!', '1', '25', 'osc_cfg_use_get_boolean_value', 'osc_cfg_set_boolean_value(array(1, -1))', now());
-INSERT INTO toc_configuration (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, use_function, set_function, date_added) VALUES ('Synchronize cart with the database when customer logged in', 'SYNCHRONIZE_CART_WITH_DATABASE', '1', 'Synchronize cart with the database when customer logged in!', '1', '26', 'osc_cfg_use_get_boolean_value', 'osc_cfg_set_boolean_value(array(1, -1))', now());
+INSERT INTO toc_configuration (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, use_function, set_function, date_added) VALUES ('Synchronize cart with the database when customer logged in', 'SYNCHRONIZE_CART_WITH_DATABASE', '-1', 'Synchronize cart with the database when customer logged in!', '1', '26', 'osc_cfg_use_get_boolean_value', 'osc_cfg_set_boolean_value(array(1, -1))', now());
 INSERT INTO toc_configuration (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, use_function, set_function, date_added) VALUES ('Check stocks when synchronize cart with the database', 'CHECK_STOCKS_SYNCHRONIZE_CART_WITH_DATABASE', '1', 'Check stocks when synchronize cart with the database', '1', '27', 'osc_cfg_use_get_boolean_value', 'osc_cfg_set_boolean_value(array(1, -1))', now());
 
 INSERT INTO toc_configuration (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, date_added) VALUES ('Credit Card Owner Name', 'CC_OWNER_MIN_LENGTH', '3', 'Minimum length of credit card owner name', '2', '12', now());

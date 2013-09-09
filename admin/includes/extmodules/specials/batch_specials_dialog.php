@@ -58,7 +58,7 @@ Toc.specials.BatchSpecialsDialog = function (config) {
   config.iconCls = 'icon-specials-win';
   config.items = [this.buildSearchForm(), this.buildProductEditorGrid()];
   
-  this.addEvents({'saveSuccess': true});
+  this.addEvents({'saveSuccess': true, 'addVariants': true});
   
   Toc.specials.BatchSpecialsDialog.superclass.constructor.call(this, config);
 }
@@ -133,8 +133,19 @@ Ext.extend(Toc.specials.BatchSpecialsDialog, Ext.Window, {
       border: false,
       autoHeight: true,
       buttonAlign: 'right',
+      labelSeparator: ' ',
       items: 
       [
+        this.chkVariants = new Ext.form.Checkbox({
+          fieldLabel: '<?php echo $osC_Language->get('field_variants'); ?>',
+          name: 'variants',
+          checked: false,
+          listeners: {
+            check: this.onChkVariantsChecked,
+            scope: this
+          }
+        }),
+        
         {
           layout: 'column',
           border: false,
@@ -341,7 +352,8 @@ Ext.extend(Toc.specials.BatchSpecialsDialog, Ext.Window, {
       params: {
 		    module: 'specials',
         action: 'save_batch_specials',
-        products: Ext.encode(products)				
+        products: Ext.encode(products),
+        variants: this.productsType 				
 	    },
 	    callback: function (options, success, response) {
         var result = Ext.decode(response.responseText);
@@ -355,5 +367,25 @@ Ext.extend(Toc.specials.BatchSpecialsDialog, Ext.Window, {
       },
       scope: this
     });
+  },
+  
+  onChkVariantsChecked: function(checkbox, checked) {
+    var store = this.grdProducts.getStore();
+    
+    if (checked) {
+      store.baseParams['variants'] = 1;
+      store.baseParams['action'] = 'load_variants_products';
+      
+      this.productsType = '<?php echo PRODUCTS_TYPE_VARIANTS; ?>';
+      
+      this.fireEvent('addVariants', 1);
+    } else {
+      store.baseParams['variants'] = 0;
+      store.baseParams['action'] = 'load_products';
+      
+      this.productsType = '<?php echo PRODUCTS_TYPE_GENERAL; ?>';
+      
+      this.fireEvent('addVariants', 0);
+    }
   }
 });

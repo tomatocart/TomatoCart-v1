@@ -76,7 +76,7 @@ function get_categories_filters($manufacturers_id) {
  */
 function get_new_products() {
     global $osC_Database, $osC_Services, $osC_Language, $osC_Currencies, $osC_Image, $osC_Specials, $current_category_id;
-
+    
     if ($current_category_id < 1) {
         $Qfeatureproducts = $osC_Database->query('select p.products_id, p.products_tax_class_id, p.products_price, pd.products_name, pd.products_keyword, i.image, s.specials_new_products_price as specials_price, f.products_id as featured_products_id from :table_products p inner join :table_products_description pd on (p.products_id = pd.products_id and pd.language_id = :language_id) left join :table_products_frontpage f on (p.products_id = f.products_id) left join :table_products_images i on (p.products_id = i.products_id and i.default_flag = :default_flag) left join :table_specials s on (p.products_id = s.products_id and s.status = 1 and s.start_date <= now() and s.expires_date >= now()) where p.products_status = 1 order by p.products_date_added desc limit :max_display_new_products');
     } else {
@@ -95,6 +95,11 @@ function get_new_products() {
     $Qfeatureproducts->bindInt(':default_flag', 1);
     $Qfeatureproducts->bindInt(':language_id', $osC_Language->getID());
     $Qfeatureproducts->bindInt(':max_display_new_products', MODULE_CONTENT_NEW_PRODUCTS_MAX_DISPLAY);
+    
+    //set the cache key for new products module in bootstrap
+	if (MODULE_CONTENT_NEW_PRODUCTS_CACHE > 0) {
+        $Qfeatureproducts->setCache('new_products-bootstrap-' . $osC_Language->getCode() . '-' . $osC_Currencies->getCode() . '-' . $current_category_id, MODULE_CONTENT_NEW_PRODUCTS_CACHE);
+    }
 
     $Qfeatureproducts->execute();
 
@@ -146,6 +151,12 @@ function get_feature_products() {
     $Qfeatureproducts->bindInt(':default_flag', 1);
     $Qfeatureproducts->bindInt(':language_id', $osC_Language->getID());
     $Qfeatureproducts->bindInt(':max_display_feature_products', MODULE_CONTENT_FEATURE_PRODUCTS_MAX_DISPLAY);
+    
+    //set the cache key for feature products module in bootstrap
+    if (MODULE_CONTENT_NEW_PRODUCTS_CACHE > 0) {
+		$Qfeatureproducts->setCache('feature-products-bootstrap-' . $osC_Language->getCode() . '-' . $osC_Currencies->getCode() . '-' . $current_category_id, MODULE_CONTENT_NEW_PRODUCTS_CACHE);
+    }
+    
     $Qfeatureproducts->execute();
 
     if ($Qfeatureproducts->numberOfRows()) {

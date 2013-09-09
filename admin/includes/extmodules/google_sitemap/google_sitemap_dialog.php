@@ -19,7 +19,7 @@ Toc.google_sitemap.GoogleSitemapDialog = function(config) {
   config.id = 'google_sitemap-win';
   config.title = '<?php echo $osC_Language->get('heading_title'); ?>';
   config.width = 600;
-  config.height = 500;
+  config.height = 620;
   config.iconCls = 'icon-google_sitemap-win';
   config.layout = 'fit';
   config.items = this.buildForm();
@@ -70,6 +70,11 @@ Ext.extend(Toc.google_sitemap.GoogleSitemapDialog, Ext.Window, {
         labelSeparator: ''
       },
       items: [
+        {
+          xtype: 'panel',
+          html: '<?php echo $osC_Language->get('introduction_create_google_sitemaps'); ?>',
+          style: 'margin-bottom: 10px;color:#C09853;'
+        },
         {
           xtype: 'combo', 
           fieldLabel: '<?php echo $osC_Language->get('field_language_selection'); ?>', 
@@ -162,7 +167,11 @@ Ext.extend(Toc.google_sitemap.GoogleSitemapDialog, Ext.Window, {
       },
       waitMsg: TocLanguage.formSubmitWaitMsg,
       success: function(form, action) {
-        this.fireEvent('saveSuccess', action.result.feedback);
+        if (action.result.success) {
+          this.fireEvent('saveSuccess', action.result.feedback);
+        }else {
+          Ext.MessageBox.alert(TocLanguage.msgErrTitle, action.result.feedback);
+        }
       },    
       failure: function(form, action) {
         if (action.failureType != 'client') {

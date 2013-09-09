@@ -17,19 +17,28 @@ class osC_Services_currencies {
 
         include('includes/classes/currencies.php');
         $osC_Currencies = new osC_Currencies();
-
-        if ((isset($_SESSION['currency']) == false) || isset($_GET['currency']) || ( (USE_DEFAULT_LANGUAGE_CURRENCY == '1') && ($osC_Currencies->getCode($osC_Language->getCurrencyID()) != $_SESSION['currency']) ) || ((USE_DEFAULT_LANGUAGE_CURRENCY != '1') && (DEFAULT_CURRENCY !=$_SESSION['currency'] )) ) {
-            if (isset($_GET['currency']) && $osC_Currencies->exists($_GET['currency'])) {
-                $_SESSION['currency'] = $_GET['currency'];
-            } else {
-                $_SESSION['currency'] = (USE_DEFAULT_LANGUAGE_CURRENCY == '1') ? $osC_Currencies->getCode($osC_Language->getCurrencyID()) : DEFAULT_CURRENCY;
-            }
-
-            if ( isset($_SESSION['cartID']) ) {
-                unset($_SESSION['cartID']);
-            }
+        
+        //Keep currency selection from currency box for the following requests
+        if (isset($_GET['currency']) && $osC_Currencies->exists($_GET['currency'])) {
+        	$_SESSION['currency'] = $_GET['currency'];
+        	$_SESSION['currency_set'] = true;
+        	
+        	if ( isset($_SESSION['cartID']) ) {
+        		unset($_SESSION['cartID']);
+        	}
         }
-
+        
+        //set the currency with default language currency or default currency
+        if (!isset($_SESSION['currency_set'])) {
+        	if ((isset($_SESSION['currency']) == false) || ( (USE_DEFAULT_LANGUAGE_CURRENCY == '1') && ($osC_Currencies->getCode($osC_Language->getCurrencyID()) != $_SESSION['currency']) ) || ((USE_DEFAULT_LANGUAGE_CURRENCY != '1') && (DEFAULT_CURRENCY !=$_SESSION['currency'] )) ) {
+				$_SESSION['currency'] = (USE_DEFAULT_LANGUAGE_CURRENCY == '1') ? $osC_Currencies->getCode($osC_Language->getCurrencyID()) : DEFAULT_CURRENCY;
+        	
+        		if ( isset($_SESSION['cartID']) ) {
+        			unset($_SESSION['cartID']);
+        		}
+        	}
+        }
+        
         return true;
     }
 

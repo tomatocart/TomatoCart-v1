@@ -8,7 +8,7 @@
 # it under the terms of the GNU General Public License v2 (1991)
 # as published by the Free Software Foundation.
 
-page_title_welcome = Welcome to TomatoCart 1.1.8.4.1!
+page_title_welcome = Welcome to TomatoCart 1.1.8.5!
 page_title_pre_installation_check = Pre-installation Check
 page_title_database_server_setup = Database Server Setup
 page_title_web_server = Web Server

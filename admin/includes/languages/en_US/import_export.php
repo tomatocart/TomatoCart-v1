@@ -25,6 +25,7 @@ field_import_file = Import File:
 
 field_seperator = Fields terminated by:
 field_enclosed = Fields enclosed by:
+field_line_length = Line Length:
 field_xml_options = No option available here.
 field_products_import_file = Products Import File:
 field_products_import_image_file = Image Files(Zip):

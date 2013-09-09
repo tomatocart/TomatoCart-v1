@@ -65,6 +65,8 @@ none = -- None --
 
 button_add_definition = Add Definition
 
+introduction_set_default_currency =<p><b>NOTE:</b> The <b>default currency</b> could be set in this module or under <b>Definitions > Currencies</b> module. So, if you wish to use the default currency for the language, please go to <b>Modules > Services > Currencies</b> to set the <b>Use Default Language Currency</b> to <b>True</b>.</p>
+ 
 introduction_edit_language = Please make the necessary changes for the selected language.
 
 introduction_import_language = Please select which language to import from the following list.

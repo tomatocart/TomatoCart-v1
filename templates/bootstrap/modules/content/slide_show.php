@@ -50,7 +50,7 @@
         	    for ($i = 0; $i < sizeof($images); $i++) {
 			?>
             <div class="item<?php echo ($i == 0) ? ' active' : '';?>">
-                <?php echo osc_image(DIR_WS_IMAGES . $images[$i]['image'], $images[$i]['description']); ?>
+                <?php echo osc_link_object(osc_href_link($images[$i]['url']), osc_image(DIR_WS_IMAGES . $images[$i]['image'], $images[$i]['description'])); ?>
                 
                 <?php 
                     if (MODULE_CONTENT_SLIDE_SHOW_DISPLAY_INFO == 'True') {

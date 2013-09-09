@@ -25,6 +25,7 @@ ms_forget_password_text = If you\'ve forgotten your password, enter your e-mail 
 
 ms_success_logged_out = Success: You have been successfully logged out of this system.
 ms_error_login_invalid = Username and password do not match.
+ms_error_db_connection_failed = Databases Error: Database connection failed.
 ms_error_wrong_email_address = Error: The email address is not correct.
 ms_error_email_not_exist = Error: The email address does not exist in the database.
 ms_error_email_send_failure = Error: The email has not been sent out. Please try later again.

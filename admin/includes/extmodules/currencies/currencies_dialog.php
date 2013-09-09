@@ -92,6 +92,11 @@ Ext.extend(Toc.currencies.CurrenciesDialog, Ext.Window, {
         labelSeparator: ''
       },
       items: [
+      	{
+      		xtype: 'panel',
+      		border: false,
+      		html: '<?php echo $osC_Language->get('introduction_set_default_currency'); ?>'
+      	},
         {xtype: 'hidden', name: 'id'},
         {xtype: 'textfield', fieldLabel: '<?php echo $osC_Language->get('field_title'); ?>', name: 'title', allowBlank: false},
         {xtype: 'textfield', fieldLabel: '<?php echo $osC_Language->get('field_code'); ?>', name: 'code', allowBlank: false},
