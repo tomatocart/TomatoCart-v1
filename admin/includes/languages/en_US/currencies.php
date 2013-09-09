@@ -32,6 +32,8 @@ service_terms_agreement = By updating the currency exchange rates, you agree to 
 
 introduction_update_exchange_rates = Please select which service to use to update the currency exchange rates.
 
+introduction_set_default_currency =<p><b>NOTE:</b> The <b>default currency</b> could be set in this module or under <b>Definitions > Languages</b> module. So, if you wish to use the default currency set in this module, please go to <b>Modules > Services > Currencies</b> to set the <b>Use Default Language Currency</b> to <b>False</b>.</p>
+
 introduction_new_currency = Please fill in the following information for the new currency.
 
 introduction_edit_currency = Please make the necessary changes for this currency.

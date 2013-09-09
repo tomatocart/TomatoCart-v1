@@ -139,6 +139,11 @@ Ext.extend(Toc.languages.LanguagesEditDialog, Ext.Window, {
       },
       labelWidth: 200,
       items: [ 
+      	{
+      		xtype: 'panel',
+      		border: false,
+      		html: '<?php echo $osC_Language->get('introduction_set_default_currency'); ?>'
+      	},
         {
           xtype: 'textfield', 
           fieldLabel: '<?php echo $osC_Language->get('field_name'); ?>', 
