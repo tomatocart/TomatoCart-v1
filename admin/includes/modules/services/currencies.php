@@ -14,7 +14,7 @@
   class osC_Services_currencies_Admin {
     var $title,
         $description,
-        $uninstallable = true,
+        $uninstallable = false,
         $depends = 'language',
         $precedes;
 
