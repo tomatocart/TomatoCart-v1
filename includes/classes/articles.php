@@ -66,5 +66,46 @@
       
       return $data;
     }
+    
+    function getCategoriesListing() {
+    	global $osC_Database, $osC_Language;
+    	
+    	//get the articles categories
+    	$Qcategories = $osC_Database->query('select ac.articles_categories_id, articles_categories_name from :table_articles_categories ac inner join :table_articles_categories_description acd on ac.articles_categories_id = acd.articles_categories_id where ac.articles_categories_status = 1 and acd.language_id = :language_id and ac.articles_categories_id != 1 order by articles_categories_order');
+    	$Qcategories->bindTable(':table_articles_categories', TABLE_ARTICLES_CATEGORIES);
+    	$Qcategories->bindTable(':table_articles_categories_description', TABLE_ARTICLES_CATEGORIES_DESCRIPTION);
+    	$Qcategories->bindInt(':language_id', $osC_Language->getID());
+    	$Qcategories->execute();
+    	
+    	//check the number of categories
+    	if ($Qcategories->numberOfRows() < 1) {
+    		return null;
+    	}
+    	
+    	$categories = array();
+    	while ($Qcategories->next()) {
+    		//get the articles in currency article category
+    		$Qarticles = $osC_Database->query('select a.articles_id, articles_name from :table_articles a inner join :table_articles_description ad on a.articles_id = ad.articles_id where a.articles_status = 1 and a.articles_categories_id = :articles_categories_id and ad.language_id = :language_id order by a.articles_order');
+    		$Qarticles->bindTable(':table_articles', TABLE_ARTICLES);
+    		$Qarticles->bindTable(':table_articles_description', TABLE_ARTICLES_DESCRIPTION);
+    		$Qarticles->bindInt(':articles_categories_id', $Qcategories->valueInt('articles_categories_id'));
+    		$Qarticles->bindInt(':language_id', $osC_Language->getID());
+    		$Qarticles->execute();
+    		
+    		$articles = array();
+    		if ($Qarticles->numberOfRows() > 0) {
+    			while ($Qarticles->next()) {
+    				$articles[] = array('articles_id' => $Qarticles->valueInt('articles_id'), 'articles_name' => $Qarticles->value('articles_name'));
+    			}
+    		}
+    		
+    		$categories[] = array('articles_categories_id' => $Qcategories->valueInt('articles_categories_id'), 'articles_categories_name' => $Qcategories->value('articles_categories_name'), 'articles' => $articles);
+    	}
+    	
+    	$Qcategories->freeResult();
+    	$Qarticles->freeResult();
+    	
+    	return $categories;
+    }
   }
 ?>
