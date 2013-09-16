@@ -389,16 +389,17 @@
           $in_categories[] = $category['id'];
         }
     
-        $Qproducts = $osC_Database->query('select distinct p.products_id, p.products_type, pd.products_name, p.products_quantity, p.products_price, p.products_date_added, p.products_last_modified, p.products_date_available, p.products_status from :table_products p, :table_products_description pd, :table_products_to_categories p2c where p.products_id = pd.products_id and pd.language_id = :language_id and p.products_id = p2c.products_id and p2c.categories_id in (:categories_id)');
+        $Qproducts = $osC_Database->query('select distinct p.products_id, p.products_type, pd.products_name, p.products_sku, p.products_quantity, p.products_price, p.products_date_added, p.products_last_modified, p.products_date_available, p.products_status from :table_products p, :table_products_description pd, :table_products_to_categories p2c where p.products_id = pd.products_id and pd.language_id = :language_id and p.products_id = p2c.products_id and p2c.categories_id in (:categories_id)');
         $Qproducts->bindTable(':table_products_to_categories', TABLE_PRODUCTS_TO_CATEGORIES);
         $Qproducts->bindRaw(':categories_id', implode(',', $in_categories));
       } else {
-        $Qproducts = $osC_Database->query('select p.products_id, p.products_type, pd.products_name, p.products_quantity, p.products_price, p.products_date_added, p.products_last_modified, p.products_date_available, p.products_status from :table_products p, :table_products_description pd where p.products_id = pd.products_id and pd.language_id = :language_id');
+        $Qproducts = $osC_Database->query('select p.products_id, p.products_type, pd.products_name, p.products_sku, p.products_quantity, p.products_price, p.products_date_added, p.products_last_modified, p.products_date_available, p.products_status from :table_products p, :table_products_description pd where p.products_id = pd.products_id and pd.language_id = :language_id');
       }
 
       if ( !empty($_REQUEST['search']) ) {
-        $Qproducts->appendQuery('and pd.products_name like :products_name');
+        $Qproducts->appendQuery('and pd.products_name like :products_name or p.products_sku like :products_sku');
         $Qproducts->bindValue(':products_name', '%' . $_REQUEST['search'] . '%');
+        $Qproducts->bindValue(':products_sku', '%' . $_REQUEST['search'] . '%');
       }
     
       if ( !empty($_REQUEST['sort']) && !empty($_REQUEST['dir']) ) {
@@ -445,6 +446,7 @@
         $records[] = array(
           'products_id'         => $Qproducts->value('products_id'),
           'products_name'       => $Qproducts->value('products_name'),
+        	'products_sku'				=> $Qproducts->value('products_sku'),
           'products_frontpage'  => $products_frontpage,
           'products_status'     => $Qproducts->value('products_status'),
           'products_price'      => $products_price,

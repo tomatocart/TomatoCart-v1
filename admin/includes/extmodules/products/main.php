@@ -68,7 +68,7 @@ Ext.override(TocDesktop.ProductsWindow, {
       win = desktop.createWindow({
         id: 'products-win',
         title:'<?php echo $osC_Language->get('heading_title'); ?>',
-        width:870,
+        width:920,
         height:400,
         iconCls: 'icon-products-win',
         layout: 'fit',

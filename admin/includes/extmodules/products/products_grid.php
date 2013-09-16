@@ -36,6 +36,7 @@ Toc.products.ProductsGrid = function(config) {
     }, [
       {name: 'products_id'},
       {name: 'products_name'},
+      {name: 'products_sku'},
       {name: 'products_frontpage'},
       {name: 'products_status'},
       {name: 'products_price', type: 'string'},
@@ -67,6 +68,7 @@ Toc.products.ProductsGrid = function(config) {
     config.sm,
     {id:'products_name', header: "<?php echo $osC_Language->get('table_heading_products'); ?>", sortable: true, dataIndex: 'products_name'},
     {header: "<?php echo $osC_Language->get('table_heading_frontpage'); ?>", align: 'center', renderer: renderStatus, dataIndex: 'products_frontpage', width: 90},
+    {header: "<?php echo $osC_Language->get('table_heading_sku'); ?>", align: 'center', sortable: true, dataIndex: 'products_sku', width: 80},
     {header: "<?php echo $osC_Language->get('table_heading_status'); ?>", align: 'center', renderer: renderStatus, sortable: true, dataIndex: 'products_status', width: 80},
     {header: "<?php echo $osC_Language->get('table_heading_price'); ?>", dataIndex: 'products_price', sortable: true, width: 80, align: 'right'},
     {header: "<?php echo $osC_Language->get('table_heading_quantity'); ?>", dataIndex: 'products_quantity', sortable: true, width: 80, align: 'right'},
