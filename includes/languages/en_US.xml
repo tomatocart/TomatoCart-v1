@@ -456,6 +456,11 @@
       <group>general</group>
     </definition>
     <definition>
+      <key>button_return</key>
+      <value><![CDATA[Return]]></value>
+      <group>general</group>
+    </definition>
+    <definition>
       <key>button_sign_in</key>
       <value><![CDATA[Sign In]]></value>
       <group>general</group>
