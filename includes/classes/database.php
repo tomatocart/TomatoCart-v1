@@ -592,7 +592,10 @@
     }
 
     function setLogging($module, $id = null) {
-      $this->logging = true;
+      if (defined('ENABLE_ADMINISTRATORS_LOG') && ENABLE_ADMINISTRATORS_LOG == '1') {
+      	$this->logging = true;
+      }
+      
       $this->logging_module = $module;
       $this->logging_module_id = $id;
     }
