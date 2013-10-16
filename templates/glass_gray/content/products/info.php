@@ -54,10 +54,16 @@
         <td colspan="2" id="productInfoPrice"><?php echo $osC_Product->getPriceFormated(true) . '&nbsp;' . ( (DISPLAY_PRICE_WITH_TAX == '1') ? $osC_Language->get('including_tax') : '' ); ?></td>
       </tr>
       
+  <?php
+    if ($osC_Product->getSKU()) {
+  ?>
       <tr>
         <td class="label" width="45%"><?php echo $osC_Language->get('field_sku'); ?></td>
         <td id="productInfoSku"><?php echo $osC_Product->getSKU(); ?>&nbsp;</td>
       </tr>
+  <?php
+    }
+  ?>
 
       <tr>
         <td class="label"><?php echo $osC_Language->get('field_availability'); ?></td>
