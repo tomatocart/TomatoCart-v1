@@ -1437,10 +1437,11 @@ CREATE TABLE toc_templates_boxes_to_pages (
   KEY templates_boxes_id (templates_boxes_id,templates_id,content_page,boxes_group)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+DROP TABLE IF EXISTS toc_variants_specials;
 CREATE TABLE IF NOT EXISTS toc_variants_specials (
   variants_specials_id int(11) NOT NULL AUTO_INCREMENT,
   products_variants_id int(11) NOT NULL,
-  variants_speicals_price decimal(15,4) NOT NULL,
+  variants_specials_price decimal(15,4) NOT NULL,
   specials_date_added datetime DEFAULT NULL,
   specials_last_modified datetime DEFAULT NULL,
   start_date datetime DEFAULT NULL,

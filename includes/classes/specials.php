@@ -95,14 +95,14 @@
       global $osC_Database;
       
       if (!isset($this->_specials['variants'][$variants_id])) {
-        $Qspecial = $osC_Database->query('select variants_speicals_price from :table_variants_specials where products_variants_id = :products_variants_id and status = 1');
+        $Qspecial = $osC_Database->query('select variants_specials_price from :table_variants_specials where products_variants_id = :products_variants_id and status = 1');
         $Qspecial->bindTable(':table_variants_specials', TABLE_VARIANTS_SPECIALS);
         $Qspecial->bindInt(':products_variants_id', $variants_id);
         $Qspecial->setCache('product-variants-specials-' . $variants_id);
         $Qspecial->execute();
         
         if ($Qspecial->numberOfRows() > 0) {
-          $this->_specials['variants'][$variants_id] = $Qspecial->valueDecimal('variants_speicals_price');
+          $this->_specials['variants'][$variants_id] = $Qspecial->valueDecimal('variants_specials_price');
         } else {
           $this->_specials['variants'][$variants_id] = null;
         }
