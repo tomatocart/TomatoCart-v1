@@ -97,9 +97,9 @@
 
 <?php if (USE_WYSIWYG_TINYMCE_EDITOR == '1') { ?>  
 
-  <script type="text/javascript" src="external/tinymec/miframe-min.js"></script>
-  <script type="text/javascript" src="external/tinymec/tiny_mce/tiny_mce.js"></script>
-  <script type="text/javascript" src="external/tinymec/Ext.ux.TinyMCE.min.js"></script>
+  <script type="text/javascript" src="external/tinymce/miframe-min.js"></script>
+  <script type="text/javascript" src="external/tinymce/tiny_mce/tiny_mce.js"></script>
+  <script type="text/javascript" src="external/tinymce/Ext.ux.TinyMCE.min.js"></script>
 
 <?php } ?>
   
