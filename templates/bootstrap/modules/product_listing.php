@@ -109,7 +109,7 @@ if ($Qlisting->numberOfRows() > 0) {
                 $href = osc_href_link(FILENAME_PRODUCTS, $Qlisting->value('products_id') . (isset($_GET['manufacturers']) ? '&manufacturers=' . $_GET['manufacturers'] : ($cPath ? '&cPath=' . $cPath : '')));
                 
                 //image
-                $image = $osC_Image->show($Qlisting->value('image'), $Qlisting->value('products_name'), 'class="thumb productImage"');
+                $image = show_products_listing_image($Qlisting->value('image'), $Qlisting->value('products_name'), 'class="thumb productImage"');
                 $image_link = osc_link_object($href, $image, 'id="img_ac_productlisting_'. $Qlisting->value('products_id') . '"');
                 
                 $buy_now_link = osc_href_link(basename($_SERVER['SCRIPT_FILENAME']), $Qlisting->value('products_id') . '&' . osc_get_all_get_params(array('action')) . '&action=cart_add');
