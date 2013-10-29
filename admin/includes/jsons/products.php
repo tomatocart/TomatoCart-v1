@@ -397,7 +397,7 @@
       }
 
       if ( !empty($_REQUEST['search']) ) {
-        $Qproducts->appendQuery('and pd.products_name like :products_name or p.products_sku like :products_sku');
+        $Qproducts->appendQuery('and (pd.products_name like :products_name or p.products_sku like :products_sku)');
         $Qproducts->bindValue(':products_name', '%' . $_REQUEST['search'] . '%');
         $Qproducts->bindValue(':products_sku', '%' . $_REQUEST['search'] . '%');
       }
