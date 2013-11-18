@@ -626,12 +626,49 @@ height: 0;
 #popupCart .cartCallpased {padding-right:15px;background: url(images/arrow-down.png) no-repeat right center;cursor:pointer;}
 #popupCart .cartExpanded {padding-right:15px;background: url(images/arrow-up.png) no-repeat right center;cursor:pointer;}
 #popupCartContent .cartEmpty{color:#464646;margin-left:10px;float:left;}
-#popupCartContent {width: 312px; z-index: 1000; background-color:#F3F3F3; border-left: 1px solid #D9D9D9; border-right: 1px solid #D9D9D9; border-top: 1px solid #D9D9D9; border-bottom: 1px solid #8B8A8A; padding:0; margin: 0;}
-#popupCartContent h6 {color: #BEBEBE;border: 0;}
+#popupCartContent {width: 312px; z-index: 1000; background:none; padding-top:20px; margin: 0;}
+#popupCartContent .cartInner {
+	padding: 10px;
+	border-radius: 4px;
+	-webkit-box-shadow: 0 0 3px 3px #CCCCCC;
+	-moz-box-shadow: 0 0 3px 3px #CCCCCC;
+	box-shadow: 0 0 3px 3px #CCCCCC;
+	background: #DDDDDD;
+	background-image: -webkit-gradient(
+	  linear,
+	  left top,
+	  left bottom,
+	  color-stop(0, #DDDDDD),
+	  color-stop(0.71, #FFFFFF)
+	);
+	background-image: -o-linear-gradient(bottom, #DDDDDD 0%, #FFFFFF 71%);
+	background-image: -moz-linear-gradient(bottom, #DDDDDD 0%, #FFFFFF 71%);
+	background-image: -webkit-linear-gradient(bottom, #DDDDDD 0%, #FFFFFF 71%);
+	background-image: -ms-linear-gradient(bottom, #DDDDDD 0%, #FFFFFF 71%);
+	background-image: linear-gradient(to bottom, #DDDDDD 0%, #FFFFFF 71%);
+}
+#popupCartContent table {width:100%;border-collapse: collapse; border-spacing: 0;}
+#popupCartContent table.products td {
+	 border-bottom: 1px solid #CCCCCC;
+   padding: 8px 5px;
+   vertical-align: center;
+}
+
+#popupCartContent table.orderTotals td {padding: 5px;}
+#popupCartContent table.orderTotals td.title {width:80%;text-align: right;}
+#popupCartContent table.orderTotals td.text {width: 19%;text-align:left;}
+
+#popupCartContent .buttons {margin: 10px 0;}
+#popupCartContent .buttons .btnCheckout {float:right;}
+#popupCartContent .buttons .btnCart {float:left;}
+
+#popupCartContent h6 {color: #BEBEBE;border-bottom: 1px solid #CCCCCC;padding-bottom: 10px;}
 #popupCartContent .productImage {border: 1px solid #dddddd;}
 #popupCartContent .subtotal {color: #464646; font-weight: bold; float: right;margin-right:10px;margin-bottom:10px;}
 #popupCartContent .content {border: none}
 #btnClosePopCart {background: none;border:0;color:#FFFFFF;cursor:pointer;position:absolute;right:5px;font-weight:bolder;font-size:18px;}
+
+
 
 /**product info**/
 #productImages {margin-top: 10px;text-align: center;width: 240px;border:1px solid #DDDDDD;}
