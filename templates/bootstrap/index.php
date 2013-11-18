@@ -341,9 +341,25 @@ require_once 'helper.php';
 <script type="text/javascript">
 window.addEvent('domready', function() {
     new PopupCart({
-    	template: '<?php echo $osC_Template->getCode(); ?>',
-    	sessionName: '<?php echo $osC_Session->getName(); ?>',
-    	sessionId: '<?php echo $osC_Session->getID(); ?>'
+			template: '<?php echo $osC_Template->getCode(); ?>',
+			enableDelete: '<?php 
+					$box_modules = $osC_Template->osC_Modules_Boxes->_modules;
+        	
+        	$flag = 'yes';
+        	foreach($box_modules as $box_group => $modules) {
+        		foreach ($modules as $module_code) {
+        			if ($module_code == 'shopping_cart') {
+        				$flag = 'no';
+        				
+        				break 2;
+        			}
+        		}
+        	}
+        	
+        	echo $flag;
+        ?>',
+			sessionName: '<?php echo $osC_Session->getName(); ?>',
+			sessionId: '<?php echo $osC_Session->getID(); ?>'
     });
     new TocAutoCompleter('keywords', {
         sessionName: '<?php echo $osC_Session->getName(); ?>',
