@@ -396,6 +396,11 @@
       <group>general</group>
     </definition>
     <definition>
+      <key>add_to_cart_confirmation</key>
+      <value><![CDATA[Success: You have added %s to your shopping cart!]]></value>
+      <group>general</group>
+    </definition>
+    <definition>
       <key>add_to_wishlist</key>
       <value><![CDATA[Add To Wishlist]]></value>
       <group>general</group>

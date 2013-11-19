@@ -254,7 +254,10 @@ var PopupCart = new Class({
                 
                   if (result.success == true) {
                     //move the product image into the popup cart with flying effects
-                    this.doFlyingEffects(addToCartButton, result.items);         
+                    this.doFlyingEffects(addToCartButton, result.items);
+                    
+                    //show the confirmation dialog
+                    this.showConfirmation(result.confirm_dialog);
                   }else {
                     addToCartButton.erase('disabled');
                   }
@@ -344,6 +347,63 @@ var PopupCart = new Class({
              tblOrderTotals.set('html', result.order_totals);
           }
       }.bind(this));
+  },
+  
+  /**
+   * show confirmation dialog
+   * 
+   * @param confirm_dialog
+   * @param pageY The y position of the mouse, relative to the full window.
+   * 
+   * return void
+   */
+  showConfirmation: function(confirm_dialog) {
+      if (confirm_dialog != null) {
+          var e = window, 
+          a = 'inner', 
+          viewport,
+          dlg,
+          dlgSize,
+          scrollY;
+          
+          //calculate the viewport width and height
+          if ( ! ('innerWidth' in window )) {
+              a = 'client';
+              e = document.documentElement || document.body;
+          }
+          viewport = {width: e[a + 'Width'] , height: e[a + 'Height']};
+
+          //calucate scoller height
+          scrollY = window.pageYOffset || document.body.scrollTop || document.documentElement.scrollTop;
+          
+          //build the dlg and add it into the document
+          dlg = new Element('div', {
+              'class': 'confirmContainer',
+              'html': confirm_dialog,
+              'styles': {
+                  'position': 'absolute'
+              }
+          });
+          $(document.body).adopt(dlg);
+          dlg.addClass('animated bounceInDown');
+          dlgSize = dlg.getSize();
+          dlg.setStyles({left: ((viewport.width / 2 - dlgSize.x / 2) + 'px'), top: ((viewport.height / 2 - dlgSize.y / 2 + scrollY) + 'px')});
+          
+          //set the continue action
+          if ($('btnContinue') != null) {
+              $('btnContinue').addEvent('click', function(e){
+                  e.stop();
+                  
+                  dlg.removeClass('bounceInDown');
+                  dlg.addClass('slideOutUp');
+                  
+                  //destroy the dlg
+                  (function() {dlg.destroy();}).delay(500);
+                  
+                  return false;
+              }.bind(this));
+          }
+      }
   },
   
   /**

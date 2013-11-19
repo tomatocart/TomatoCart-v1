@@ -684,6 +684,93 @@ height: 0;
   animation-name: slideOutUp;
 }
 
+@-webkit-keyframes bounceInDown {
+  0% {
+    opacity: 0;
+    -webkit-transform: translateY(-2000px);
+  }
+
+  60% {
+    opacity: 1;
+    -webkit-transform: translateY(30px);
+  }
+
+  80% {
+    -webkit-transform: translateY(-10px);
+  }
+
+  100% {
+    -webkit-transform: translateY(0);
+  }
+}
+
+@-moz-keyframes bounceInDown {
+  0% {
+    opacity: 0;
+    -moz-transform: translateY(-2000px);
+  }
+
+  60% {
+    opacity: 1;
+    -moz-transform: translateY(30px);
+  }
+
+  80% {
+    -moz-transform: translateY(-10px);
+  }
+
+  100% {
+    -moz-transform: translateY(0);
+  }
+}
+
+@-o-keyframes bounceInDown {
+  0% {
+    opacity: 0;
+    -o-transform: translateY(-2000px);
+  }
+
+  60% {
+    opacity: 1;
+    -o-transform: translateY(30px);
+  }
+
+  80% {
+    -o-transform: translateY(-10px);
+  }
+
+  100% {
+    -o-transform: translateY(0);
+  }
+}
+
+@keyframes bounceInDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-2000px);
+  }
+
+  60% {
+    opacity: 1;
+    transform: translateY(30px);
+  }
+
+  80% {
+    transform: translateY(-10px);
+  }
+
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.animated.bounceInDown {
+  -webkit-animation-name: bounceInDown;
+  -moz-animation-name: bounceInDown;
+  -o-animation-name: bounceInDown;
+  animation-name: bounceInDown;
+}
+
 .cart a:hover {text-decoration:none;}
 #popupCart .cartCallpased {padding-right:15px;background: url(images/arrow-down.png) no-repeat right center;cursor:pointer;}
 #popupCart .cartExpanded {padding-right:15px;background: url(images/arrow-up.png) no-repeat right center;cursor:pointer;}
@@ -730,7 +817,20 @@ height: 0;
 #popupCartContent .content {border: none}
 #btnClosePopCart {background: none;border:0;color:#FFFFFF;cursor:pointer;position:absolute;right:5px;font-weight:bolder;font-size:18px;}
 
+.confirmContainer {
+	width: 400px;
+	padding: 15px;
+	text-align:center;
+	background: #FFFFFF;
+	border-radius: 4px;
+	box-shadow: 0 0 5px 5px #CCCCCC;
+	-webkit-box-shadow: 0 0 5px 5px #CCCCCC;
+	-moz-box-shadow: 0 0 5px 5px #CCCCCC;
+	-ms-box-shadow: 0 0 5px 5px #CCCCCC;
+	-o-box-shadow: 0 0 5px 5px #CCCCCC;
+}
 
+.confirmContainer .btns a {padding: 0 10px;}
 
 /**product info**/
 #productImages {margin-top: 10px;text-align: center;width: 240px;border:1px solid #DDDDDD;}
