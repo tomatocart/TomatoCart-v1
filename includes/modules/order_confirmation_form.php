@@ -79,10 +79,10 @@
     }
     
     if ($products['type'] == PRODUCT_TYPE_GIFT_CERTIFICATE) {
-      echo '<br /><nobr><small>&nbsp;<i> - ' . $osC_Language->get('senders_name') . ': ' . $products['gc_data']['recipients_name'] . '</i></small></nobr>';
+      echo '<br /><nobr><small>&nbsp;<i> - ' . $osC_Language->get('senders_name') . ': ' . $products['gc_data']['senders_name'] . '</i></small></nobr>';
       
       if ($products['gc_data']['type'] == GIFT_CERTIFICATE_TYPE_EMAIL) {
-        echo '<br /><nobr><small>&nbsp;<i> - ' . $osC_Language->get('senders_email')  . ': ' . $products['gc_data']['recipients_email'] . '</i></small></nobr>';
+        echo '<br /><nobr><small>&nbsp;<i> - ' . $osC_Language->get('senders_email')  . ': ' . $products['gc_data']['senders_email'] . '</i></small></nobr>';
       }
       
       echo '<br /><nobr><small>&nbsp;<i> - ' . $osC_Language->get('recipients_name') . ': ' . $products['gc_data']['recipients_name'] . '</i></small></nobr>';
