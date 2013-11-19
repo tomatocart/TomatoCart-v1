@@ -50,9 +50,7 @@ var PopupCart = new Class({
     clsAddBtn: '.ajaxAddToCart',
     
     //represent the flying image element
-    clsImage: '.productImage',
-            
-    urlLoadingImage: null
+    clsImage: '.productImage'
   },
   
   //init the popup cart
@@ -95,18 +93,13 @@ var PopupCart = new Class({
   //get the shopping cart content
   getShoppingCart: function() {
     var data = {
-      template: this.options.template,
-      module: 'popup_cart', 
-      action: 'get_cart_contents'
+      action: 'get_cart_contents',
+      enable_delete: this.options.enableDelete
     };
-    data[this.options.sessionName] = this.options.sessionId;
-    data['enable_delete'] = this.options.enableDelete;
     
-    var loadRequest = new Request({
-      url: this.options.remoteUrl,
-      data: data,
-      onSuccess: this.displayCart.bind(this)
-    }).send();
+    this.sendRequest(data, function(response) {
+        this.displayCart(response);
+    }.bind(this));
   },
   
   //display the cart with the shopping cart content
@@ -159,7 +152,7 @@ var PopupCart = new Class({
                       
                       var productIdString = removeBtn.get('data-pid');
                       
-                      this.removeProduct(productIdString);
+                      this.removeProduct(productIdString, removeBtn);
                       
                       return false;
                       
@@ -262,7 +255,6 @@ var PopupCart = new Class({
                   if (result.success == true) {
                     //move the product image into the popup cart with flying effects
                     this.doFlyingEffects(addToCartButton, result.items);         
-                  //alert the error
                   }else {
                     addToCartButton.erase('disabled');
                   }
@@ -315,7 +307,7 @@ var PopupCart = new Class({
           floatImage.fade('out');
           
           //destroy the float image
-          (function() {floatImage.destroy();}).delay(1000);
+          (function() {floatImage.destroy();}).delay(500);
           
           //enable the fly trigger again
           addToCartButton.erase('disabled');
@@ -327,30 +319,31 @@ var PopupCart = new Class({
   },
   
   //remove product based on the product id string
-  removeProduct: function(productIdString) {
+  removeProduct: function(productIdString, removeBtn) {
       var result,
-          loadRequest,
+          elItem = removeBtn.getParent('tr'),
+          tblOrderTotals = removeBtn.getParent('table').getNext('table'),
           data = {
-            template: this.options.template,
-            module: 'popup_cart', 
-            action: 'remove_product'
+            action: 'remove_product',
+            pID: productIdString     
           };
       
-      data[this.options.sessionName] = this.options.sessionId;
-      data['pID'] = productIdString;
-      loadRequest = new Request({
-        url: this.options.remoteUrl,
-        data: data,
-        onSuccess: function(response) {
-            result = JSON.decode(response);
-            
-            if (result.success) {
-                this.getShoppingCart();
-            }
-        }.bind(this)
-      });
-      
-      loadRequest.send();
+      this.sendRequest(data, function(response) {
+          result = JSON.decode(response);
+          
+          if (result.success) {
+             elItem.addClass('animated slideOutUp');
+              
+             //An anonymous function which waits a second and then destroy the item element
+             (function(){elItem.destroy()}).delay(300);
+             
+             //update the items count
+             this.options.itemsEl.set('text', result.total);
+             
+             //update order totals
+             tblOrderTotals.set('html', result.order_totals);
+          }
+      }.bind(this));
   },
   
   /**

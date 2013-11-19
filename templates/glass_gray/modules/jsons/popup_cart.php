@@ -114,7 +114,7 @@
 			
       $content .= '</div>';
       
-      $response = array('success' => true, 'content' => $content, 'total' => count($osC_ShoppingCart->getProducts()));
+      $response = array('success' => true, 'content' => $content, 'total' => $osC_ShoppingCart->numberOfItems());
       
       echo $toC_Json->encode($response);
     }
@@ -194,8 +194,17 @@
     		if (!$osC_ShoppingCart->hasContents()) {
     			$osC_ShoppingCart->reset();
     		}
+    		
+    		//order totals
+    		$order_totals =	'';
+    		foreach ($osC_ShoppingCart->getOrderTotals() as $module) {
+    			$order_totals .=	'<tr>' .
+					    							'	<td class="title"><strong>' . $module['title'] . '</strong></td>' .
+					    							'	<td class="text"><strong>' . $module['text'] . '</strong></td>' .
+					    							'</tr>';
+    		}
     	
-    		$response = array('success' => true);
+    		$response = array('success' => true, 'total' => $osC_ShoppingCart->numberOfItems(), 'order_totals' => $order_totals);
     	}else {
     		$response = array('success' => false);
     	}
