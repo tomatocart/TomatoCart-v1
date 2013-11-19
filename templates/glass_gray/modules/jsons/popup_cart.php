@@ -117,7 +117,69 @@
       $response = array('success' => true, 'content' => $content, 'total' => count($osC_ShoppingCart->getProducts()));
       
       echo $toC_Json->encode($response);
-    } 
+    }
+
+    function addProduct() {
+    	global $osC_ShoppingCart, $toC_Json, $osC_Language, $toC_Customization_Fields;
+    
+    	$osC_Language->load('products');
+    
+    	if ( is_numeric($_POST['pID']) && osC_Product::checkEntry($_POST['pID']) ) {
+    		$osC_ShoppingCart->resetShippingMethod();
+    
+    		$osC_Product = new osC_Product($_POST['pID']);
+    
+    		//gift certificate check
+    		if ($osC_Product->isGiftCertificate() && !isset($_POST['senders_name'])) {
+    			$response = array('success' => false,
+    												'feedback' => $osC_Language->get('error_gift_certificate_data_missing'));
+    		}
+    		//customization fields check
+    		else if ( $osC_Product->hasRequiredCustomizationFields() && !$toC_Customization_Fields->exists($osC_Product->getID()) ) {
+    			$response = array('success' => false,
+    												'feedback' => $osC_Language->get('error_customization_fields_missing'));
+    		} else {
+    			$variants = null;
+    			if (isset($_POST['variants']) && !empty($_POST['variants'])) {
+    				$variants = osc_parse_variants_string($_POST['variants']);
+    			}
+    
+    			$gift_certificate_data = null;
+    			if($osC_Product->isGiftCertificate() && isset($_POST['senders_name']) && isset($_POST['recipients_name']) && isset($_POST['message'])) {
+    				if ($osC_Product->isEmailGiftCertificate()) {
+    					$gift_certificate_data = array('senders_name' => $_POST['senders_name'],
+    									'senders_email' => $_POST['senders_email'],
+    									'recipients_name' => $_POST['recipients_name'],
+    									'recipients_email' => $_POST['recipients_email'],
+    									'message' => $_POST['message']);
+    				} else {
+    					$gift_certificate_data = array('senders_name' => $_POST['senders_name'],
+    									'recipients_name' => $_POST['recipients_name'],
+    									'message' => $_POST['message']);
+    				}
+    
+    				if ($osC_Product->isOpenAmountGiftCertificate()) {
+    					$gift_certificate_data['price'] = $_POST['gift_certificate_amount'];
+    				}
+    
+    				$gift_certificate_data['type'] = $osC_Product->getGiftCertificateType();
+    			}
+    
+    			$osC_ShoppingCart->add($_POST['pID'], $variants, $_POST['pQty'], $gift_certificate_data);
+    
+    			$items = 0;
+    			foreach($osC_ShoppingCart->getProducts() as $products_id => $data) {
+    				$items += $data['quantity'];
+    			}
+    
+    			$response = array('success' => true, 'items' => $items);
+    		}
+    	} else {
+    		$response = array('success' => false);
+    	}
+    
+    	echo $toC_Json->encode($response);
+    }
     
     //remove product from popup cart
     function removeProduct() {

@@ -10,6 +10,20 @@
   as published by the Free Software Foundation.
 */
 
+Element.implement({
+    closest: function(el) {
+        var find = this.getElement(el),
+            self = this;
+
+        while (self && !find) {
+            self = self.getParent();
+            find = self ? self.getElement(el) : null;
+        }
+
+        return find;
+    }
+});
+
 var PopupCart = new Class({
   Implements: [Options],
   options: {
@@ -19,19 +33,35 @@ var PopupCart = new Class({
     isCartExpanded: false,
     triggerEl: $('popupCart'),
     container: $('pageHeader'),
+    itemsEl: $('popupCartItems'),
     clsCollapsed: 'cartCallpased',
     clsExpanded: 'cartExpanded',
     clsCartText: 'cartText',
     relativeTop: 0,
     relativeLeft: 215,
-    enableDelete: 'yes'
+    
+    //flag to represent the ajax shopping cart box is eanbled / disabled
+    enableDelete: 'yes',
+    
+    //enable the flying effect or not
+    enableFlyEffect: true,
+    
+    //the class name of the add to cart button
+    clsAddBtn: '.ajaxAddToCart',
+    
+    //represent the flying image element
+    clsImage: '.productImage',
+            
+    urlLoadingImage: null
   },
   
+  //init the popup cart
   initialize: function(options) {
     this.setOptions(options);
     this.registerEvents();
   },
   
+  //register the mouseover events for the trigger element
   registerEvents: function() {
     this.options.triggerEl.addEvents({
       'mouseover': function(e) {
@@ -50,6 +80,16 @@ var PopupCart = new Class({
         }
       }.bind(this)
     });
+    
+    //enable the flying effects only when the ajax shopping cart box is disabled
+    if (this.options.enableDelete === 'no') {
+        this.options.enableFlyEffect = false;
+    }
+    
+    //active the flying effects
+    if (this.options.enableFlyEffect == true) {
+      this.enableFlyingEffects();
+    }
   },
   
   //get the shopping cart content
@@ -128,11 +168,162 @@ var PopupCart = new Class({
           }
           
           //update cart total items
-          this.options.triggerEl.getElement('#popupCartItems').set('text', result.total);
+          this.options.itemsEl.set('text', result.total);
       }
       
       this.options.isCartExpanded = true;
     }
+  },
+  
+  //enable the flying effects
+  enableFlyingEffects: function() {
+    var addCartBtns = $$(this.options.clsAddBtn);
+    
+    //verify whether there is any add to cart button
+    if (addCartBtns != null) {
+        addCartBtns.each(function(addToCartButton) {
+            addToCartButton.addEvent('click', function(e) {
+                e.stop();
+                
+                //disable the fly trigger
+                addToCartButton.set('disabled', 'disabled');
+                
+                //check parameters
+                var errors = [],
+                    btnId = addToCartButton.get('id'),
+                    pID = btnId.test("^ac_[a-z]+_[0-9]+$", "i") ? btnId.split('_').getLast() : null,
+                    params = {action: 'add_product', pID: pID},
+                    selects = $$('tr.variantCombobox select'),
+                    variants = '';
+                
+                if ( $defined($('quantity')) ) {
+                  params.pQty = $('quantity').get('value');  
+                }
+
+                //variants
+                if ($defined(selects)) {
+                  selects.each(function(select) {
+                    var id = select.id.toString();
+                    var groups_id = id.substring(9, id.indexOf(']'));
+                    
+                    variants += groups_id + ':' + select.value + ';';
+                  }.bind(this));
+                  
+                  params.variants = variants; 
+                }
+                
+                //gift certificate
+                if ($defined($('senders_name')) && $('senders_name').value != '') {
+                  params.senders_name = $('senders_name').value;
+                } else if ($defined($('senders_name')) && $('senders_name').value == '') {
+                  errors.push(this.options.error_sender_name_empty);
+                }
+                 
+                if ($defined($('senders_email')) && $('senders_email').value != '') {
+                  params.senders_email = $('senders_email').value;
+                } else if ($defined($('senders_email')) && $('senders_email').value == '') {
+                  errors.push(this.options.error_sender_email_empty);
+                }
+                  
+                if ($defined($('recipients_name')) && $('recipients_name').value != '') {
+                  params.recipients_name = $('recipients_name').value;
+                } else if ($defined($('recipients_name')) && $('recipients_name').value == '') {
+                  errors.push(this.options.error_recipient_name_empty);
+                }
+                  
+                if ($defined($('recipients_email')) && $('recipients_email').value != '') {
+                  params.recipients_email = $('recipients_email').value;
+                } else if ($defined($('recipients_email')) && $('recipients_email').value == '') {
+                  errors.push(this.options.error_recipient_email_empty);
+                }
+                    
+                if ($defined($('message')) && $('message').value != '') {
+                  params.message = $('message').value;
+                } else if ($defined($('message')) && $('message').value == '') {
+                  errors.push(this.options.error_message_empty);
+                }
+                    
+                if ($defined($('gift_certificate_amount')) && $('gift_certificate_amount').value != '') {
+                  params.gift_certificate_amount = $('gift_certificate_amount').value;
+                } else if ($defined($('gift_certificate_amount')) && $('gift_certificate_amount').value == '') {
+                  errors.push(this.options.error_message_open_gift_certificate_amount);
+                }
+                
+                if (errors.length > 0) {
+                  alert(errors.join('\n'));
+                  addToCartButton.erase('disabled');
+                  return false;
+                }
+                
+                //send the ajax request to add the product into the shopping cart
+                this.sendRequest(params, function(response) {
+                  var result = JSON.decode(response);
+                
+                  if (result.success == true) {
+                    //move the product image into the popup cart with flying effects
+                    this.doFlyingEffects(addToCartButton, result.items);         
+                  //alert the error
+                  }else {
+                    addToCartButton.erase('disabled');
+                  }
+                });
+                
+                return false;
+            }.bind(this));
+        }, this);
+    }
+  },
+  
+  /**
+   * move the product image into the popup cart with flying effects
+   * 
+   * @param addToCartButton the add to cart button
+   * @param items the count number of items in current shopping cart
+   * 
+   * return void
+   */
+  doFlyingEffects: function(addToCartButton, items) {
+      var documentBody = $(document.body),
+          //find the product image which is closest with current actived add to cart button
+          imageEl = addToCartButton.closest(this.options.clsImage),
+          
+          //get the coordinates of the fly image element
+          srcPos = imageEl.getCoordinates(),
+          
+          //copy the fly image element
+          floatImage = imageEl.clone().setStyles({
+            'position': 'absolute',
+            'width': srcPos.width,
+            'height': srcPos.height,
+            'left': srcPos.left,
+            'top': srcPos.top,
+            'z-index': 9999
+          }),
+          
+          //get the destination position
+          destPos = this.options.triggerEl.getCoordinates();
+          
+  
+      //add the float image into the document
+      documentBody.adopt(floatImage);
+      
+      //create the flying effects
+      floatImage.set('morph', {
+        duration: 700,
+        onComplete: function() {
+          //fade out float image
+          floatImage.fade('out');
+          
+          //destroy the float image
+          (function() {floatImage.destroy();}).delay(1000);
+          
+          //enable the fly trigger again
+          addToCartButton.erase('disabled');
+          
+          //update the items count
+          this.options.itemsEl.set('text', items);
+        }.bind(this)
+      }).morph({width: srcPos.width / 4, height: srcPos.height / 4, top: destPos.top, left: destPos.left});
   },
   
   //remove product based on the product id string
@@ -160,5 +351,32 @@ var PopupCart = new Class({
       });
       
       loadRequest.send();
+  },
+  
+  /**
+   * send the ajax request
+   * 
+   * @param params - an object composed of the params which will be sent in the reqeust
+   * @param callback - an function will be called after receiving the respose from the server
+   * 
+   * return void
+   */
+  sendRequest: function(params, callback) {
+    var data = {
+      template: this.options.template,
+      module: 'popup_cart',
+      method: 'post'
+    };
+    
+    data[this.options.sessionName] = this.options.sessionId;
+    
+    $extend(data, params);
+    
+    //send the ajax request
+    var loadRequest = new Request({
+      url: this.options.remoteUrl,
+      data: data,
+      onSuccess: callback.bind(this)
+    }).send();
   }
 });

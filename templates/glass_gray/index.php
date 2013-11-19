@@ -328,7 +328,13 @@
       	echo $flag;
       ?>',
       sessionName: '<?php echo $osC_Session->getName(); ?>',
-      sessionId: '<?php echo $osC_Session->getID(); ?>'
+      sessionId: '<?php echo $osC_Session->getID(); ?>',
+      error_sender_name_empty: '<?php echo $osC_Language->get("error_sender_name_empty"); ?>',
+      error_sender_email_empty: '<?php echo $osC_Language->get("error_sender_email_empty"); ?>',
+      error_recipient_name_empty: '<?php echo $osC_Language->get("error_recipient_name_empty"); ?>',
+      error_recipient_email_empty: '<?php echo $osC_Language->get("error_recipient_email_empty"); ?>',
+      error_message_empty: '<?php echo $osC_Language->get("error_message_empty"); ?>',
+      error_message_open_gift_certificate_amount: '<?php echo $osC_Language->get('error_message_open_gift_certificate_amount'); ?>'
     });
     
     new TocAutoCompleter('keywords', {
