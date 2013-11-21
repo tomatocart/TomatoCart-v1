@@ -299,7 +299,7 @@
   }
 ?>
 
-
+<script type="text/javascript" src="includes/javascript/pop_dialog.js"></script>
 <script type="text/javascript" src="ext/autocompleter/Autocompleter.js"></script>
 <script type="text/javascript" src="ext/autocompleter/Autocompleter.Request.js"></script>
 <script type="text/javascript" src="ext/autocompleter/Observer.js"></script>

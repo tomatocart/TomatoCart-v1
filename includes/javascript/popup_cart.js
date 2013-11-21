@@ -373,46 +373,23 @@ var PopupCart = new Class({
    */
   showConfirmation: function(confirm_dialog) {
       if (confirm_dialog != null) {
-          var e = window, 
-          a = 'inner', 
-          viewport,
-          dlg,
-          dlgSize,
-          scrollY;
-          
-          //calculate the viewport width and height
-          if ( ! ('innerWidth' in window )) {
-              a = 'client';
-              e = document.documentElement || document.body;
+          if (typeof this.dlg !== 'undefined') {
+              this.dlg.update(confirm_dialog);
+          }else {
+              this.dlg = new popDialog(confirm_dialog, {clsEl: 'confirmContainer'});
           }
-          viewport = {width: e[a + 'Width'] , height: e[a + 'Height']};
-
-          //calucate scoller height
-          scrollY = window.pageYOffset || document.body.scrollTop || document.documentElement.scrollTop;
           
-          //build the dlg and add it into the document
-          dlg = new Element('div', {
-              'class': 'confirmContainer',
-              'html': confirm_dialog,
-              'styles': {
-                  'position': 'absolute'
-              }
-          });
-          $(document.body).adopt(dlg);
-          dlg.addClass('animated bounceInDown');
-          dlgSize = dlg.getSize();
-          dlg.setStyles({left: ((viewport.width / 2 - dlgSize.x / 2) + 'px'), top: ((viewport.height / 2 - dlgSize.y / 2 + scrollY) + 'px')});
+          this.dlg.show();
           
           //set the continue action
           if ($('btnContinue') != null) {
               $('btnContinue').addEvent('click', function(e){
                   e.stop();
-                  
-                  dlg.removeClass('bounceInDown');
-                  dlg.addClass('slideOutUp');
-                  
+                                 
+                  this.dlg.doAnimate('slideOutUp');
+                
                   //destroy the dlg
-                  (function() {dlg.destroy();}).delay(500);
+                  (function() {this.dlg.hide();}).delay(500);
                   
                   return false;
               }.bind(this));
