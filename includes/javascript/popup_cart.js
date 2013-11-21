@@ -109,6 +109,7 @@ var PopupCart = new Class({
   displayCart: function(response) {
     var result = JSON.decode(response),
         pos = this.options.triggerEl.getCoordinates(),
+        cartFx,
         removeBtns;
 
     if (result.success == true) {
@@ -119,14 +120,15 @@ var PopupCart = new Class({
           'styles': {
             'position': 'absolute',
             'top': pos.top + this.options.relativeTop,
-            'left': pos.left - this.options.relativeLeft    
+            'left': pos.left - this.options.relativeLeft,
+            'opacity': 0
           }
         });
         
         this.cartContainer.addEvent('mouseleave', function(e) {
             e.stop();
             
-            this.cartContainer.fade('out');
+            cartFx.start(1, 0);
             
             this.options.isCartExpanded = false;
             
@@ -143,7 +145,14 @@ var PopupCart = new Class({
       }
       
       this.options.container.adopt(this.cartContainer);
-      this.cartContainer.setStyle('opacity', 0).fade('in');
+      
+      cartFx = new Fx.Tween(this.cartContainer, {
+          duration: 'short',
+          link: 'cancel',
+          property: 'opacity'
+      });
+      
+      cartFx.start(0, 1);
       
       //add the remove button
       if (this.options.enableDelete == 'yes') {

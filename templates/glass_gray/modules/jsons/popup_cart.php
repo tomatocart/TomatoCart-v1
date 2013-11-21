@@ -39,9 +39,9 @@
         	}
         	
           $content .= 	'<tr>' .
-          							'	<td>' . osc_link_object(osc_href_link(FILENAME_CHECKOUT, null, 'SSL'), $osC_Image->show($product['image'], $product['name'], '', 'mini')) . '</td>' .
+          							'	<td>' . osc_link_object(osc_href_link(FILENAME_PRODUCTS, $product['id'], 'SSL'), $osC_Image->show($product['image'], $product['name'], '', 'mini')) . '</td>' .
                       	'	<td>' . 
-                      		$product['quantity'] . ' x ' . osc_link_object(osc_href_link(FILENAME_CHECKOUT, null, 'SSL'), $product_name);
+                      		$product['quantity'] . ' x ' . osc_link_object(osc_href_link(FILENAME_PRODUCTS, $product['id'], 'SSL'), $product_name);
           
           								//gift certificates
 									        if ($product['type'] == PRODUCT_TYPE_GIFT_CERTIFICATE) {
