@@ -50,7 +50,10 @@ var PopupCart = new Class({
     clsAddBtn: '.ajaxAddToCart',
     
     //represent the flying image element
-    clsImage: '.productImage'
+    clsImage: '.productImage',
+    
+    //enable the confirmation dialog
+    dlgConfirmStatus: true
   },
   
   //init the popup cart
@@ -257,7 +260,9 @@ var PopupCart = new Class({
                     this.doFlyingEffects(addToCartButton, result.items);
                     
                     //show the confirmation dialog
-                    this.showConfirmation(result.confirm_dialog);
+                    if (this.options.dlgConfirmStatus == true) {
+                        this.showConfirmation(result.confirm_dialog);
+                    }
                   }else {
                     addToCartButton.erase('disabled');
                   }

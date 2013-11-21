@@ -327,6 +327,17 @@
       	
       	echo $flag;
       ?>',
+      <?php 
+      	if (defined('ENABLE_CONFIRMATION_DIALOG') && (ENABLE_CONFIRMATION_DIALOG == '1')) {
+      ?>
+      dlgConfirmStatus: true,
+      <?php 
+				}else {
+      ?>
+      dlgConfirmStatus: false,
+      <?php 
+				}
+      ?>
       sessionName: '<?php echo $osC_Session->getName(); ?>',
       sessionId: '<?php echo $osC_Session->getID(); ?>',
       error_sender_name_empty: '<?php echo $osC_Language->get("error_sender_name_empty"); ?>',
