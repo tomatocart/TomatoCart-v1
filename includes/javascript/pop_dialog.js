@@ -17,13 +17,16 @@ var popDialog = new Class({
         //enable the animation
         enableAnimation: true,
         baseClsAnimated: 'animated',
-        clsAnimated: 'bounceInDown'
+        clsAnimated: 'bounceInDown',
+        clsClose: 'btnClose',
+        clsHideAnimation: 'slideOutUp'
     },
     
     //init the dialog
     initialize: function(html, options) {
       this.setOptions(options);
       
+      this.btnClose = this.createCloseBtn();
       this.dlg = this.createDialog(html);
       
       this.currentClsAnimated = this.options.clsAnimated;
@@ -102,6 +105,8 @@ var popDialog = new Class({
      * return mixed
      */
     createDialog: function(html) {
+        var dlg;
+        
         if (typeof html != 'undefined') {
             //build the dlg and add it into the document
             dlg = new Element('div', {
@@ -112,10 +117,38 @@ var popDialog = new Class({
                 }
             });
             
+            dlg.adopt(this.btnClose);
+            
             return dlg;
         }
         
         return null;
+    },
+    
+    /**
+     * Create the close button
+     * 
+     * return element
+     */
+    createCloseBtn: function() {
+        var btnClose = new Element('a', {
+            'href': '#',
+            'html': '&#10006;',
+            'class': this.options.clsClose
+        });
+        
+        btnClose.addEvent('click', function(e) {
+            e.stop();
+            
+            this.doAnimate(this.options.clsHideAnimation);
+            
+            //hide the dlg
+            (function() {this.hide();}.bind(this)).delay(500);
+            
+            return false;
+        }.bind(this));
+        
+        return btnClose;
     },
     
     /**
@@ -149,5 +182,16 @@ var popDialog = new Class({
      */
     update: function(html) {
         this.dlg.set('html', html);
+        this.dlg.adopt(this.btnClose);
+    },
+    
+
+    /**
+     * Destroy dialog
+     * 
+     * return mixed
+     */
+    destroy: function() {
+        this.dlg.destroy();
     }
 });

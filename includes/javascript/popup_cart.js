@@ -389,7 +389,7 @@ var PopupCart = new Class({
                   this.dlg.doAnimate('slideOutUp');
                 
                   //destroy the dlg
-                  (function() {this.dlg.hide();}).delay(500);
+                  (function() {this.dlg.hide();}.bind(this)).delay(500);
                   
                   return false;
               }.bind(this));

@@ -817,6 +817,7 @@ height: 0;
 #popupCartContent .content {border: none}
 #btnClosePopCart {background: none;border:0;color:#FFFFFF;cursor:pointer;position:absolute;right:5px;font-weight:bolder;font-size:18px;}
 
+/* Pop dialog*/
 .dialog {
 	width: 400px;
 	padding: 15px;
@@ -829,8 +830,31 @@ height: 0;
 	-ms-box-shadow: 0 0 5px 5px #CCCCCC;
 	-o-box-shadow: 0 0 5px 5px #CCCCCC;
 }
-
 .dialog .btns a {padding: 0 10px;}
+.dialog .btnClose {
+	width:25px;
+	height:25px;
+	display:block;
+	position:absolute;
+	right:-10px;
+	top:-10px;
+	text-transform:uppercase;
+	text-decoration:none;
+	color:#fff;
+	background:rgba(255, 0, 0, 0.6);
+	font-family:"Tahoma", Helvetica, sans-serif;
+	text-align:center;
+	font-size:18px;
+	line-height:1.4em;
+	border-radius:50%;
+	-moz-border-radius:50%;
+	-webkit-border-radius:50%;
+	box-shadow:0px 0px 2px 0px #666;
+	-moz-box-shadow:0px 0px 2px 0px #666;
+	-webkit-box-shadow:0px 0px 2px 0px #666;
+	text-indent:1px;
+	font-weight:bold;
+}
 
 /**product info**/
 #productImages {margin-top: 10px;text-align: center;width: 240px;border:1px solid #DDDDDD;}
