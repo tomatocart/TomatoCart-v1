@@ -817,7 +817,7 @@ height: 0;
 #popupCartContent .content {border: none}
 #btnClosePopCart {background: none;border:0;color:#FFFFFF;cursor:pointer;position:absolute;right:5px;font-weight:bolder;font-size:18px;}
 
-.confirmContainer {
+.dialog {
 	width: 400px;
 	padding: 15px;
 	text-align:center;
@@ -830,7 +830,7 @@ height: 0;
 	-o-box-shadow: 0 0 5px 5px #CCCCCC;
 }
 
-.confirmContainer .btns a {padding: 0 10px;}
+.dialog .btns a {padding: 0 10px;}
 
 /**product info**/
 #productImages {margin-top: 10px;text-align: center;width: 240px;border:1px solid #DDDDDD;}

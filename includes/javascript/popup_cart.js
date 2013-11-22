@@ -376,7 +376,7 @@ var PopupCart = new Class({
           if (typeof this.dlg !== 'undefined') {
               this.dlg.update(confirm_dialog);
           }else {
-              this.dlg = new popDialog(confirm_dialog, {clsEl: 'confirmContainer'});
+              this.dlg = new popDialog(confirm_dialog);
           }
           
           this.dlg.show();
