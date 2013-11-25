@@ -650,6 +650,20 @@ height: 0;
   margin: 5px;
 }
 
+.productListing tr td:last-child {
+	width: 125px;
+}
+
+.productListing tr td:last-child input {
+	float:left;
+}
+.productListing tr td:last-child a {
+	float:right;
+}
+
+input.qtyField {text-align:center;}
+div.qtyBlock {margin-bottom:5px;}
+
 /* popupCart */
 .animated {
   -webkit-animation-duration: 1s;

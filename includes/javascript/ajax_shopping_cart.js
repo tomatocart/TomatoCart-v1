@@ -108,6 +108,10 @@ var AjaxShoppingCart = new Class({
           if ( $defined($('quantity')) ) {
             params.pQty = $('quantity').get('value');  
           }
+          
+          if ($('qty_' + pID) != null) {
+              params.pQty = $('qty_' + pID).get('value');  
+          }
 
           //variants
           var selects = $$('tr.variantCombobox select');

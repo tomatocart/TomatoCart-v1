@@ -976,7 +976,7 @@
     function &getListingNew() {
       global $osC_Database, $osC_Language;
 
-      $Qproducts = $osC_Database->query('select p.products_id, p.products_price, p.products_tax_class_id, p.products_date_added, pd.products_name, pd.products_keyword, m.manufacturers_name, i.image from :table_products p left join :table_manufacturers m on (p.manufacturers_id = m.manufacturers_id) left join :table_products_images i on (p.products_id = i.products_id and i.default_flag = :default_flag), :table_products_description pd where p.products_status = 1 and p.products_id = pd.products_id and pd.language_id = :language_id order by p.products_date_added desc, pd.products_name');
+      $Qproducts = $osC_Database->query('select p.products_id, p.products_price, p.products_type, p.products_tax_class_id, p.products_date_added, pd.products_name, pd.products_keyword, m.manufacturers_name, i.image from :table_products p left join :table_manufacturers m on (p.manufacturers_id = m.manufacturers_id) left join :table_products_images i on (p.products_id = i.products_id and i.default_flag = :default_flag), :table_products_description pd where p.products_status = 1 and p.products_id = pd.products_id and pd.language_id = :language_id order by p.products_date_added desc, pd.products_name');
       $Qproducts->bindTable(':table_products', TABLE_PRODUCTS);
       $Qproducts->bindTable(':table_manufacturers', TABLE_MANUFACTURERS);
       $Qproducts->bindTable(':table_products_images', TABLE_PRODUCTS_IMAGES);
