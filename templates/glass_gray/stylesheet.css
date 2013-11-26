@@ -664,6 +664,8 @@ height: 0;
 input.qtyField {text-align:center;width:35px;margin-left:15px;}
 div.qtyBlock {margin-bottom:5px;}
 
+a.readMore {display:block;margin: 5px 3px;}
+
 /* popupCart */
 .animated {
   -webkit-animation-duration: 1s;
