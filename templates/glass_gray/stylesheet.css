@@ -661,7 +661,7 @@ height: 0;
 	float:right;
 }
 
-input.qtyField {text-align:center;}
+input.qtyField {text-align:center;width:35px;margin-left:15px;}
 div.qtyBlock {margin-bottom:5px;}
 
 /* popupCart */
