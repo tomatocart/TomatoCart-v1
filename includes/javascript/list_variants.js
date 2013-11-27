@@ -18,6 +18,7 @@ var TocListVariants = new Class({
         linkWishlistCls : '.wishlist',
         priceCls: '.price',
         buyElCls: '.buyBlock',
+        btnAddCls: '.ajaxAddToCart',
         lang : {
             txtInStock : 'In Stock',
             txtOutOfStock : 'Out Of Stock',
@@ -114,10 +115,11 @@ var TocListVariants = new Class({
         var productsIdString = this.getProductsIdString(),
             product = this.options.variants[productsIdString],
             buyEl = combobox.getParent(this.options.buyElCls),
+            buyBtn = buyEl.getParent().getElement(this.options.btnAddCls).getParent('a'),
             selects = buyEl.getElements('select'),
             href,
             error;
-            
+        
         // if it is in the product info page and the product have any variants,
         // add the variants into the compare products link
         if (this.linkCp) {
@@ -156,7 +158,13 @@ var TocListVariants = new Class({
                     this.imgEl.removeClass('animated flash');
                 }
             }
+            
+            //disable the buy btn
+            buyBtn.addClass('disabled');
         } else {
+            //enable the buy btn
+            buyBtn.removeClass('disabled');
+            
             //remove the alert mark for the selects
             selects.removeClass('alert');
             
