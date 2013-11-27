@@ -749,16 +749,23 @@
       }
     }
 
-    function getImage() {
+    function getImage($variants = null) {
       $default_image = null;
       $default_variant_image = null;
+      $current_variants = null;
       
       if (isset($this->_data['images']) && is_array($this->_data['images'])) {
         foreach ($this->_data['images'] as $image) {
           //get variant default image
           if ($this->hasVariants()) {
-            if (!osc_empty($this->_current_variants)) {
-              $product_id_string = osc_get_product_id_string($this->getID(), $this->_current_variants);
+          	if (!osc_empty($this->_current_variants)) {
+          		$current_variants = $this->_current_variants;
+          	}else if ($variants !== null) {
+          		$current_variants = $variants;
+          	}
+          	
+            if ($current_variants !== null) {
+              $product_id_string = osc_get_product_id_string($this->getID(), $current_variants);
               $product_variant = $this->_data['variants'][$product_id_string];
               
               $default_variant_image = $product_variant['image'];

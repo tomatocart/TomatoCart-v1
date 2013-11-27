@@ -504,7 +504,7 @@
                                                         'type' => $osC_Product->getProductType(),
                                                         'keyword' => $osC_Product->getKeyword(),
                                                         'sku' => $osC_Product->getSKU($variants),
-                                                        'image' => $osC_Product->getImage(),
+                                                        'image' => $osC_Product->getImage($variants),
                                                         'price' => $price,
                                                         'final_price' => $price,
                                                         'quantity' => $quantity,
