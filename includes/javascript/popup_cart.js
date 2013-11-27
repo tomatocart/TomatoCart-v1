@@ -9,21 +9,6 @@
   it under the terms of the GNU General Public License v2 (1991)
   as published by the Free Software Foundation.
 */
-
-Element.implement({
-    closest: function(el) {
-        var find = this.getElement(el),
-            self = this;
-
-        while (self && !find) {
-            self = self.getParent();
-            find = self ? self.getElement(el) : null;
-        }
-
-        return find;
-    }
-});
-
 var PopupCart = new Class({
   Implements: [Options],
   options: {
