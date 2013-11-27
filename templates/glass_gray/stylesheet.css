@@ -190,6 +190,183 @@ A:hover {
 
 a, button { noFocusLine:expression(this.onFocus=this.blur()) }
 
+/* Css3 Animation */
+.animated {
+  -webkit-animation-duration: 1s;
+     -moz-animation-duration: 1s;
+       -o-animation-duration: 1s;
+          animation-duration: 1s;
+  -webkit-animation-fill-mode: both;
+     -moz-animation-fill-mode: both;
+       -o-animation-fill-mode: both;
+          animation-fill-mode: both;
+}
+
+
+@-webkit-keyframes flash {
+  0%, 50%, 100% {opacity: 1;}
+  25%, 75% {opacity: 0;}
+}
+
+@-moz-keyframes flash {
+  0%, 50%, 100% {opacity: 1;}
+  25%, 75% {opacity: 0;}
+}
+
+@-o-keyframes flash {
+  0%, 50%, 100% {opacity: 1;}
+  25%, 75% {opacity: 0;}
+}
+
+@keyframes flash {
+  0%, 50%, 100% {opacity: 1;}
+  25%, 75% {opacity: 0;}
+}
+
+.animated.flash {
+  -webkit-animation-name: flash;
+  -moz-animation-name: flash;
+  -o-animation-name: flash;
+  animation-name: flash;
+}
+
+@-webkit-keyframes slideOutUp {
+  0% {
+    -webkit-transform: translateY(0);
+  }
+
+  100% {
+    opacity: 0;
+    -webkit-transform: translateY(-2000px);
+  }
+}
+
+@-moz-keyframes slideOutUp {
+  0% {
+    -moz-transform: translateY(0);
+  }
+
+  100% {
+    opacity: 0;
+    -moz-transform: translateY(-2000px);
+  }
+}
+
+@-o-keyframes slideOutUp {
+  0% {
+    -o-transform: translateY(0);
+  }
+
+  100% {
+    opacity: 0;
+    -o-transform: translateY(-2000px);
+  }
+}
+
+@keyframes slideOutUp {
+  0% {
+    transform: translateY(0);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateY(-2000px);
+  }
+}
+
+.slideOutUp {
+  -webkit-animation-name: slideOutUp;
+  -moz-animation-name: slideOutUp;
+  -o-animation-name: slideOutUp;
+  animation-name: slideOutUp;
+}
+
+@-webkit-keyframes bounceInDown {
+  0% {
+    opacity: 0;
+    -webkit-transform: translateY(-2000px);
+  }
+
+  60% {
+    opacity: 1;
+    -webkit-transform: translateY(30px);
+  }
+
+  80% {
+    -webkit-transform: translateY(-10px);
+  }
+
+  100% {
+    -webkit-transform: translateY(0);
+  }
+}
+
+@-moz-keyframes bounceInDown {
+  0% {
+    opacity: 0;
+    -moz-transform: translateY(-2000px);
+  }
+
+  60% {
+    opacity: 1;
+    -moz-transform: translateY(30px);
+  }
+
+  80% {
+    -moz-transform: translateY(-10px);
+  }
+
+  100% {
+    -moz-transform: translateY(0);
+  }
+}
+
+@-o-keyframes bounceInDown {
+  0% {
+    opacity: 0;
+    -o-transform: translateY(-2000px);
+  }
+
+  60% {
+    opacity: 1;
+    -o-transform: translateY(30px);
+  }
+
+  80% {
+    -o-transform: translateY(-10px);
+  }
+
+  100% {
+    -o-transform: translateY(0);
+  }
+}
+
+@keyframes bounceInDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-2000px);
+  }
+
+  60% {
+    opacity: 1;
+    transform: translateY(30px);
+  }
+
+  80% {
+    transform: translateY(-10px);
+  }
+
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.animated.bounceInDown {
+  -webkit-animation-name: bounceInDown;
+  -moz-animation-name: bounceInDown;
+  -o-animation-name: bounceInDown;
+  animation-name: bounceInDown;
+}
 
 /* new clearfix */
 .clearfix:after {
@@ -664,157 +841,18 @@ height: 0;
 input.qtyField {text-align:center;width:35px;margin-left:15px;}
 div.qtyBlock {margin-bottom:5px;}
 
-a.readMore {display:block;margin: 5px 3px;}
+a.readMore {display:block;margin:5px 3px;}
+
+/* Variants*/
+.productListing .buyBlock {margin-bottom:5px;}
+.productListing .buyBlock label {display:block;text-align:center;font-weight:bold;}
+.productListing .buyBlock select {width:110px;margin-bottom:5px;margin-left:5px;}
+.productListing .buyBlock {text-align:right;}
+.warning {color:red;text-align:center;}
+.alert {border: 1px solid red;}
 
 /* popupCart */
-.animated {
-  -webkit-animation-duration: 1s;
-     -moz-animation-duration: 1s;
-       -o-animation-duration: 1s;
-          animation-duration: 1s;
-  -webkit-animation-fill-mode: both;
-     -moz-animation-fill-mode: both;
-       -o-animation-fill-mode: both;
-          animation-fill-mode: both;
-}
 
-@-webkit-keyframes slideOutUp {
-  0% {
-    -webkit-transform: translateY(0);
-  }
-
-  100% {
-    opacity: 0;
-    -webkit-transform: translateY(-2000px);
-  }
-}
-
-@-moz-keyframes slideOutUp {
-  0% {
-    -moz-transform: translateY(0);
-  }
-
-  100% {
-    opacity: 0;
-    -moz-transform: translateY(-2000px);
-  }
-}
-
-@-o-keyframes slideOutUp {
-  0% {
-    -o-transform: translateY(0);
-  }
-
-  100% {
-    opacity: 0;
-    -o-transform: translateY(-2000px);
-  }
-}
-
-@keyframes slideOutUp {
-  0% {
-    transform: translateY(0);
-  }
-
-  100% {
-    opacity: 0;
-    transform: translateY(-2000px);
-  }
-}
-
-.slideOutUp {
-  -webkit-animation-name: slideOutUp;
-  -moz-animation-name: slideOutUp;
-  -o-animation-name: slideOutUp;
-  animation-name: slideOutUp;
-}
-
-@-webkit-keyframes bounceInDown {
-  0% {
-    opacity: 0;
-    -webkit-transform: translateY(-2000px);
-  }
-
-  60% {
-    opacity: 1;
-    -webkit-transform: translateY(30px);
-  }
-
-  80% {
-    -webkit-transform: translateY(-10px);
-  }
-
-  100% {
-    -webkit-transform: translateY(0);
-  }
-}
-
-@-moz-keyframes bounceInDown {
-  0% {
-    opacity: 0;
-    -moz-transform: translateY(-2000px);
-  }
-
-  60% {
-    opacity: 1;
-    -moz-transform: translateY(30px);
-  }
-
-  80% {
-    -moz-transform: translateY(-10px);
-  }
-
-  100% {
-    -moz-transform: translateY(0);
-  }
-}
-
-@-o-keyframes bounceInDown {
-  0% {
-    opacity: 0;
-    -o-transform: translateY(-2000px);
-  }
-
-  60% {
-    opacity: 1;
-    -o-transform: translateY(30px);
-  }
-
-  80% {
-    -o-transform: translateY(-10px);
-  }
-
-  100% {
-    -o-transform: translateY(0);
-  }
-}
-
-@keyframes bounceInDown {
-  0% {
-    opacity: 0;
-    transform: translateY(-2000px);
-  }
-
-  60% {
-    opacity: 1;
-    transform: translateY(30px);
-  }
-
-  80% {
-    transform: translateY(-10px);
-  }
-
-  100% {
-    transform: translateY(0);
-  }
-}
-
-.animated.bounceInDown {
-  -webkit-animation-name: bounceInDown;
-  -moz-animation-name: bounceInDown;
-  -o-animation-name: bounceInDown;
-  animation-name: bounceInDown;
-}
 
 .cart a:hover {text-decoration:none;}
 #popupCart .cartCallpased {padding-right:15px;background: url(images/arrow-down.png) no-repeat right center;cursor:pointer;}

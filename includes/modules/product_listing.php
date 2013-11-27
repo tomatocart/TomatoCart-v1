@@ -10,6 +10,11 @@
   it under the terms of the GNU General Public License v2 (1991)
   as published by the Free Software Foundation.
 */
+  //load the language for the variants products
+  $osC_Language->load('products');
+  
+  //collect the product objects
+  $collections = array();
 
 // create column list
   $define_list = array('PRODUCT_LIST_SKU' => PRODUCT_LIST_SKU, 
@@ -114,6 +119,7 @@
 
       for ($col=0, $n=sizeof($column_list); $col<$n; $col++) {
         $lc_align = '';
+        $lc_class = '';
 
         switch ($column_list[$col]) {
           case 'PRODUCT_LIST_SKU':
@@ -137,8 +143,11 @@
             break;
           case 'PRODUCT_LIST_PRICE':
             $lc_align = 'right';
+            $lc_class .= ' price';
             $osC_Product = new osC_Product($Qlisting->value('products_id'));
             $lc_text = $osC_Product->getPriceFormated(true);
+            
+            $collections[] = $osC_Product;
             break;
           case 'PRODUCT_LIST_QUANTITY':
             $lc_align = 'right';
@@ -167,23 +176,39 @@
           case 'PRODUCT_LIST_BUY_NOW':
             $lc_align = 'center';
             
+            $lc_text = '';
+            if ($osC_Product->hasVariants()) {
+							//change the flag
+							$lc_text .= '<div class="buyBlock variants_' . $osC_Product->getID() . '">';
+            	$combobox_array = $osC_Product->getVariantsComboboxArray();
+            
+            	foreach ($combobox_array as $groups_name => $combobox) {
+								$lc_text .= '<div class="variant">';
+            		$lc_text .=  '<label>' . $groups_name . ':</label>';
+                $lc_text .= $combobox;
+                $lc_text .= '</div>';
+            	}
+            	
+            	$lc_text .= '</div>';
+            }
+            
             if ($Qlisting->value('products_type') == PRODUCT_TYPE_SIMPLE) {
-							$lc_text = '<input type="text" id="qty_' . $Qlisting->value('products_id') . '" value="1" size="1" class="qtyField" />';
+							$lc_text .= '<input type="text" id="qty_' . $Qlisting->value('products_id') . '" value="1" size="1" class="qtyField" />';
               $lc_text .= osc_link_object(osc_href_link(basename($_SERVER['SCRIPT_FILENAME']), $Qlisting->value('products_id') . '&' . osc_get_all_get_params(array('action')) . '&action=cart_add'), osc_draw_image_button('button_buy_now.gif', $osC_Language->get('button_buy_now'), 'class="ajaxAddToCart" id="ac_productlisting_'. $Qlisting->value('products_id') . '"')) . '&nbsp;<br />';
             }else {
-              $lc_text = osc_link_object(osc_href_link(basename($_SERVER['SCRIPT_FILENAME']), $Qlisting->value('products_id') . '&' . osc_get_all_get_params(array('action')) . '&action=cart_add'), osc_draw_image_button('button_buy_now.gif', $osC_Language->get('button_buy_now'))) . '&nbsp;<br />';
+              $lc_text .= osc_link_object(osc_href_link(basename($_SERVER['SCRIPT_FILENAME']), $Qlisting->value('products_id') . '&' . osc_get_all_get_params(array('action')) . '&action=cart_add'), osc_draw_image_button('button_buy_now.gif', $osC_Language->get('button_buy_now'))) . '&nbsp;<br />';
             }
             
             if ($osC_Template->isInstalled('compare_products', 'boxes')) {
-              $lc_text .= osc_link_object(osc_href_link(basename($_SERVER['SCRIPT_FILENAME']), 'cid=' . $Qlisting->value('products_id') . '&' . osc_get_all_get_params(array('action')) . '&action=compare_products_add'), $osC_Language->get('add_to_compare')) . '&nbsp;<br />';
+              $lc_text .= osc_link_object(osc_href_link(basename($_SERVER['SCRIPT_FILENAME']), 'cid=' . $Qlisting->value('products_id') . '&' . osc_get_all_get_params(array('action')) . '&action=compare_products_add'), $osC_Language->get('add_to_compare'), 'class="compare"') . '&nbsp;<br />';
             }  
             
-            $lc_text .= osc_link_object(osc_href_link(basename($_SERVER['SCRIPT_FILENAME']), $Qlisting->value('products_id') . '&' . osc_get_all_get_params(array('action')) . '&action=wishlist_add'), $osC_Language->get('add_to_wishlist')); 
+            $lc_text .= osc_link_object(osc_href_link(basename($_SERVER['SCRIPT_FILENAME']), $Qlisting->value('products_id') . '&' . osc_get_all_get_params(array('action')) . '&action=wishlist_add'), $osC_Language->get('add_to_wishlist'), 'class="wishlist"'); 
                         
             break;
         }
 
-        echo '      <td ' . ((empty($lc_align) === false) ? 'align="' . $lc_align . '" ' : '') . ' valign="top" class="productListing-data">' . $lc_text . '</td>' . "\n";
+        echo '      <td ' . ((empty($lc_align) === false) ? 'align="' . $lc_align . '" ' : '') . ' valign="top" class="productListing-data' . $lc_class . '">' . $lc_text . '</td>' . "\n";
       }
 
       echo '    </tr>' . "\n";
@@ -212,4 +237,31 @@
 
 <?php
   }
+?>
+
+<script type="text/javascript" src="includes/javascript/list_variants.js"></script>
+
+<?php 
+	if (count($collections) > 0) {
+		foreach ($collections as $product) {
+			if ($product->hasVariants()) {
+?>
+				<script type="text/javascript">
+					new TocListVariants({
+				    remoteUrl: '<?php echo osc_href_link('json.php', null, 'SSL', false, false, true); ?>',
+				    combVariants: $$('.variants_<?php echo $product->getID(); ?> select'),
+				    variants: <?php echo $toC_Json->encode($product->getVariants()); ?>,
+				    productsId: <?php echo $product->getID(); ?>,
+				    hasSpecial: <?php echo $product->hasSpecial() ? 1 : 0; ?>,
+				    lang: {
+				      txtInStock: '<?php echo addslashes($osC_Language->get('in_stock'));?>',
+				      txtOutOfStock: '<?php echo addslashes($osC_Language->get('out_of_stock')); ?>',
+				      txtNotAvailable: '<?php echo addslashes($osC_Language->get('not_available')); ?>'
+				    }
+				  });
+				</script>
+<?php
+			} 
+		}
+	}
 ?>
