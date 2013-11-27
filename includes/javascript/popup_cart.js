@@ -189,8 +189,10 @@ var PopupCart = new Class({
                     pID = btnId.test("^ac_[a-z]+_[0-9]+$", "i") ? btnId.split('_').getLast() : null,
                     params = {action: 'add_product', pID: pID},
                     selects = $$('tr.variantCombobox select'),
+                    listSelects = $$('.variants_' + pID + ' select'),
+                    options = null,
                     variants = '';
-                
+                    
                 if ( $defined($('quantity')) ) {
                   params.pQty = $('quantity').get('value');  
                 }
@@ -200,12 +202,18 @@ var PopupCart = new Class({
                 }
 
                 //variants
-                if ($defined(selects)) {
-                  selects.each(function(select) {
-                    var id = select.id.toString();
-                    var groups_id = id.substring(9, id.indexOf(']'));
+                if (selects.length > 0) {
+                    options = selects;
+                }else if (listSelects.length > 0) {
+                    options = listSelects;
+                }
+                
+                if (options !== null) {
+                    options.each(function(option) {
+                        var id = option.id.toString();
+                        var groups_id = id.substring(9, id.indexOf(']'));
                     
-                    variants += groups_id + ':' + select.value + ';';
+                    variants += groups_id + ':' + option.value + ';';
                   }.bind(this));
                   
                   params.variants = variants; 
