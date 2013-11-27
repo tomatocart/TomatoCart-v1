@@ -175,6 +175,11 @@ var PopupCart = new Class({
             addToCartButton.addEvent('click', function(e) {
                 e.stop();
                 
+                //do nothing if the add to cart button is disabled
+                if (addToCartButton.hasClass('disabled')) {
+                    return false;
+                }
+                
                 //disable the fly trigger
                 addToCartButton.set('disabled', 'disabled');
                 
