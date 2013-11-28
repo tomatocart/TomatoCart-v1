@@ -120,6 +120,11 @@ var TocListVariants = new Class({
             href,
             error;
         
+        //destroy the error element
+        if (buyEl.getElement('.warning')) {
+            buyEl.getElement('.warning').destroy();
+        }
+        
         // if it is in the product info page and the product have any variants,
         // add the variants into the compare products link
         if (this.linkCp) {
