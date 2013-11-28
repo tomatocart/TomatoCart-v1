@@ -114,18 +114,27 @@ var AjaxShoppingCart = new Class({
           }
 
           //variants
+          var options = null;
           var selects = $$('tr.variantCombobox select');
-          if ($defined(selects)) {
+          var listSelects = $$('.variants_' + pID + ' select');
+          
+          if (selects.length > 0) {
+              options = selects;
+          }else if (listSelects.length > 0) {
+              options = listSelects;
+          }
+          
+          if (options !== null) {
             var variants = '';
             
-				    selects.each(function(select) {
-				      var id = select.id.toString();
-				      var groups_id = id.substring(9, id.indexOf(']'));
-				      
-				      variants += groups_id + ':' + select.value + ';';
-				    }.bind(this));
-				    
-				    params.variants = variants; 
+            options.each(function(select) {
+		      var id = select.id.toString();
+		      var groups_id = id.substring(9, id.indexOf(']'));
+		      
+		      variants += groups_id + ':' + select.value + ';';
+		    }.bind(this));
+		    
+		    params.variants = variants; 
           }
           
           //gift certificate
