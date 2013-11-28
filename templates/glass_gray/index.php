@@ -351,8 +351,7 @@
     new TocAutoCompleter('keywords', {
       sessionName: '<?php echo $osC_Session->getName(); ?>',
       sessionId: '<?php echo $osC_Session->getID(); ?>',
-      template: '<?php echo $osC_Template->getCode(); ?>',
-      width: 300
+      template: '<?php echo $osC_Template->getCode(); ?>'
     });
   });
   new TocBookmark({

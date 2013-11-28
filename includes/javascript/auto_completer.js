@@ -10,64 +10,6 @@
   as published by the Free Software Foundation.
 */
 
-Autocompleter.implement({
-   /**
-   * override addChoiceEvents
-   *
-   * Appends the needed event handlers for a choice-entry to the given element.
-   *
-   * @param   {Element} Choice entry
-   * @return    {Element} Choice entry
-   */
-  addChoiceEvents: function(el) {
-    return el.addEvents({
-      'mouseover': this.choiceOver.bind(this, el),
-      'click': this.choiceSelect.bind(this, el)
-    });
-  },
-  
-  showChoices: function() {
-    var match = this.options.choicesMatch, first = this.choices.getFirst(match);
-    this.selected = this.selectedValue = null;
-    if (this.fix) {
-      var pos = this.element.getCoordinates(this.relative), width = this.options.width || 'auto';
-      this.choices.setStyles({
-        'left': pos.left - 101,
-        'top': pos.bottom,
-        'width': (width === true || width == 'inherit') ? pos.width : width
-      });
-    }
-    if (!first) return;
-    if (!this.visible) {
-      this.visible = true;
-      this.choices.setStyle('display', '');
-      if (this.fx) this.fx.start(1);
-      this.fireEvent('onShow', [this.element, this.choices]);
-    }
-    if (this.options.selectFirst || this.typeAhead || first.inputValue == this.queryValue) this.choiceOver(first, this.typeAhead);
-    var items = this.choices.getChildren(match), max = this.options.maxChoices;
-    var styles = {'overflowY': 'hidden', 'height': ''};
-    this.overflown = false;
-    if (items.length > max) {
-      var item = items[max - 1];
-      styles.overflowY = 'scroll';
-      styles.height = item.getCoordinates(this.choices).bottom;
-      this.overflown = true;
-    };
-    this.choices.setStyles(styles);
-    this.fix.show();
-    
-    if (this.options.visibleChoices) {
-      var scroll = document.getScroll(),
-      size = document.getSize(),
-      coords = this.choices.getCoordinates();
-      if (coords.right > scroll.x + size.x) scroll.x = coords.right - size.x;
-      if (coords.bottom > scroll.y + size.y) scroll.y = coords.bottom - size.y;
-      window.scrollTo(Math.min(scroll.x, coords.left), Math.min(scroll.y, coords.top));
-    }
-  }
-});
-
 var TocAutoCompleter = new Class({
   Extends: Autocompleter.Request.JSON,
   
@@ -79,9 +21,7 @@ var TocAutoCompleter = new Class({
     minLength: 3,
     filterSubset: true,
     cache: true,
-    delay: 250,
-    width: 235,
-    parentId: 'navigationInner',
+    delay: 150,
     selectionLength: 23
   },
   
@@ -95,6 +35,61 @@ var TocAutoCompleter = new Class({
     }
     
     this.setSelectionValueLength(this.options.selectionLength);
+  },
+  
+ //override showChoices method to remove the hard coded style
+  showChoices: function() {
+      var match = this.options.choicesMatch, first = this.choices.getFirst(match);
+      this.selected = this.selectedValue = null;
+      if (this.fix) {
+          //get the correct position for the autocompleter list
+          var pos = this.element.getCoordinates(this.relative),
+              sizeTrigger = this.element.getSize(),
+              sizeChoices = this.choices.getSize();
+          
+          if (!this.relative) {
+              this.relative = sizeChoices.x - sizeTrigger.x || sizeTrigger.x - sizeChoices.x;
+          }
+          
+          this.choices.setStyles({
+              'left': pos.left - this.relative,
+              'top': pos.bottom
+          });
+          
+          //hide the choice automatically when the mouse leave out
+          this.choices.addEvent('mouseleave',function() {
+              this.hideChoices();
+          }.bind(this));
+      }
+      if (!first) return;
+      if (!this.visible) {
+          this.visible = true;
+          this.choices.setStyle('display', '');
+          if (this.fx) this.fx.start(1);
+          this.fireEvent('onShow', [this.element, this.choices]);
+      }
+      if (this.options.selectFirst || this.typeAhead || first.inputValue == this.queryValue) this.choiceOver(first, this.typeAhead);
+      var items = this.choices.getChildren(match), max = this.options.maxChoices;
+      var styles = {'overflowY': 'hidden', 'height': ''};
+      this.overflown = false;
+      if (items.length > max) {
+          var item = items[max - 1];
+          styles.overflowY = 'scroll';
+          styles.height = item.getCoordinates(this.choices).bottom;
+          this.overflown = true;
+      };
+      this.choices.setStyles(styles);
+      this.fix.show();
+      if (this.options.visibleChoices) {
+          var scroll = document.getScroll(),
+          size = document.getSize(),
+          coords = this.choices.getCoordinates();
+          if (coords.right > scroll.x + size.x) scroll.x = coords.right - size.x;
+          if (coords.bottom > scroll.y + size.y) scroll.y = coords.bottom - size.y;
+          window.scrollTo(Math.min(scroll.x, coords.left), Math.min(scroll.y, coords.top));
+      }
+      
+      
   },
   
   //override setSelection method to get the text in the link and enter it into the search field
