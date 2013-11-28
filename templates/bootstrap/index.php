@@ -364,7 +364,8 @@ window.addEvent('domready', function() {
     new TocAutoCompleter('keywords', {
         sessionName: '<?php echo $osC_Session->getName(); ?>',
         sessionId: '<?php echo $osC_Session->getID(); ?>',
-        template: '<?php echo $osC_Template->getCode(); ?>'
+        template: '<?php echo $osC_Template->getCode(); ?>',
+        maxChoices: <?php echo defined('MAX_DISPLAY_AUTO_COMPLETER_RESULTS') ? MAX_DISPLAY_AUTO_COMPLETER_RESULTS : 10;?>
     });
     new TocBookmark({
         bookmark: 'bookmark',
