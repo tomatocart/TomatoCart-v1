@@ -97,22 +97,36 @@ var TocAutoCompleter = new Class({
     this.setSelectionValueLength(this.options.selectionLength);
   },
   
-  /**
-   * override choiceSelect
-   *
-   * Make the form to submit automatically once the element is selected
-   *
-   */
-  
-  choiceSelect: function(choice) {
-    if (choice) this.choiceOver(choice);
-    this.setSelection(true);
-    this.queryValue = false;
-    this.hideChoices();
-    
-    if ($defined($(this.options.parentId))) {
-      $(this.options.parentId).getElement('form').submit();
-    }
+  //override setSelection method to get the text in the link and enter it into the search field
+  setSelection: function(finish) {
+      var input = this.selected.inputValue, value = input;
+      var start = this.queryValue.length, end = input.length;
+      if (input.substr(0, start).toLowerCase() != this.queryValue.toLowerCase()) start = 0;
+      if (this.options.multiple) {
+          var split = this.options.separatorSplit;
+          value = this.element.value;
+          start += this.queryIndex;
+          end += this.queryIndex;
+          var old = value.substr(this.queryIndex).split(split, 1)[0];
+          value = value.substr(0, this.queryIndex) + input + value.substr(this.queryIndex + old.length);
+          if (finish) {
+              var tokens = value.split(this.options.separatorSplit).filter(function(entry) {
+                  return this.test(entry);
+              }, /[^\s,]+/);
+              if (!this.options.allowDupes) tokens = [].combine(tokens);
+              var sep = this.options.separator;
+              value = tokens.join(sep) + sep;
+              end = value.length;
+          }
+      }
+      
+      //filter the <a> tag in the selection
+      value = value.replace(/<a\s(?:\s*\w*?\s*=\s*".+?")*(?:\s*href\s*=\s*".+?")(?:\s*\w*?\s*=\s*".+?")*\s*>([\s\S]*?)<\/a>/,'$1'); 
+      this.observer.setValue(value);
+      this.opted = value;
+      if (finish || this.selectMode == 'pick') start = end;
+      this.element.selectRange(start, end);
+      this.fireEvent('onSelection', [this.element, this.selected, value, input]);
   },
   
   setSelectionValueLength: function(length) {
@@ -124,5 +138,5 @@ var TocAutoCompleter = new Class({
       
       return this.clear();
     };
-  }  
+  }
 });
