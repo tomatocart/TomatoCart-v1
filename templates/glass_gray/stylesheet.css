@@ -1196,7 +1196,8 @@ ul.autocompleter-choices {
   border-left: 1px solid #8B8A8A;
   border-right: 1px solid #8B8A8A;
   border-top: 1px solid #D9D9D9;
-  border-bottom: 1px solid #8B8A8A;  
+  border-bottom: 1px solid #8B8A8A;
+  width: 350px;  
 }
 
 ul.autocompleter-choices li{
