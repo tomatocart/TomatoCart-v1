@@ -205,7 +205,10 @@
             }
      
             if ($Qlisting->value('products_type') == PRODUCT_TYPE_SIMPLE) {
-							$lc_text .= '<input type="text" id="qty_' . $Qlisting->value('products_id') . '" value="1" size="1" class="qtyField" />';
+							//enable quantity input field
+							if (defined('PRODUCT_LIST_QUANTITY_INPUT') && PRODUCT_LIST_QUANTITY_INPUT == 1) {
+								$lc_text .= '<input type="text" id="qty_' . $Qlisting->value('products_id') . '" value="1" size="1" class="qtyField" />';
+							}
 							
               $lc_text .= osc_link_object(osc_href_link(basename($_SERVER['SCRIPT_FILENAME']), $Qlisting->value('products_id') . '&' . osc_get_all_get_params(array('action')) . '&action=cart_add'), osc_draw_image_button('button_buy_now.gif', $osC_Language->get('button_buy_now'), 'class="ajaxAddToCart" id="ac_productlisting_'. $Qlisting->value('products_id') . '"')) . '&nbsp;<br />';
             }else {
