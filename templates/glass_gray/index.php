@@ -352,7 +352,8 @@
       sessionName: '<?php echo $osC_Session->getName(); ?>',
       sessionId: '<?php echo $osC_Session->getID(); ?>',
       template: '<?php echo $osC_Template->getCode(); ?>',
-      maxChoices: <?php echo defined('MAX_DISPLAY_AUTO_COMPLETER_RESULTS') ? MAX_DISPLAY_AUTO_COMPLETER_RESULTS : 10;?>
+      maxChoices: <?php echo defined('MAX_DISPLAY_AUTO_COMPLETER_RESULTS') ? MAX_DISPLAY_AUTO_COMPLETER_RESULTS : 10;?>,
+      moreBtnText: '<?php echo $osC_Language->get('button_get_more'); ?>'
     });
   });
   new TocBookmark({

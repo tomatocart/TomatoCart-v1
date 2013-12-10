@@ -381,6 +381,11 @@
       <group>general</group>
     </definition>
     <definition>
+      <key>button_get_more</key>
+      <value><![CDATA[Get More]]></value>
+      <group>general</group>
+    </definition>
+    <definition>
       <key>button_add</key>
       <value><![CDATA[Add]]></value>
       <group>general</group>
