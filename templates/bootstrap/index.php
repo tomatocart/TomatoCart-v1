@@ -35,6 +35,7 @@ require_once 'helper.php';
     <link rel="stylesheet" type="text/css" href="templates/<?php echo $osC_Template->getCode(); ?>/css/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="templates/<?php echo $osC_Template->getCode(); ?>/css/stylesheet.css" />
     <link rel="stylesheet" type="text/css" href="templates/<?php echo $osC_Template->getCode(); ?>/css/stylesheet.responsive.css" />
+    <link rel="stylesheet" type="text/css" href="ext/autocompleter/Autocompleter.css" />
     
     <!-- touch icons -->
     <link rel="apple-touch-icon-precomposed" sizes="144x144" href="templates/<?php echo $osC_Template->getCode(); ?>/images/apple-touch-icon-144-precomposed.png">
@@ -365,7 +366,9 @@ window.addEvent('domready', function() {
         sessionName: '<?php echo $osC_Session->getName(); ?>',
         sessionId: '<?php echo $osC_Session->getID(); ?>',
         template: '<?php echo $osC_Template->getCode(); ?>',
-        maxChoices: <?php echo defined('MAX_DISPLAY_AUTO_COMPLETER_RESULTS') ? MAX_DISPLAY_AUTO_COMPLETER_RESULTS : 10;?>
+        maxChoices: <?php echo defined('MAX_DISPLAY_AUTO_COMPLETER_RESULTS') ? MAX_DISPLAY_AUTO_COMPLETER_RESULTS : 10;?>,
+				moreBtnText: '<?php echo $osC_Language->get('button_get_more'); ?>',
+				imageGroup: '<?php echo defined('IMAGE_GROUP_AUTO_COMPLETER') ? IMAGE_GROUP_AUTO_COMPLETER : 'mini'; ?>'
     });
     new TocBookmark({
         bookmark: 'bookmark',

@@ -24,7 +24,7 @@ var TocAutoCompleter = new Class({
     delay: 0,
     selectionLength: 23,
     imageGroup: 'thumbnail',
-    moreBtnText: 'More'
+    moreBtnText: 'Get More'
   },
   
   initialize: function(el, options) {
@@ -101,7 +101,7 @@ var TocAutoCompleter = new Class({
           }),
           moreBtn = new Element('a', {
               'href': '#',
-              'class': 'button squre medium',
+              'class': 'button squre medium btn',
               'html': this.options.moreBtnText
           });
           
