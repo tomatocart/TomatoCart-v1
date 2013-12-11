@@ -16,19 +16,33 @@ class toC_Json_Auto_Completer {
   function getProducts() {  
     global $osC_Database, $osC_Language, $toC_Json, $osC_Image;
     
+    $max_name_len = 40;
+    $image_group = 'mini';
+    
+    if (defined('IMAGE_GROUP_AUTO_COMPLETER')) {
+    	$image_group = IMAGE_GROUP_AUTO_COMPLETER;
+    }
+    
     $products = array();
     if (isset($_POST['keywords']) && !empty($_POST['keywords'])) {
-      $Qproducts = $osC_Database->query("select distinct p.products_id as products_id, products_name, image from :table_products_description pd, :table_products p left join :table_products_images pi on (p.products_id = pi.products_id and pi.default_flag = 1) where pd.products_id = p.products_id and p.products_status = :products_status and products_name like :keywords and language_id =" . $osC_Language->getID() . ' limit :max_results');
+      $Qproducts = $osC_Database->query("select distinct p.products_id as products_id, pd.products_name from :table_products_description pd, :table_products p where pd.products_id = p.products_id and p.products_status = :products_status and products_name like :keywords and language_id =" . $osC_Language->getID() . ' limit :max_results');
       $Qproducts->bindTable(':table_products_description', TABLE_PRODUCTS_DESCRIPTION);
       $Qproducts->bindTable(':table_products', TABLE_PRODUCTS);
-      $Qproducts->bindTable(':table_products_images', TABLE_PRODUCTS_IMAGES);
       $Qproducts->bindInt(':products_status', 1);
       $Qproducts->bindInt(':max_results', MAX_DISPLAY_AUTO_COMPLETER_RESULTS);
       $Qproducts->bindValue(':keywords', '%' . $_POST['keywords'] . '%');
       $Qproducts->execute();
       
       while($Qproducts->next()) {
-        $products[] = $osC_Image->show($Qproducts->value('image'), null, null, 'mini') . osc_link_object(osc_href_link(FILENAME_PRODUCTS, $Qproducts->valueInt('products_id')), $Qproducts->value('products_name'));        
+      	$osC_Product = new osC_Product($Qproducts->valueInt('products_id'));
+      	
+      	$products_name = $Qproducts->value('products_name');
+      	
+      	if (strlen($products_name) > $max_name_len) {
+      		$products_name = substr($products_name, 0, $max_name_len) . '...';
+      	}
+      	
+        $products[] = '<div class="image">' . $osC_Image->show($osC_Product->getImage(), null, null, $image_group) . '</div><div class="details"><strong class="price">' . $osC_Product->getPriceFormated(true) . '</strong>' . osc_link_object(osc_href_link(FILENAME_PRODUCTS, $Qproducts->valueInt('products_id')), $products_name) . '</div>';        
       }
     }
     

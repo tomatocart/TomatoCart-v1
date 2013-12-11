@@ -1199,24 +1199,6 @@ a.readMore {display:block;margin:5px 3px;}
   width: 500px;
 }
 
-/*auto_completer*/
-ul.autocompleter-choices {
-  width: 350px;
-  overflow:hidden;  
-}
-
-ul.autocompleter-choices li {
-  white-space: normal;
-}
-
-ul.autocompleter-choices .more{
-  text-align:center;
-  margin: 10px 0;
-  height: 20px;
-  z-index: 1000; 
-}
-
-
 /*img align right*/
 #pageIcon {
   float: right;
