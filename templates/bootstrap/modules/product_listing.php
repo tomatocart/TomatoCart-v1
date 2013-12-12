@@ -14,6 +14,18 @@
  * @since        Version 1.1.8
  * @filesource
 */
+
+//flag to check whether the variants options is enabled
+$variants_enabled = (defined('PRODUCT_LIST_VARIANTS_OPTIONS') && PRODUCT_LIST_VARIANTS_OPTIONS == 1) ? true : false;
+
+if ($variants_enabled) {
+	//load the language for the variants products
+	$osC_Language->load('products');
+	 
+	//collect the product objects
+	$collections = array();
+}
+
 $sort_array = get_products_listing_sort();
 $view_type = get_products_listing_view_type();
 
@@ -99,6 +111,11 @@ if ($Qlisting->numberOfRows() > 0) {
                 //initialize osC_Product object
                 $osC_Product = new osC_Product($Qlisting->value('products_id'));
                 
+                //variants options is enabled
+                if ($variants_enabled) {
+                	$collections[] = $osC_Product;
+                }
+                
                 //product type
                 $type = $Qlisting->value('products_type');
                 
@@ -134,7 +151,13 @@ if ($Qlisting->numberOfRows() > 0) {
                     <span class="buttons hidden-phone">
                     	<?php 
                     	    if ($Qlisting->value('products_type') == PRODUCT_TYPE_SIMPLE) {
+														//enable quantity input field
+														if (defined('PRODUCT_LIST_QUANTITY_INPUT') && PRODUCT_LIST_QUANTITY_INPUT == 1) {
                     	?>
+                    					<input type="text" id="qty_<?php echo $Qlisting->value('products_id'); ?>" value="1" size="1" class="qtyField" />
+                    	<?php 
+                    				}
+                    	?>	
                         <a id="ac_productlisting_<?php echo $Qlisting->value('products_id'); ?>" class="btn btn-small btn-info ajaxAddToCart" href="<?php echo $buy_now_link; ?>">
                     	<?php 
                     	    } else {
@@ -143,6 +166,25 @@ if ($Qlisting->numberOfRows() > 0) {
                     	<?php 
                     	    }
                     	?>
+											<?php 
+                    			//variants options is enabled
+                    			if ($variants_enabled) {
+                    				if ($osC_Product->hasVariants()) {
+                    					echo '<div class="buyBlock variants_' . $osC_Product->getID() . '">';
+                    					$combobox_array = $osC_Product->getVariantsComboboxArray();
+                    						
+                    					foreach ($combobox_array as $groups_name => $combobox) {
+                    						echo '<div class="variant">';
+                    						echo  '<label>' . $groups_name . ':</label>';
+                    						echo $combobox;
+                    						echo '</div>';
+                    					}
+                    						
+                    					echo '</div>';
+                    				}
+                    			}
+												?>
+                    	
                         	<i class="icon-shopping-cart icon-white "></i> 
                         	<?php echo $osC_Language->get('button_buy_now'); ?>
                         </a><br />
