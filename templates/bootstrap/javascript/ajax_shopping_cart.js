@@ -204,7 +204,7 @@ var AjaxShoppingCart = new Class({
               });
 
               floatImage.injectAfter($(document.body)).setStyles({position: 'absolute'}).set('morph', {
-                duration: 700,
+                duration: 300,
                 onComplete: function() {
                   floatImage.fade('out');
                   
