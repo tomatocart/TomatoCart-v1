@@ -320,7 +320,7 @@ var PopupCart = new Class({
       
       //create the flying effects
       floatImage.set('morph', {
-        duration: 700,
+        duration: 300,
         onComplete: function() {
           //fade out float image
           floatImage.fade('out');
