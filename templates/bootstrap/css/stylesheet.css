@@ -675,7 +675,7 @@ ul.grid li {
     *width: 27.43%;
     border-right: 1px solid #CDCDCD; 
     border-bottom: 1px solid #CDCDCD; 
-    padding: 10px 20px; 
+    padding: 10px 15px; 
     box-sizing: border-box; 
     -moz-box-sizing: border-box; 
     -webkit-box-sizing: border-box; 
@@ -863,6 +863,15 @@ ul.grid .productImage, ul.list .productImage {
 
 #datefrom_days, #datefrom_months, #datefrom_years, #dateto_days, #dateto_months, #dateto_years, #page, #dob_days, #dob_months, #dob_years {width: 98px;margin-right: 5px;}
 #quantity {width: 30px}
+
+/** Variants and Quantity filed **/
+input.qtyField {margin-bottom:0;text-align:center;width:25px;margin-right:3px;padding:2px 2px;}
+ul.options {clear:both;}
+ul.options .warning{color:red;}
+ul.options .alert{padding:4px 6px;}
+ul.options li {border:0;float:left;padding: 5px;vertical-align:center;}
+ul.options li label {display:inline-block;padding: 4px 6px;}
+ul.options li select {width:auto;margin-bottom:0}
 
 /*******************************************
  *         Product Info Page

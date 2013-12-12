@@ -166,25 +166,6 @@ if ($Qlisting->numberOfRows() > 0) {
                     	<?php 
                     	    }
                     	?>
-											<?php 
-                    			//variants options is enabled
-                    			if ($variants_enabled) {
-                    				if ($osC_Product->hasVariants()) {
-                    					echo '<div class="buyBlock variants_' . $osC_Product->getID() . '">';
-                    					$combobox_array = $osC_Product->getVariantsComboboxArray();
-                    						
-                    					foreach ($combobox_array as $groups_name => $combobox) {
-                    						echo '<div class="variant">';
-                    						echo  '<label>' . $groups_name . ':</label>';
-                    						echo $combobox;
-                    						echo '</div>';
-                    					}
-                    						
-                    					echo '</div>';
-                    				}
-                    			}
-												?>
-                    	
                         	<i class="icon-shopping-cart icon-white "></i> 
                         	<?php echo $osC_Language->get('button_buy_now'); ?>
                         </a><br />
@@ -192,6 +173,29 @@ if ($Qlisting->numberOfRows() > 0) {
                         <?php echo osc_link_object($wishlist_link, $osC_Language->get('add_to_wishlist')); ?>
                     </span>
                 </div>
+                
+                <?php 
+                    //variants options is enabled
+										if ($variants_enabled) {
+												if ($osC_Product->hasVariants()) {
+													$combobox_array = $osC_Product->getVariantsComboboxArray();
+								?>
+													<ul class="options variants_<?php echo $osC_Product->getID(); ?> clearfix">
+								<?php 
+														foreach ($combobox_array as $groups_name => $combobox) {
+								?>
+															<li class="variant">
+                    							<label><?php echo $groups_name; ?>:</label>
+                    							<?php echo $combobox; ?>
+															</li>
+								<?php
+														}
+								?>						
+                    		</ul>
+								<?php 			
+												}
+										}
+								?>
     		</li>
         <?php 
             }
@@ -261,4 +265,37 @@ if ($Qlisting->numberOfRows() > 0) {
     } else {
         echo $osC_Language->get('no_products_in_category');
     }
+?>
+
+<?php if ($variants_enabled) 
+	{ 
+?>
+
+		<script type="text/javascript" src="includes/javascript/list_variants.js"></script>
+
+<?php 
+		if (count($collections) > 0) {
+			foreach ($collections as $product) {
+				if ($product->hasVariants()) {
+?>
+					<script type="text/javascript">
+						new TocListVariants({
+					    remoteUrl: '<?php echo osc_href_link('json.php', null, 'SSL', false, false, true); ?>',
+					    combVariants: $$('.variants_<?php echo $product->getID(); ?> select'),
+					    variants: <?php echo $toC_Json->encode($product->getVariants()); ?>,
+							variantsGroups: <?php echo $toC_Json->encode($product->getData('variants_groups')); ?>,
+					    productsId: <?php echo $product->getID(); ?>,
+					    hasSpecial: <?php echo $product->hasSpecial() ? 1 : 0; ?>,
+					    lang: {
+					      txtInStock: '<?php echo addslashes($osC_Language->get('in_stock'));?>',
+					      txtOutOfStock: '<?php echo addslashes($osC_Language->get('out_of_stock')); ?>',
+					      txtNotAvailable: '<?php echo addslashes($osC_Language->get('not_available')); ?>'
+					    }
+					  });
+					</script>
+<?php
+				} 
+			}
+		}
+	}
 ?>
