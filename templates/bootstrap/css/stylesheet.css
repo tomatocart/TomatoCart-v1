@@ -400,7 +400,7 @@ ul.autocompleter-choices div.details {margin-top:10px;}
 }
 
 /*MenuMatic*/
-.smOW{display:none; position: absolute; min-width: 180px;overflow:hidden;}
+.smOW{display:none; position: absolute; min-width: 180px;}
 .smOW ul {background-clip: padding-box;background-color: #FFFFFF;border: 1px solid #CCC;border-radius: 6px 6px 6px 6px;box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);display: block;list-style: none outside none;margin: 2px 0 0;min-width: 180px;padding: 8px 0;top: 100%;z-index: 1000;}
 .smOW ul li a {clear: both;color: #333333;display: block;font-weight: normal;line-height: 20px;padding: 3px 20px;white-space: nowrap;}
 .smOW ul li>a:hover,.smOW ul li>a:focus,.smOW ul li:hover>a{color: #fff;text-decoration: none;background-color: #08c;background-color: #0081c2;background-image: -moz-linear-gradient(top, #08c, #0077b3);background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#08c), to(#0077b3) );background-image: -webkit-linear-gradient(top, #08c, #0077b3);background-image: -o-linear-gradient(top, #08c, #0077b3);background-image: linear-gradient(to bottom, #08c, #0077b3);background-repeat: repeat-x;filter: progid : dximagetransform.microsoft.gradient ( startColorstr = '#ff0088cc', endColorstr = '#ff0077b3', GradientType = 0 )}
