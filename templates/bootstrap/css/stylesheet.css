@@ -520,6 +520,7 @@ ul.autocompleter-choices div.details {margin-top:10px;}
 }
 .boxNew .boxContents ul li a {
     display: inline-block;
+    font-size:12px;
 }
 .boxNew .boxContents ul li a:hover,
 .boxNew .boxContents ul li a:focus {
@@ -612,6 +613,9 @@ ul.autocompleter-choices div.details {margin-top:10px;}
 /** box-review**/
 .boxReview {word-break:break-all;}
 .boxReview a {display:block;}
+
+/** ajax-shoppingCart **/
+.boxAjaxShoppingCart > .boxContents {padding:8px;}
 
 /*******************************************
  *            Module Box
