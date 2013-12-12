@@ -331,11 +331,12 @@ require_once 'helper.php';
   }
 ?>
 
+<script type="text/javascript" src="includes/javascript/pop_dialog.js"></script>
 <script type="text/javascript" src="ext/autocompleter/Autocompleter.js"></script>
 <script type="text/javascript" src="ext/autocompleter/Autocompleter.Request.js"></script>
 <script type="text/javascript" src="ext/autocompleter/Observer.js"></script>
 <script type="text/javascript" src="includes/javascript/auto_completer.js"></script>
-<script type="text/javascript" src="templates/<?php echo $osC_Template->getCode(); ?>/javascript/popup_cart.js"></script>
+<script type="text/javascript" src="includes/javascript/popup_cart.js"></script>
 <script type="text/javascript" src="includes/javascript/bookmark.js"></script>
 <script type="text/javascript" src="ext/menumatic/MenuMatic_0.68.3.js"></script>
 

@@ -51,9 +51,189 @@ h4, h5, h6 {
 }
 s {
 }
+
+/* Css3 Animation */
+.animated {
+  -webkit-animation-duration: 0.5s;
+     -moz-animation-duration: 0.5s;
+       -o-animation-duration: 0.5s;
+          animation-duration: 0.5s;
+  -webkit-animation-fill-mode: both;
+     -moz-animation-fill-mode: both;
+       -o-animation-fill-mode: both;
+          animation-fill-mode: both;
+}
+
+
+@-webkit-keyframes flash {
+  0%, 50%, 100% {opacity: 1;}
+  25%, 75% {opacity: 0;}
+}
+
+@-moz-keyframes flash {
+  0%, 50%, 100% {opacity: 1;}
+  25%, 75% {opacity: 0;}
+}
+
+@-o-keyframes flash {
+  0%, 50%, 100% {opacity: 1;}
+  25%, 75% {opacity: 0;}
+}
+
+@keyframes flash {
+  0%, 50%, 100% {opacity: 1;}
+  25%, 75% {opacity: 0;}
+}
+
+.animated.flash {
+  -webkit-animation-name: flash;
+  -moz-animation-name: flash;
+  -o-animation-name: flash;
+  animation-name: flash;
+}
+
+@-webkit-keyframes slideOutUp {
+  0% {
+    -webkit-transform: translateY(0);
+  }
+
+  100% {
+    opacity: 0;
+    -webkit-transform: translateY(-2000px);
+  }
+}
+
+@-moz-keyframes slideOutUp {
+  0% {
+    -moz-transform: translateY(0);
+  }
+
+  100% {
+    opacity: 0;
+    -moz-transform: translateY(-2000px);
+  }
+}
+
+@-o-keyframes slideOutUp {
+  0% {
+    -o-transform: translateY(0);
+  }
+
+  100% {
+    opacity: 0;
+    -o-transform: translateY(-2000px);
+  }
+}
+
+@keyframes slideOutUp {
+  0% {
+    transform: translateY(0);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateY(-2000px);
+  }
+}
+
+.slideOutUp {
+  -webkit-animation-name: slideOutUp;
+  -moz-animation-name: slideOutUp;
+  -o-animation-name: slideOutUp;
+  animation-name: slideOutUp;
+}
+
+@-webkit-keyframes bounceInDown {
+  0% {
+    opacity: 0;
+    -webkit-transform: translateY(-2000px);
+  }
+
+  60% {
+    opacity: 1;
+    -webkit-transform: translateY(30px);
+  }
+
+  80% {
+    -webkit-transform: translateY(-10px);
+  }
+
+  100% {
+    -webkit-transform: translateY(0);
+  }
+}
+
+@-moz-keyframes bounceInDown {
+  0% {
+    opacity: 0;
+    -moz-transform: translateY(-2000px);
+  }
+
+  60% {
+    opacity: 1;
+    -moz-transform: translateY(30px);
+  }
+
+  80% {
+    -moz-transform: translateY(-10px);
+  }
+
+  100% {
+    -moz-transform: translateY(0);
+  }
+}
+
+@-o-keyframes bounceInDown {
+  0% {
+    opacity: 0;
+    -o-transform: translateY(-2000px);
+  }
+
+  60% {
+    opacity: 1;
+    -o-transform: translateY(30px);
+  }
+
+  80% {
+    -o-transform: translateY(-10px);
+  }
+
+  100% {
+    -o-transform: translateY(0);
+  }
+}
+
+@keyframes bounceInDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-2000px);
+  }
+
+  60% {
+    opacity: 1;
+    transform: translateY(30px);
+  }
+
+  80% {
+    transform: translateY(-10px);
+  }
+
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.animated.bounceInDown {
+  -webkit-animation-name: bounceInDown;
+  -moz-animation-name: bounceInDown;
+  -o-animation-name: bounceInDown;
+  animation-name: bounceInDown;
+}
+
 /*******************************************
  *           Common Style
 *******************************************/
+
 .center {
 	text-align: center;
 }
@@ -88,6 +268,7 @@ s {
     color: #ff0000;
     font-weight: bold;
 }
+
 /*******************************************
  *            Header
 *******************************************/
@@ -175,6 +356,48 @@ ul.autocompleter-choices div.details {margin-top:10px;}
 #popupCartContent .buttons .btnCart {float:left;}
 
 #popupCartContent h6 {border-bottom: 1px solid #CCCCCC;padding-bottom: 10px;}
+
+/* Pop dialog*/
+.dialog {
+  width: 400px;
+  padding: 15px;
+  text-align:center;
+  background: #FFFFFF;
+  border-radius: 4px;
+  box-shadow: 0 0 5px 5px #CCCCCC;
+  -webkit-box-shadow: 0 0 5px 5px #CCCCCC;
+  -moz-box-shadow: 0 0 5px 5px #CCCCCC;
+  -ms-box-shadow: 0 0 5px 5px #CCCCCC;
+  -o-box-shadow: 0 0 5px 5px #CCCCCC;
+  z-index:9999;
+}
+.dialog .btns a {padding: 0 10px;}
+.dialog .btnClose {
+  width:25px;
+  height:25px;
+  display:block;
+  position:absolute;
+  right:-10px;
+  top:-10px;
+  text-transform:uppercase;
+  text-decoration:none;
+  color:#fff;
+  background:rgba(255, 0, 0, 0.6);
+  font-family:"Tahoma", Helvetica, sans-serif;
+  text-align:center;
+  font-size:18px;
+  line-height:1.4em;
+  border-radius:50%;
+  -moz-border-radius:50%;
+  -webkit-border-radius:50%;
+  box-shadow:0px 0px 2px 0px #666;
+  -moz-box-shadow:0px 0px 2px 0px #666;
+  -webkit-box-shadow:0px 0px 2px 0px #666;
+  -ms-box-shadow:0px 0px 2px 0px #666;
+  -o-box-shadow:0px 0px 2px 0px #666;
+  text-indent:1px;
+  font-weight:bold;
+}
 
 /*MenuMatic*/
 .smOW{display:none; position: absolute; min-width: 180px;overflow:hidden;}
