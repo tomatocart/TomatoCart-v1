@@ -138,13 +138,20 @@ var TocAutoCompleter = new Class({
       }
   },
   
+  query: function(){
+      this.element.removeClass('auto-loaded').addClass('auto-loading');
+      this.parent();
+  },
+  
+  queryResponse: function(response) {
+      this.parent(response);
+      this.element.removeClass('auto-loading').addClass('auto-loaded');
+  },
+  
   choiceSelect: function(choice) {
       var link = choice.getElement('a');
       
-      if (choice) this.choiceOver(choice);
-      this.setSelection(true);
-      this.queryValue = false;
-      this.hideChoices();
+     this.parent(choice);
       
       window.location = link.getProperty('href');
   },

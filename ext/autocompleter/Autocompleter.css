@@ -55,3 +55,6 @@ ul.autocompleter-choices .more{
   height: 20px;
   z-index: 1000; 
 }
+
+input.auto-loading {background:#FFFFFF url("indicator.gif") no-repeat 80% center;}
+input.auto-loaded {background:#FFFFFF;}
