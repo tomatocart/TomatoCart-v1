@@ -34,8 +34,6 @@ var TocAutoCompleter = new Class({
     if (options.template) {
       this.options.postData['template'] = options.template;  
     }
-    
-    this.setSelectionValueLength(this.options.selectionLength);
   },
   
  //override showChoices method to remove the hard coded style
