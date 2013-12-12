@@ -20,7 +20,7 @@ global $osC_Session, $osC_Language;
 
 <!-- box shopping_cart start //-->
 
-<div class="boxNew">
+<div class="boxNew boxAjaxShoppingCart">
     <div class="boxTitle">
         <?php echo osc_link_object($osC_Box->getTitleLink(), $osC_Box->getTitle()); ?>
         <?php echo osc_draw_image_button('button_ajax_cart_up.png', null, 'id="ajaxCartCollapse"'); ?>
