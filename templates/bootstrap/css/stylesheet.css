@@ -664,7 +664,6 @@ ul.grid .productImage, ul.list .productImage {
 }
 #product-info .price-info .tax {color: #707070;}
 #product-info  .variantCombobox select{width: 140px;}
-#product-info input {width: 30px;}
 #product-info p.short-description {
     border-top: 1px dashed #999;
     padding-top: 10px; 
