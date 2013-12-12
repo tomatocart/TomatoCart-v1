@@ -18,7 +18,7 @@ var TocAutoCompleter = new Class({
     sessionName: 'sid',
     sessionId: null,
     postData: {module: 'auto_completer', action: 'get_products'},
-    minLength: 2,
+    minLength: 3,
     filterSubset: true,
     cache: true,
     delay: 0,
