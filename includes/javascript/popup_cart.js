@@ -22,8 +22,6 @@ var PopupCart = new Class({
     clsCollapsed: 'cartCallpased',
     clsExpanded: 'cartExpanded',
     clsCartText: 'cartText',
-    relativeTop: 0,
-    relativeLeft: 215,
     
     //flag to represent the ajax shopping cart box is eanbled / disabled
     enableDelete: 'yes',
@@ -94,6 +92,7 @@ var PopupCart = new Class({
   displayCart: function(response) {
     var result = JSON.decode(response),
         pos = this.options.triggerEl.getCoordinates(),
+        posContainer,
         cartFx,
         removeBtns;
 
@@ -104,8 +103,6 @@ var PopupCart = new Class({
           'id': 'popupCartContent',
           'styles': {
             'position': 'absolute',
-            'top': pos.top + this.options.relativeTop,
-            'left': pos.left - this.options.relativeLeft,
             'opacity': 0
           }
         });
@@ -131,8 +128,15 @@ var PopupCart = new Class({
       
       this.options.container.adopt(this.cartContainer);
       
+      posContainer = this.cartContainer.getCoordinates();
+      
+      this.cartContainer.setStyles({
+          'left': pos.left - (posContainer.width - pos.width),
+          'top': pos.top + (pos.height/5)
+      });
+      
       cartFx = new Fx.Tween(this.cartContainer, {
-          duration: 'short',
+          duration: 100,
           link: 'cancel',
           property: 'opacity'
       });
