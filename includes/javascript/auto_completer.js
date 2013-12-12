@@ -22,7 +22,6 @@ var TocAutoCompleter = new Class({
     filterSubset: true,
     cache: true,
     delay: 0,
-    selectionLength: 23,
     imageGroup: 'thumbnail',
     moreBtnText: 'Get More'
   },
@@ -154,16 +153,5 @@ var TocAutoCompleter = new Class({
      this.parent(choice);
       
       window.location = link.getProperty('href');
-  },
-  
-  setSelectionValueLength: function(length) {
-    this.observer.setValue = function(value) {
-      value = value.substr(0, length);
-      
-      this.value = value;
-      this.element.set('value', value);
-      
-      return this.clear();
-    };
-  }
+  }  
 });
