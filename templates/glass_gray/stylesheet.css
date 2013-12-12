@@ -203,10 +203,10 @@ a, button { noFocusLine:expression(this.onFocus=this.blur()) }
 
 /* Css3 Animation */
 .animated {
-  -webkit-animation-duration: 1s;
-     -moz-animation-duration: 1s;
-       -o-animation-duration: 1s;
-          animation-duration: 1s;
+  -webkit-animation-duration: 0.5s;
+     -moz-animation-duration: 0.5s;
+       -o-animation-duration: 0.5s;
+          animation-duration: 0.5s;
   -webkit-animation-fill-mode: both;
      -moz-animation-fill-mode: both;
        -o-animation-fill-mode: both;
