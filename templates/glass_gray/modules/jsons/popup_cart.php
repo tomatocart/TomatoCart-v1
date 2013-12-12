@@ -10,7 +10,6 @@
   it under the terms of the GNU General Public License v2 (1991)
   as published by the Free Software Foundation.
 */
-	ini_set('display_errors', 1);
 	include_once(DIR_FS_CATALOG . 'includes/classes/modules.php');
 
   class toC_Json_Popup_Cart {
