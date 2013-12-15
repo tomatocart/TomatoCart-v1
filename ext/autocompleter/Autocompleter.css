@@ -15,7 +15,7 @@ ul.autocompleter-choices
 ul.autocompleter-choices.useThumbnail {width: 420px;}
 ul.autocompleter-choices.useThumbnail .details {margin-top:20px;}
 ul.autocompleter-choices li .details, ul.autocompleter-choices li .image {display:block;float:left;}
-ul.autocompleter-choices li .details .price {display:block;margin-bottom:5px;}
+ul.autocompleter-choices li .details .price {display:block;margin-top:5px;}
 
 ul.autocompleter-choices li
 {

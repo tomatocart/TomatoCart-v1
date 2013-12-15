@@ -42,7 +42,7 @@ class toC_Json_Auto_Completer {
       		$products_name = substr($products_name, 0, $max_name_len) . '...';
       	}
       	
-        $products[] = '<div class="image">' . $osC_Image->show($osC_Product->getImage(), null, null, $image_group) . '</div><div class="details"><strong class="price">' . $osC_Product->getPriceFormated(true) . '</strong>' . osc_link_object(osc_href_link(FILENAME_PRODUCTS, $Qproducts->valueInt('products_id')), $products_name) . '</div>';        
+        $products[] = '<div class="image">' . $osC_Image->show($osC_Product->getImage(), null, null, $image_group) . '</div><div class="details">' . osc_link_object(osc_href_link(FILENAME_PRODUCTS, $Qproducts->valueInt('products_id')), $products_name) . '<strong class="price">' . $osC_Product->getPriceFormated(true) . '</strong></div>';        
       }
     }
     
