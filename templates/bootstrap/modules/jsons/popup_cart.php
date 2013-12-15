@@ -81,7 +81,7 @@
           		$variants_string = $tmp[1];
           	}
           	
-          	$content .=		'	<td>' . osc_link_object(osc_href_link(FILENAME_CHECKOUT, osc_get_product_id($product['id']) . (!empty($variants_string) ? '&variants=' . $variants_string : '') . '&action=cart_remove', 'SSL'), osc_draw_image_button('small_delete.gif', $osC_Language->get('button_delete')), 'class="removeBtn" data-pid="' . $product['id'] . '"') . '</td>';
+          	$content .=		'	<td>' . osc_link_object(osc_href_link(FILENAME_CHECKOUT, osc_get_product_id($product['id']) . (!empty($variants_string) ? '&variants=' . $variants_string : '') . '&action=cart_remove', 'SSL'), 'X', 'class="btn btn-mini removeBtn" data-pid="' . $product['id'] . '"') . '</td>';
           }
 		      
       		$content .=		'</tr>';
