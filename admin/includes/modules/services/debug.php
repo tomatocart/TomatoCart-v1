@@ -41,6 +41,7 @@
       $osC_Database->simpleQuery("insert into " . TABLE_CONFIGURATION . " (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, use_function, set_function, date_added) VALUES ('Check Sessions Directory', 'SERVICE_DEBUG_CHECK_SESSION_DIRECTORY', '1', 'Show a warning if the file-based session directory does not exist.', '6', '0', 'osc_cfg_use_get_boolean_value', 'osc_cfg_set_boolean_value(array(1, -1))', now())");
       $osC_Database->simpleQuery("insert into " . TABLE_CONFIGURATION . " (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, use_function, set_function, date_added) VALUES ('Check Sessions Auto Start', 'SERVICE_DEBUG_CHECK_SESSION_AUTOSTART', '1', 'Show a warning if PHP is configured to automatically start sessions.', '6', '0', 'osc_cfg_use_get_boolean_value', 'osc_cfg_set_boolean_value(array(1, -1))', now())");
       $osC_Database->simpleQuery("insert into " . TABLE_CONFIGURATION . " (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, use_function, set_function, date_added) VALUES ('Check Download Directory', 'SERVICE_DEBUG_CHECK_DOWNLOAD_DIRECTORY', '1', 'Show a warning if the digital product download directory does not exist.', '6', '0', 'osc_cfg_use_get_boolean_value', 'osc_cfg_set_boolean_value(array(1, -1))', now())");
+      $osC_Database->simpleQuery("insert into " . TABLE_CONFIGURATION . " (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, use_function, set_function, date_added) VALUES ('Show The Uncompressed Css And Javascript', 'SERVICE_DEBUG_SHOW_CSS_JAVASCRIPT', '1', 'Show the uncompressed css And javascript in the template .', '6', '0', 'osc_cfg_use_get_boolean_value', 'osc_cfg_set_boolean_value(array(1, -1))', now())");
     }
 
     function remove() {
@@ -60,7 +61,8 @@
                    'SERVICE_DEBUG_CHECK_CONFIGURATION',
                    'SERVICE_DEBUG_CHECK_SESSION_DIRECTORY',
                    'SERVICE_DEBUG_CHECK_SESSION_AUTOSTART',
-                   'SERVICE_DEBUG_CHECK_DOWNLOAD_DIRECTORY');
+                   'SERVICE_DEBUG_CHECK_DOWNLOAD_DIRECTORY', 
+      						 'SERVICE_DEBUG_SHOW_CSS_JAVASCRIPT');
     }
   }
 ?>

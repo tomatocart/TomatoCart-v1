@@ -129,9 +129,6 @@ function output_javascripts() {
         } 
     }
     
-    //add ajax_shopping_cart.js
-    $js_files .= '<script type="text/javascript" src="templates/' . $osC_Template->getCode() . '/javascript/ajax_shopping_cart.js"></script>' . "\n";
-
     echo $js_files;
     
     //output header php javascript
