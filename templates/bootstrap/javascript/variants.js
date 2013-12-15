@@ -15,6 +15,8 @@ var TocVariants = new Class({
   options: {
     hasSpecial: 0,
     remoteUrl: 'json.php',
+    variantsGroups: null,
+    variants: null,
     linkCompareProductsCls: '.compare-products',
     linkWishlistCls: '.wishlist',
     lang: {
@@ -37,10 +39,12 @@ var TocVariants = new Class({
   
   initialize: function(options) {
     this.setOptions(options);
-    this.checkCompareProducts();
-    this.checkWishlist();
-    this.initializeComboBox();
-    this.updateView();
+    
+    if (this.options.combVariants !== null && this.options.combVariants.length > 0) {
+      this.checkCompareProducts();
+      this.checkWishlist();
+      this.initializeComboBox();
+    }
   },
   
   initializeComboBox: function() {
@@ -91,7 +95,7 @@ var TocVariants = new Class({
     return this.options.productsId + '#' + groups.join(';');
   },
     
-  updateView: function(choice) {
+  updateView: function() {
   	var productsIdString = this.getProductsIdString();
   	
   	//if it is in the product info page and the product have any variants, add the variants into the compare products link

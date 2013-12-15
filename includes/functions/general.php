@@ -196,9 +196,6 @@
       $variants_check = true;
       $variants_ids = array();
 
-      //lei:sort the variant by the options id
-      ksort($params);
-
       foreach ($params as $group => $value) {
         if (is_numeric($group) && is_numeric($value)) {
           $variants_ids[] = (int)$group . ':' . (int)$value;

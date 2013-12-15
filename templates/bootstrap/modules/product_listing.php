@@ -283,7 +283,6 @@ if ($Qlisting->numberOfRows() > 0) {
 					    remoteUrl: '<?php echo osc_href_link('json.php', null, 'SSL', false, false, true); ?>',
 					    combVariants: $$('.variants_<?php echo $product->getID(); ?> select'),
 					    variants: <?php echo $toC_Json->encode($product->getVariants()); ?>,
-							variantsGroups: <?php echo $toC_Json->encode($product->getData('variants_groups')); ?>,
 					    productsId: <?php echo $product->getID(); ?>,
 					    hasSpecial: <?php echo $product->hasSpecial() ? 1 : 0; ?>,
 					    lang: {
