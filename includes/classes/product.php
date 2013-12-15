@@ -275,7 +275,6 @@
         
         //sort the variants groups based on its its sort order or name (ASC direction)
         $variants_groups = $this->_data['variants_groups'];
-        usort($variants_groups, array('self', '_sortVariantsGroups'));
 
         foreach ($variants_groups as $group) {
           $values = array();
@@ -298,31 +297,6 @@
       }
       
       return false;
-    }
-    
-    /**
-     * sort the variants groups based on its its sort order or name (ASC direction)
-     *
-     * @access private
-     * @param array $group_a a
-     * @param array $group_b
-     *
-     * return int
-     *
-     */
-    function _sortVariantsGroups($group_a, $group_b) {
-     if ($group_a['sort_order'] < $group_b['sort_order']) {
-        return -1;
-      }
-      
-      if ($group_a['sort_order'] > $group_b['sort_order']) {
-        return 1;
-      }
-      
-      //sort order is equel. Compare their names
-      if ($group_a['sort_order'] == $group_b['sort_order']) {
-        return strnatcmp($group_a['groups_name'], $group_b['groups_name']);
-      }
     }
     
     /**
@@ -371,7 +345,7 @@
       $groups = array();
       $groups_values = array();
       while ($Qvariants->next()) {
-        $Qvalues = $osC_Database->query('select pve.products_variants_groups_id as groups_id, pve.products_variants_values_id as variants_values_id, pvg.products_variants_groups_name as groups_name, pvg.sort_order as groups_sort_order, pvv.products_variants_values_name as variants_values_name, pvv.sort_order as sort_order from :table_products_variants_entries pve, :table_products_variants_groups pvg, :table_products_variants_values pvv where pve.products_variants_groups_id = pvg.products_variants_groups_id and pve.products_variants_values_id = pvv.products_variants_values_id and pvg.language_id = pvv.language_id and pvg.language_id = :language_id and pve.products_variants_id = :products_variants_id order by pve.products_variants_groups_id');
+        $Qvalues = $osC_Database->query('select pve.products_variants_groups_id as groups_id, pve.products_variants_values_id as variants_values_id, pvg.products_variants_groups_name as groups_name, pvg.sort_order as groups_sort_order, pvv.products_variants_values_name as variants_values_name, pvv.sort_order as sort_order from :table_products_variants_entries pve, :table_products_variants_groups pvg, :table_products_variants_values pvv where pve.products_variants_groups_id = pvg.products_variants_groups_id and pve.products_variants_values_id = pvv.products_variants_values_id and pvg.language_id = pvv.language_id and pvg.language_id = :language_id and pve.products_variants_id = :products_variants_id order by pvg.sort_order, pvg.products_variants_groups_name, pve.products_variants_groups_id');
         $Qvalues->bindTable(':table_products_variants_entries', TABLE_PRODUCTS_VARIANTS_ENTRIES);
         $Qvalues->bindTable(':table_products_variants_groups', TABLE_PRODUCTS_VARIANTS_GROUPS);
         $Qvalues->bindTable(':table_products_variants_values', TABLE_PRODUCTS_VARIANTS_VALUES);
@@ -401,7 +375,7 @@
         }
         $Qvalues->freeResult();
         $product_id_string = osc_get_product_id_string($this->getID(), $variants);
-
+        
         $products_variants[$product_id_string]['variants_id'] = $Qvariants->valueInt('products_variants_id');
         $products_variants[$product_id_string]['is_default'] = $Qvariants->valueInt('is_default');
         $products_variants[$product_id_string]['sku'] = $Qvariants->value('products_sku');
@@ -430,7 +404,7 @@
       }
       
       $Qvariants->freeResult();
-
+      
       $this->_data['variants'] = $products_variants;
       $this->_data['variants_groups'] = $groups;
       $this->_data['variants_groups_values'] = $groups_values;
