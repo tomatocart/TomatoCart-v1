@@ -92,7 +92,11 @@ var AjaxShoppingCart = new Class({
       $$('.ajaxAddToCart').each(function(addToCartButton) {
         addToCartButton.addEvent('click', function(e) {
           e.stop();
-
+          
+          if (addToCartButton.hasClass('disabled')) {
+            return false;
+          }
+          
           addToCartButton.set('disabled', 'disabled');
           
           var errors = [];
