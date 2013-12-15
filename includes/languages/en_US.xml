@@ -481,6 +481,11 @@
       <group>general</group>
     </definition>
     <definition>
+      <key>button_cart</key>
+      <value><![CDATA[Cart]]></value>
+      <group>general</group>
+    </definition>
+    <definition>
       <key>button_reviews</key>
       <value><![CDATA[Reviews]]></value>
       <group>general</group>

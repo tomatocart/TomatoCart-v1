@@ -107,8 +107,8 @@
 			
 			//bottom buttons
 			$content .= '<div class="buttons clearfix">' . 
-										osc_link_object(osc_href_link(FILENAME_CHECKOUT, 'checkout', 'SSL'), osc_draw_image_button('button_checkout.gif', $osC_Language->get('button_checkout')), 'class="btnCheckout"') .
-										osc_link_object(osc_href_link(FILENAME_CHECKOUT, 'cart', 'SSL'), osc_draw_image_button('button_ajax_cart.png'), 'class="btnCart"') . 
+										osc_link_object(osc_href_link(FILENAME_CHECKOUT, 'checkout', 'SSL'), $osC_Language->get('button_checkout'), 'class="btn btn-primary btnCheckout"') .
+										osc_link_object(osc_href_link(FILENAME_CHECKOUT, 'cart', 'SSL'), $osC_Language->get('button_cart'), 'class="btn btn-primary btnCart"') . 
 									'</div>';
 			
       $content .= '</div>';
@@ -220,9 +220,9 @@
     				
     				//bottom buttons
     				$confirm_dialog .=	'<div class="btns">' .
-							    								osc_link_object(osc_href_link(FILENAME_CHECKOUT, 'checkout', 'SSL'), osc_draw_image_button('button_checkout.gif', $osC_Language->get('button_checkout'))) .
-							    								osc_link_object(osc_href_link(FILENAME_CHECKOUT, 'cart', 'SSL'), osc_draw_image_button('button_ajax_cart.png')) .
-							    								osc_link_object(osc_href_link(FILENAME_DEFAULT), osc_draw_image_button('button_continue.gif'), 'id="btnContinue"') .
+							    								osc_link_object(osc_href_link(FILENAME_CHECKOUT, 'checkout', 'SSL'), $osC_Language->get('button_checkout'), 'class="btn btn-primary"') .
+							    								osc_link_object(osc_href_link(FILENAME_CHECKOUT, 'cart', 'SSL'), $osC_Language->get('button_cart'), 'class="btn btn-primary"') .
+							    								osc_link_object(osc_href_link(FILENAME_DEFAULT), $osC_Language->get('button_continue'), 'id="btnContinue" class="btn btn-primary"') .
 					    									'</div>';
     				
     				$confirm_dialog .= '</div>';
