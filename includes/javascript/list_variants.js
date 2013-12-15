@@ -117,7 +117,7 @@ var TocListVariants = new Class({
         var productsIdString = this.getProductsIdString(),
             product = this.options.variants[productsIdString],
             buyEl = combobox.getParent(this.options.buyElCls),
-            buyBtn = buyEl.getParent().getElement(this.options.btnAddCls),
+            buyBtn = buyEl.closest(this.options.btnAddCls),
             selects = buyEl.getElements('select'),
             error,
             href;

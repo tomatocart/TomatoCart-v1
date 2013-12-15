@@ -855,10 +855,8 @@ div.qtyBlock {margin-bottom:5px;}
 a.readMore {display:block;margin:5px 3px;}
 
 /* Variants*/
-.productListing .buyBlock {margin-bottom:5px;}
-.productListing .buyBlock label {display:block;text-align:center;font-weight:bold;}
-.productListing .buyBlock select {width:110px;margin-bottom:5px;margin-left:5px;}
-.productListing .buyBlock {text-align:right;}
+.productListing .options li {float:left;margin-left:10px;}
+.productListing .options li label {display:block;}
 .warning {color:red;text-align:center;}
 .alert {border: 1px solid red;}
 

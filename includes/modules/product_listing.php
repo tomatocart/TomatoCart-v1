@@ -120,6 +120,8 @@
 
     while ($Qlisting->next()) {
       $rows++;
+      
+      $osC_Product = new osC_Product($Qlisting->value('products_id'));
 
       echo '    <tr class="' . ((($rows/2) == floor($rows/2)) ? 'productListing-even' : 'productListing-odd') . '">' . "\n";
 
@@ -142,6 +144,23 @@
               $lc_text .= osc_link_object(osc_href_link(FILENAME_PRODUCTS, $Qlisting->value('products_id') . ($cPath ? '&cPath=' . $cPath : '')), $osC_Language->get('button_read_more'), 'class="readMore"');
             }
             
+        //variants options is enabled
+            if ($variants_enabled) {
+            	if ($osC_Product->hasVariants()) {
+								$lc_text .= '<ul class="options variants_' . $osC_Product->getID() . '">';
+								$combobox_array = $osC_Product->getVariantsComboboxArray();
+							
+								foreach ($combobox_array as $groups_name => $combobox) {
+									$lc_text .= '<li class="variant">';
+									$lc_text .=  '<label>' . $groups_name . ':</label>';
+									$lc_text .= $combobox;
+									$lc_text .= '</li>';
+								}
+								 
+								$lc_text .= '</ul>';
+							}
+            }
+            
             break;
           case 'PRODUCT_LIST_MANUFACTURER':
             $lc_align = '';
@@ -150,7 +169,6 @@
           case 'PRODUCT_LIST_PRICE':
             $lc_align = 'right';
             $lc_class .= ' price';
-            $osC_Product = new osC_Product($Qlisting->value('products_id'));
             $lc_text = $osC_Product->getPriceFormated(true);
             
             //variants options is enabled
@@ -187,23 +205,6 @@
             
             $lc_text = '';
             
-            //variants options is enabled
-            if ($variants_enabled) {
-            	if ($osC_Product->hasVariants()) {
-								$lc_text .= '<div class="buyBlock variants_' . $osC_Product->getID() . '">';
-								$combobox_array = $osC_Product->getVariantsComboboxArray();
-							
-								foreach ($combobox_array as $groups_name => $combobox) {
-									$lc_text .= '<div class="variant">';
-									$lc_text .=  '<label>' . $groups_name . ':</label>';
-									$lc_text .= $combobox;
-									$lc_text .= '</div>';
-								}
-								 
-								$lc_text .= '</div>';
-							}
-            }
-     
             if ($Qlisting->value('products_type') == PRODUCT_TYPE_SIMPLE) {
 							//enable quantity input field
 							if (defined('PRODUCT_LIST_QUANTITY_INPUT') && PRODUCT_LIST_QUANTITY_INPUT == 1) {

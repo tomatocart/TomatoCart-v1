@@ -15,10 +15,10 @@ var TocVariants = new Class({
   options: {
     hasSpecial: 0,
     remoteUrl: 'json.php',
-    variantsGroups: null,
     variants: null,
     linkCompareProductsCls: '.compare-products',
     linkWishlistCls: '.wishlist',
+    btnAddCls: '.ajaxAddToCart',
     lang: {
       txtInStock: 'In Stock',
       txtOutOfStock: 'Out Of Stock',
@@ -96,7 +96,8 @@ var TocVariants = new Class({
   },
     
   updateView: function() {
-  	var productsIdString = this.getProductsIdString();
+  	var productsIdString = this.getProductsIdString(),
+  	    btnAddToCart = $$(this.options.btnAddCls);
   	
   	//if it is in the product info page and the product have any variants, add the variants into the compare products link
   	if (this.linkCp) {
@@ -116,7 +117,14 @@ var TocVariants = new Class({
     
     if (product == undefined || (product['status'] == 0)) {
       $('productInfoAvailable').innerHTML = '<font color="red">' + this.options.lang.txtNotAvailable + '</font>';
+      
+      if (btnAddToCart.length > 0) {
+        btnAddToCart[0].addClass('disabled');
+      }
+      
     } else {
+      btnAddToCart[0].removeClass('disabled');
+      
 	    if (this.options.hasSpecial == 0) {
 	    	// get the formatted price of the variants product by ajax requst
 	    	this.sendRequest({action: 'get_variants_formatted_price', products_id_string: productsIdString}, function(response) {

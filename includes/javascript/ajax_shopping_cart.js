@@ -92,9 +92,11 @@ var AjaxShoppingCart = new Class({
       $$('.ajaxAddToCart').each(function(addToCartButton) {
         addToCartButton.addEvent('click', function(e) {
           e.stop();
-
-          addToCartButton.set('disabled', 'disabled');
           
+          if (addToCartButton.hasClass('disabled')) {
+            return false;
+          }
+
           var errors = [];
 
           //send request
@@ -176,7 +178,6 @@ var AjaxShoppingCart = new Class({
           
           if (errors.length > 0) {
             alert(errors.join('\n'));
-            addToCartButton.erase('disabled');
             return;
           }
           
@@ -236,8 +237,6 @@ var AjaxShoppingCart = new Class({
               if ($defined(result.feedback)) {
                 alert(result.feedback);
               }
-              
-              addToCartButton.erase('disabled');
             }
           });
         }.bind(this));
