@@ -176,7 +176,7 @@ if ($Qlisting->numberOfRows() > 0) {
                 
                 <?php 
                     //variants options is enabled
-										if ($variants_enabled) {
+										if ($variants_enabled && $view_type=='list') {
 												if ($osC_Product->hasVariants()) {
 													$combobox_array = $osC_Product->getVariantsComboboxArray();
 								?>
