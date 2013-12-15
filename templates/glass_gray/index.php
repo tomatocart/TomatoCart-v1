@@ -23,8 +23,12 @@
 <title><?php echo ($osC_Template->hasMetaPageTitle() ? $osC_Template->getMetaPageTitle() . ' - ' : '') . STORE_NAME; ?></title>
 <base href="<?php echo osc_href_link(null, null, 'AUTO', false); ?>" />
 
+<?php if ($osC_Services->isStarted('debug') && defined('SERVICE_DEBUG_SHOW_CSS_JAVASCRIPT') && SERVICE_DEBUG_SHOW_CSS_JAVASCRIPT == 1) { ?>
 <link rel="stylesheet" type="text/css" href="templates/<?php echo $osC_Template->getCode(); ?>/stylesheet.css" />
 <link rel="stylesheet" type="text/css" href="ext/autocompleter/Autocompleter.css" />
+<?php }else {?>
+<link rel="stylesheet" type="text/css" href="templates/<?php echo $osC_Template->getCode(); ?>/all.min.css" />
+<?php } ?>
 
 <?php
   if ($osC_Template->hasPageTags()) {
@@ -299,6 +303,7 @@
   }
 ?>
 
+<?php if ($osC_Services->isStarted('debug') && defined('SERVICE_DEBUG_SHOW_CSS_JAVASCRIPT') && SERVICE_DEBUG_SHOW_CSS_JAVASCRIPT == 1) { ?>
 <script type="text/javascript" src="includes/javascript/pop_dialog.js"></script>
 <script type="text/javascript" src="ext/autocompleter/Autocompleter.js"></script>
 <script type="text/javascript" src="ext/autocompleter/Autocompleter.Request.js"></script>
@@ -306,6 +311,9 @@
 <script type="text/javascript" src="includes/javascript/auto_completer.js"></script>
 <script type="text/javascript" src="includes/javascript/popup_cart.js"></script>
 <script type="text/javascript" src="includes/javascript/bookmark.js"></script>
+<?php }else { ?>
+<script type="text/javascript" src="templates/<?php echo $osC_Template->getCode(); ?>/javascript/all.min.js"></script>
+<?php }?>
 
 <script type="text/javascript">
   window.addEvent('domready', function() {
