@@ -141,6 +141,22 @@ var TocAutoCompleter = new Class({
       }
   },
   
+  /**
+   * markQueryValue
+   *
+   * Marks the queried word in the given string with <span class="autocompleter-queried">*</span>
+   * Call this i.e. from your custom parseChoices, same for addChoiceEvents
+   *
+   * @param   {String} Text
+   * @return    {String} Text
+   */
+  markQueryValue: function(str) {
+    var markValue = (!this.options.markQuery || !this.queryValue) ? str
+      : str.replace(new RegExp('(' + ((this.options.filterSubset) ? '' : '^') + this.queryValue.escapeRegExp() + ')', (this.options.filterCase) ? '' : 'i'), '<span class="autocompleter-queried">$1</span>');
+    
+    return markValue;
+  },
+  
   query: function(){
       this.element.removeClass('auto-loaded').addClass('auto-loading');
       this.parent();
