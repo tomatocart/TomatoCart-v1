@@ -126,8 +126,14 @@ var TocAutoCompleter = new Class({
           if (this.options.maxChoices < tokens.length && !this.options.overflow) tokens.length = this.options.maxChoices;
           
           tokens.each(this.options.injectChoice || function(token){
-              var choice = new Element('li', {'html': this.markQueryValue(token), 'class': 'clearfix'});
-              choice.inputValue = choice.getElement('a').get('text');
+              var choice = new Element('li', {'html': token, 'class': 'clearfix'}),
+                  choiceLink = choice.getElement('a'),
+                  choiceText = choiceLink.get('text'),
+                  choiceMarkedValue = this.markQueryValue(choiceText);
+              
+              choice.inputValue = choiceText;
+              
+              choiceLink.set('html', choiceMarkedValue);
               
               this.addChoiceEvents(choice).inject(this.choices);
           }, this);
