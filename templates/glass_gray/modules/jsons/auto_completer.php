@@ -16,11 +16,16 @@ class toC_Json_Auto_Completer {
   function getProducts() {  
     global $osC_Database, $osC_Language, $toC_Json, $osC_Image;
     
-    $max_name_len = 40;
-    $image_group = 'mini';
-    
     if (defined('IMAGE_GROUP_AUTO_COMPLETER')) {
     	$image_group = IMAGE_GROUP_AUTO_COMPLETER;
+    }else {
+    	$image_group = 'mini';
+    }
+    
+    if (defined('MAX_CHARACTERS_AUTO_COMPLETER')) {
+    	$max_name_len = MAX_CHARACTERS_AUTO_COMPLETER;
+    }else {
+    	$max_name_len = 40;
     }
     
     $products = array();

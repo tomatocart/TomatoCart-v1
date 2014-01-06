@@ -45,24 +45,30 @@ var TocAutoCompleter = new Class({
       var match = this.options.choicesMatch, first = this.choices.getFirst(match);
       this.selected = this.selectedValue = null;
       if (this.fix) {
-          //get the correct position for the autocompleter list
-          var pos = this.element.getCoordinates(this.relative),
-              sizeTrigger = this.element.getSize(),
-              sizeChoices = this.choices.getSize();
-          
-          if (!this.relative) {
-              this.relative = sizeChoices.x - sizeTrigger.x || sizeTrigger.x - sizeChoices.x;
-          }
-          
-          this.choices.setStyles({
-              'left': pos.left - this.relative,
-              'top': pos.bottom
-          });
-          
-          //hide the choice automatically when the mouse leave out
-          this.choices.addEvent('mouseleave',function() {
-              this.hideChoices();
-          }.bind(this));
+        //get the correct position for the autocompleter list
+        var pos = this.element.getCoordinates(this.relative),
+            sizeTrigger = this.element.getSize(),
+            sizeChoices;
+           
+        if (this.options.width) {
+          this.choices.setStyle('width', this.options.width + 'px');
+        }
+        
+        sizeChoices = this.choices.getSize();
+        if (!this.relative) {
+            this.relative = sizeChoices.x - sizeTrigger.x || sizeTrigger.x - sizeChoices.x;
+        }
+        
+        this.choices.setStyles({
+            'left': pos.left - this.relative,
+            'top': pos.bottom
+        });
+  
+        
+        //hide the choice automatically when the mouse leave out
+        this.choices.addEvent('mouseleave',function() {
+            this.hideChoices();
+        }.bind(this));
       }
       if (!first) return;
       if (!this.visible) {
