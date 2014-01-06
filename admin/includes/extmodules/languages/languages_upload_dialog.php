@@ -88,9 +88,13 @@ Ext.extend(Toc.languages.LanguagesUploadDialog, Ext.Window, {
     this.frmLanguage.form.submit({
       waitMsg: TocLanguage.formSubmitWaitMsg,
       success: function(form, action) {
-         this.fireEvent('saveSuccess', action.result.feedback);
-         this.close();
-         window.location.reload();  
+				if (action.result.success) {
+					this.fireEvent('saveSuccess', action.result.feedback);
+					this.close();
+					window.location.reload();  
+				}else {
+					Ext.MessageBox.alert(TocLanguage.msgErrTitle, action.result.feedback);
+				}
       },    
       failure: function(form, action) {
         if (action.failureType != 'client') {

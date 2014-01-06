@@ -100,13 +100,15 @@
       $error = false;
       $feedback = array();
       
-      if ( $_REQUEST['code'] == DEFAULT_LANGUAGE ) {
+      $del_files = isset($_POST['delFiles']) && $_POST['delFiles'] == 1 ? true : false;
+      
+      if ( $_POST['code'] == DEFAULT_LANGUAGE ) {
         $error = true;
         $feedback[] = $osC_Language->get('introduction_delete_language_invalid');
       }
       
       if ($error === false) {
-        if ( osC_Language_Admin::remove($_REQUEST['languages_id']) ) {
+        if ( osC_Language_Admin::remove($_POST['languages_id'], $del_files) ) {
           $response = array('success' => true, 'feedback' => $osC_Language->get('ms_success_action_performed'));
         } else {
           $response = array('success' => false, 'feedback' => $osC_Language->get('ms_error_action_not_performed'));
@@ -123,8 +125,10 @@
       
       $error = false;
       $feedback = array();
+      
+      $del_files = isset($_POST['delFiles']) && $_POST['delFiles'] == 1 ? true : false;
      
-      $batch = explode(',', $_REQUEST['batch']);
+      $batch = explode(',', $_POST['batch']);
       $Qcheck = $osC_Database->query('select code from :table_languages where languages_id in (":languages_id")');
       $Qcheck->bindTable(':table_languages', TABLE_LANGUAGES);
       $Qcheck->bindRaw(':languages_id', implode('", "', array_unique(array_filter(array_slice($batch, 0, MAX_DISPLAY_SEARCH_RESULTS), 'is_numeric'))));
@@ -140,7 +144,7 @@
 
       if ($error === false) {
         foreach ($batch as $id) {
-          if ( !osC_Language_Admin::remove($id) ) {
+          if ( !osC_Language_Admin::remove($id, $del_files) ) {
             $error = true;
             break;
           } 
@@ -271,12 +275,17 @@
       $tmp_path = DIR_FS_CACHE . 'languages/' . time();    
       
       if ( !is_dir(DIR_FS_CACHE . 'languages') ) {
+      	$old = umask(0);
         if ( !mkdir(DIR_FS_CACHE . 'languages', 0777) ) {
           $error = true;
         }
+        umask($old);
       }
-        
+
+      $old = umask(0);
       if ( ($error === false) && (mkdir($tmp_path, 0777)) ) {
+      	umask($old);
+      	
         $temp_file = new upload($language, $tmp_path);
         
         if ( $temp_file->exists() && $temp_file->parse() && $temp_file->save() ) {
@@ -332,7 +341,7 @@
           $response = array('success' => false, 'feedback' => $osC_Language->get('ms_error_action_not_performed'));
         }
       } else {
-        $response = array('success' => false, 'feedback' => $osC_Language->get('ms_error_action_not_performed') . '<br />' . implode('<br />', $feedback));
+        $response = array('success' => false, 'feedback' => $osC_Language->get('ms_error_action_not_performed') . ' ' . implode(' ', $feedback));
       }
       
       header('Content-Type: text/html');

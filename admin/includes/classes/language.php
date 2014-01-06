@@ -1096,7 +1096,7 @@
       return false;
     }
 
-    function remove($id) {
+    function remove($id, $del_files = false) {
       global $osC_Database, $osC_Language;
 
       $Qcheck = $osC_Database->query('select code from :table_languages where languages_id = :languages_id');
@@ -1431,6 +1431,38 @@
           $osC_Database->commitTransaction();
 
           osC_Cache::clear('languages');
+          
+          //delete language files too
+          if ($del_files === true) {
+          	$lang_admin_path = DIR_FS_CATALOG . DIR_FS_ADMIN . 'includes/languages/';
+          	$lang_front_path = DIR_FS_CATALOG . 'includes/languages/';
+          	$lang_install_path = DIR_FS_CATALOG . 'install/includes/languages/';
+          	$lang_code = $Qcheck->value('code');
+          	
+          	if (file_exists($lang_admin_path .  $lang_code . '.php')) {
+          		@unlink($lang_admin_path . $lang_code . '.php');
+          	}
+          	
+          	if (is_dir($lang_admin_path .  $lang_code)) {
+          		osc_remove($lang_admin_path .  $lang_code);
+          	}
+          	
+          	if (file_exists($lang_front_path .  $lang_code . '.xml')) {
+          		@unlink($lang_front_path . $lang_code . '.xml');
+          	}
+          	
+          	if (is_dir($lang_front_path .  $lang_code)) {
+          		osc_remove($lang_front_path .  $lang_code);
+          	}
+          	
+          	if (file_exists($lang_install_path .  $lang_code . '.php')) {
+          		@unlink($lang_install_path . $lang_code . '.php');
+          	}
+          	 
+          	if (is_dir($lang_install_path .  $lang_code)) {
+          		osc_remove($lang_install_path .  $lang_code);
+          	}
+          }
 
           return true;
         } else {
