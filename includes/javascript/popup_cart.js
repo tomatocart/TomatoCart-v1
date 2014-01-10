@@ -22,6 +22,7 @@ var PopupCart = new Class({
     clsCollapsed: 'cartCallpased',
     clsExpanded: 'cartExpanded',
     clsCartText: 'cartText',
+    contentEl:  $('pageContent'),
     
     //flag to represent the ajax shopping cart box is eanbled / disabled
     enableDelete: 'yes',
@@ -171,121 +172,119 @@ var PopupCart = new Class({
   
   //enable the flying effects
   enableFlyingEffects: function() {
-    var addCartBtns = $$(this.options.clsAddBtn);
-    
     //verify whether there is any add to cart button
-    if (addCartBtns != null) {
-        addCartBtns.each(function(addToCartButton) {
-            addToCartButton.addEvent('click', function(e) {
-                e.stop();
-                
-                //do nothing if the add to cart button is disabled
-                if (addToCartButton.hasClass('disabled')) {
-                    return false;
-                }
-                
-                //disable the fly trigger
-                addToCartButton.set('disabled', 'disabled');
-                
-                //check parameters
-                var errors = [],
-                    btnId = addToCartButton.get('id'),
-                    pID = btnId.test("^ac_[a-z]+_[0-9]+$", "i") ? btnId.split('_').getLast() : null,
-                    params = {action: 'add_product', pID: pID},
-                    selects = $$('tr.variantCombobox select'),
-                    listSelects = $$('.variants_' + pID + ' select'),
-                    options = null,
-                    variants = '';
-                    
-                if ( $defined($('quantity')) ) {
-                  params.pQty = $('quantity').get('value');  
-                }
-                
-                if ($('qty_' + pID) != null) {
-                    params.pQty = $('qty_' + pID).get('value');  
-                }
+    if (this.options.contentEl) {
+      this.options.contentEl.addEvent('click:relay(' + this.options.clsAddBtn + ')', function(e) {
+        var addToCartButton = e.target;
+        
+        e.stop();
+        
+        //do nothing if the add to cart button is disabled
+        if (addToCartButton.hasClass('disabled')) {
+            return false;
+        }
+        
+        //disable the fly trigger
+        addToCartButton.set('disabled', 'disabled');
+        
+        //check parameters
+        var errors = [],
+            btnId = addToCartButton.get('id'),
+            pID = btnId.test("^ac_[a-z]+_[0-9]+$", "i") ? btnId.split('_').getLast() : null,
+            params = {action: 'add_product', pID: pID},
+            selects = $$('tr.variantCombobox select'),
+            listSelects = $$('.variants_' + pID + ' select'),
+            options = null,
+            variants = '';
+            
+        if ( $defined($('quantity')) ) {
+          params.pQty = $('quantity').get('value');  
+        }
+        
+        if ($('qty_' + pID) != null) {
+            params.pQty = $('qty_' + pID).get('value');  
+        }
 
-                //variants
-                if (selects.length > 0) {
-                    options = selects;
-                }else if (listSelects.length > 0) {
-                    options = listSelects;
-                }
-                
-                if (options !== null) {
-                    options.each(function(option) {
-                        var id = option.id.toString();
-                        var groups_id = id.substring(9, id.indexOf(']'));
-                    
-                    variants += groups_id + ':' + option.value + ';';
-                  }.bind(this));
-                  
-                  params.variants = variants; 
-                }
-                
-                //gift certificate
-                if ($defined($('senders_name')) && $('senders_name').value != '') {
-                  params.senders_name = $('senders_name').value;
-                } else if ($defined($('senders_name')) && $('senders_name').value == '') {
-                  errors.push(this.options.error_sender_name_empty);
-                }
-                 
-                if ($defined($('senders_email')) && $('senders_email').value != '') {
-                  params.senders_email = $('senders_email').value;
-                } else if ($defined($('senders_email')) && $('senders_email').value == '') {
-                  errors.push(this.options.error_sender_email_empty);
-                }
-                  
-                if ($defined($('recipients_name')) && $('recipients_name').value != '') {
-                  params.recipients_name = $('recipients_name').value;
-                } else if ($defined($('recipients_name')) && $('recipients_name').value == '') {
-                  errors.push(this.options.error_recipient_name_empty);
-                }
-                  
-                if ($defined($('recipients_email')) && $('recipients_email').value != '') {
-                  params.recipients_email = $('recipients_email').value;
-                } else if ($defined($('recipients_email')) && $('recipients_email').value == '') {
-                  errors.push(this.options.error_recipient_email_empty);
-                }
-                    
-                if ($defined($('message')) && $('message').value != '') {
-                  params.message = $('message').value;
-                } else if ($defined($('message')) && $('message').value == '') {
-                  errors.push(this.options.error_message_empty);
-                }
-                    
-                if ($defined($('gift_certificate_amount')) && $('gift_certificate_amount').value != '') {
-                  params.gift_certificate_amount = $('gift_certificate_amount').value;
-                } else if ($defined($('gift_certificate_amount')) && $('gift_certificate_amount').value == '') {
-                  errors.push(this.options.error_message_open_gift_certificate_amount);
-                }
-                
-                if (errors.length > 0) {
-                  alert(errors.join('\n'));
-                  addToCartButton.erase('disabled');
-                  return false;
-                }
-                
-                //send the ajax request to add the product into the shopping cart
-                this.sendRequest(params, function(response) {
-                  var result = JSON.decode(response);
-                
-                  if (result.success == true) {
-                    //move the product image into the popup cart with flying effects
-                    this.doFlyingEffects(addToCartButton, result.items);
-                    
-                    //show the confirmation dialog
-                    if (this.options.dlgConfirmStatus == true) {
-                        this.showConfirmation(result.confirm_dialog);
-                    }
-                  }else {
-                    addToCartButton.erase('disabled');
-                  }
-                });
-                
-                return false;
-            }.bind(this));
-        }, this);
+        //variants
+        if (selects.length > 0) {
+            options = selects;
+        }else if (listSelects.length > 0) {
+            options = listSelects;
+        }
+        
+        if (options !== null) {
+            options.each(function(option) {
+                var id = option.id.toString();
+                var groups_id = id.substring(9, id.indexOf(']'));
+            
+            variants += groups_id + ':' + option.value + ';';
+          }.bind(this));
+          
+          params.variants = variants; 
+        }
+        
+        //gift certificate
+        if ($defined($('senders_name')) && $('senders_name').value != '') {
+          params.senders_name = $('senders_name').value;
+        } else if ($defined($('senders_name')) && $('senders_name').value == '') {
+          errors.push(this.options.error_sender_name_empty);
+        }
+         
+        if ($defined($('senders_email')) && $('senders_email').value != '') {
+          params.senders_email = $('senders_email').value;
+        } else if ($defined($('senders_email')) && $('senders_email').value == '') {
+          errors.push(this.options.error_sender_email_empty);
+        }
+          
+        if ($defined($('recipients_name')) && $('recipients_name').value != '') {
+          params.recipients_name = $('recipients_name').value;
+        } else if ($defined($('recipients_name')) && $('recipients_name').value == '') {
+          errors.push(this.options.error_recipient_name_empty);
+        }
+          
+        if ($defined($('recipients_email')) && $('recipients_email').value != '') {
+          params.recipients_email = $('recipients_email').value;
+        } else if ($defined($('recipients_email')) && $('recipients_email').value == '') {
+          errors.push(this.options.error_recipient_email_empty);
+        }
+            
+        if ($defined($('message')) && $('message').value != '') {
+          params.message = $('message').value;
+        } else if ($defined($('message')) && $('message').value == '') {
+          errors.push(this.options.error_message_empty);
+        }
+            
+        if ($defined($('gift_certificate_amount')) && $('gift_certificate_amount').value != '') {
+          params.gift_certificate_amount = $('gift_certificate_amount').value;
+        } else if ($defined($('gift_certificate_amount')) && $('gift_certificate_amount').value == '') {
+          errors.push(this.options.error_message_open_gift_certificate_amount);
+        }
+        
+        if (errors.length > 0) {
+          alert(errors.join('\n'));
+          addToCartButton.erase('disabled');
+          return false;
+        }
+        
+        //send the ajax request to add the product into the shopping cart
+        this.sendRequest(params, function(response) {
+          var result = JSON.decode(response);
+        
+          if (result.success == true) {
+            //move the product image into the popup cart with flying effects
+            this.doFlyingEffects(addToCartButton, result.items);
+            
+            //show the confirmation dialog
+            if (this.options.dlgConfirmStatus == true) {
+                this.showConfirmation(result.confirm_dialog);
+            }
+          }else {
+            addToCartButton.erase('disabled');
+          }
+        }.bind(this));
+        
+        return false;
+      }.bind(this));
     }
   },
   
