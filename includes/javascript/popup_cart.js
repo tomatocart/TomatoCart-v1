@@ -22,7 +22,7 @@ var PopupCart = new Class({
     clsCollapsed: 'cartCallpased',
     clsExpanded: 'cartExpanded',
     clsCartText: 'cartText',
-    contentEl:  $('pageContent'),
+    contentEl:  $('pageContent') || $('content-center'),
     
     //flag to represent the ajax shopping cart box is eanbled / disabled
     enableDelete: 'yes',
