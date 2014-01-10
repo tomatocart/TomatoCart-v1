@@ -6699,7 +6699,6 @@ INSERT INTO toc_templates_boxes VALUES (17,'Cross Sell Products','xsell_products
 INSERT INTO toc_templates_boxes VALUES (18,'Compare Products','compare_products','TomatoCart','http://www.tomatocart.com','boxes');
 INSERT INTO toc_templates_boxes VALUES (19,'Popular Search Term','popular_search_terms_tag_cloud','TomatoCart','http://www.tomatocart.com','boxes');
 INSERT INTO toc_templates_boxes VALUES (20,'Feature Products','feature_products','TomatoCart','http://www.tomatocart.com','content');
-INSERT INTO toc_templates_boxes VALUES (21,'Shopping Cart','shopping_cart','TomatoCart','http://www.tomatocart.com','boxes');
 
 INSERT INTO toc_templates_boxes_to_pages VALUES (1,2,1,'*','left',100,0);
 INSERT INTO toc_templates_boxes_to_pages VALUES (2,6,1,'*','left',200,0);
@@ -6722,7 +6721,6 @@ INSERT INTO toc_templates_boxes_to_pages VALUES (18,17,1,'products/info','after'
 INSERT INTO toc_templates_boxes_to_pages VALUES (19,18,1,'*','right',10,0);
 INSERT INTO toc_templates_boxes_to_pages VALUES (20,19,1,'*','right',1200,0);
 INSERT INTO toc_templates_boxes_to_pages VALUES (21,20,1,'index/index','after',100,0);
-INSERT INTO toc_templates_boxes_to_pages VALUES (22,21,1,'*','right',50,0);
 
 INSERT INTO toc_configuration (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, date_added) values ('Minimum List Size', 'BOX_BEST_SELLERS_MIN_LIST', '3', 'Minimum amount of products that must be shown in the listing', '6', '0', now());
 INSERT INTO toc_configuration (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, date_added) values ('Maximum List Size', 'BOX_BEST_SELLERS_MAX_LIST', '10', 'Maximum amount of products to show in the listing', '6', '0', now());
