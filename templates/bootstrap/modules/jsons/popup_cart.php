@@ -119,7 +119,7 @@
     }
 
     function addProduct() {
-    	global $osC_ShoppingCart, $toC_Json, $osC_Language, $toC_Customization_Fields, $osC_Image;
+    	global $osC_ShoppingCart, $toC_Json, $osC_Language, $toC_Customization_Fields, $osC_Image, $osC_Currencies;
     	
     	$osC_Language->load('products');
     
@@ -208,15 +208,23 @@
     					$confirm_dialog .= '<br />- ' . $osC_Language->get('message')  . ': ' . $product['gc_data']['message'];
     				}
     				
+    				$confirm_dialog .= '</p>';
+    				
     				//variants products
     				if ($osC_ShoppingCart->hasVariants($product['id'])) {
     					foreach ($osC_ShoppingCart->getVariants($product['id']) as $variants) {
+    						$confirm_dialog .= '<div>';
     				
-    						$confirm_dialog .=  '<br />- ' . $variants['groups_name'] . ': ' . $variants['values_name'];
+    						$confirm_dialog .=  '<strong>' . $variants['groups_name'] . ' - </strong><strong>' . $variants['values_name'] . '</strong></tr>';
+    						
+    						$confirm_dialog .= '</div>';
     					}
     				}
     					
-    				$confirm_dialog .= '</p>';
+    				$confirm_dialog .= '</div>';
+    				
+    				//cart total
+    				$confirm_dialog .= '<p><strong>' . $osC_ShoppingCart->numberOfItems() . ' ' . $osC_Language->get('text_items') . '</strong> - <strong>' . $osC_Currencies->format($osC_ShoppingCart->getTotal()) . '</strong></p>';
     				
     				//bottom buttons
     				$confirm_dialog .=	'<div class="btns">' .
