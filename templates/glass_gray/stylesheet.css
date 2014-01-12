@@ -874,19 +874,19 @@ a.readMore {display:block;margin:5px 3px;}
 	-webkit-box-shadow: 0 0 3px 3px #CCCCCC;
 	-moz-box-shadow: 0 0 3px 3px #CCCCCC;
 	box-shadow: 0 0 3px 3px #CCCCCC;
-	background: #DDDDDD;
+	background: #EEEEEE;
 	background-image: -webkit-gradient(
 	  linear,
 	  left top,
 	  left bottom,
-	  color-stop(0, #DDDDDD),
+	  color-stop(0, #EEEEEE),
 	  color-stop(0.71, #FFFFFF)
 	);
-	background-image: -o-linear-gradient(bottom, #DDDDDD 0%, #FFFFFF 71%);
-	background-image: -moz-linear-gradient(bottom, #DDDDDD 0%, #FFFFFF 71%);
-	background-image: -webkit-linear-gradient(bottom, #DDDDDD 0%, #FFFFFF 71%);
-	background-image: -ms-linear-gradient(bottom, #DDDDDD 0%, #FFFFFF 71%);
-	background-image: linear-gradient(to bottom, #DDDDDD 0%, #FFFFFF 71%);
+	background-image: -o-linear-gradient(bottom, #EEEEEE 0%, #FFFFFF 71%);
+	background-image: -moz-linear-gradient(bottom, #EEEEEE 0%, #FFFFFF 71%);
+	background-image: -webkit-linear-gradient(bottom, #EEEEEE 0%, #FFFFFF 71%);
+	background-image: -ms-linear-gradient(bottom, #EEEEEE 0%, #FFFFFF 71%);
+	background-image: linear-gradient(to bottom, #EEEEEE 0%, #FFFFFF 71%);
 }
 #popupCartContent table {width:100%;border-collapse: collapse; border-spacing: 0;}
 #popupCartContent table.products td {
