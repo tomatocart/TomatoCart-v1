@@ -27,13 +27,20 @@
 /* Class constructor */
 
     function osC_Info_Sitemap() {
-      global $osC_Services, $osC_Language, $breadcrumb, $Qarticles_listing, $Qfaqs_listing;
+      global $osC_Services, $osC_Language, $breadcrumb, $Qinformation_listing, $articles_categories, $Qfaqs_listing;
 
       $this->_page_title = $osC_Language->get('info_sitemap_heading');
       
+      //create the article instance to get the articles in each categories
       $articles = new toC_Articles();
-      $Qarticles_listing = $articles->getListing();
       
+      //get the articles listing for information category
+      $Qinformation_listing = $articles->getListing(1);
+      
+      //get articles categories including the articles
+      $articles_categories = $articles->getCategoriesListing();
+      
+      //get the faqs listing
       $faqs = new toC_Faqs();
       $Qfaqs_listing = $faqs->getListing();
 

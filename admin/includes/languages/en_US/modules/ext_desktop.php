@@ -75,6 +75,7 @@ msgMustSelectOne = Please select at least one record!
 msgSessionTimeout = Session Timeout! Please login again to access the system!
 msgActiveConfirm = Do you really want to active the selected record(s)?
 msgDeactiveConfirm = Do you really want to deactive the selected record(s)?
+msgDeleteLanguageFiles = Do you want to delete the languages files too?
 
 tipDelete = Delete
 tipEdit = Edit

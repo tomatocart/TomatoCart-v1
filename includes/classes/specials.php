@@ -95,14 +95,14 @@
       global $osC_Database;
       
       if (!isset($this->_specials['variants'][$variants_id])) {
-        $Qspecial = $osC_Database->query('select variants_speicals_price from :table_variants_specials where products_variants_id = :products_variants_id and status = 1');
+        $Qspecial = $osC_Database->query('select variants_specials_price from :table_variants_specials where products_variants_id = :products_variants_id and status = 1');
         $Qspecial->bindTable(':table_variants_specials', TABLE_VARIANTS_SPECIALS);
         $Qspecial->bindInt(':products_variants_id', $variants_id);
         $Qspecial->setCache('product-variants-specials-' . $variants_id);
         $Qspecial->execute();
         
         if ($Qspecial->numberOfRows() > 0) {
-          $this->_specials['variants'][$variants_id] = $Qspecial->valueDecimal('variants_speicals_price');
+          $this->_specials['variants'][$variants_id] = $Qspecial->valueDecimal('variants_specials_price');
         } else {
           $this->_specials['variants'][$variants_id] = null;
         }
@@ -116,7 +116,7 @@
     function &getListing() {
       global $osC_Database, $osC_Language, $osC_Image;
 
-      $Qspecials = $osC_Database->query('select p.products_id, p.products_price, p.products_tax_class_id, pd.products_name, pd.products_keyword, s.specials_new_products_price, i.image from :table_products p left join :table_products_images i on (p.products_id = i.products_id and i.default_flag = :default_flag), :table_products_description pd, :table_specials s where p.products_status = 1 and s.products_id = p.products_id and p.products_id = pd.products_id and pd.language_id = :language_id and s.status = 1 order by s.specials_date_added desc');
+      $Qspecials = $osC_Database->query('select p.products_id, p.products_price, p.products_type, p.products_tax_class_id, pd.products_name, pd.products_keyword, s.specials_new_products_price, i.image from :table_products p left join :table_products_images i on (p.products_id = i.products_id and i.default_flag = :default_flag), :table_products_description pd, :table_specials s where p.products_status = 1 and s.products_id = p.products_id and p.products_id = pd.products_id and pd.language_id = :language_id and s.status = 1 order by s.specials_date_added desc');
       $Qspecials->bindTable(':table_products', TABLE_PRODUCTS);
       $Qspecials->bindTable(':table_products_images', TABLE_PRODUCTS_IMAGES);
       $Qspecials->bindTable(':table_products_description', TABLE_PRODUCTS_DESCRIPTION);

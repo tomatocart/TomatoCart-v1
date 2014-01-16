@@ -205,7 +205,7 @@
     function &execute() {
       global $osC_Database, $osC_Customer, $osC_Currencies, $osC_Language, $osC_Image, $osC_CategoryTree;
       
-      $Qlisting = $osC_Database->query('select SQL_CALC_FOUND_ROWS distinct p.*, pd.*, m.*, i.image, vs.status, if(vs.status, vs.variants_speicals_price, if(s.status, s.specials_new_products_price, null)) as specials_new_products_price, if(vs.status, vs.variants_speicals_price, if(s.status, s.specials_new_products_price, if (pv.products_price, pv.products_price, p.products_price))) as final_price');
+      $Qlisting = $osC_Database->query('select SQL_CALC_FOUND_ROWS distinct p.*, pd.*, m.*, i.image, vs.status, if(vs.status, vs.variants_specials_price, if(s.status, s.specials_new_products_price, null)) as specials_new_products_price, if(vs.status, vs.variants_specials_price, if(s.status, s.specials_new_products_price, if (pv.products_price, pv.products_price, p.products_price))) as final_price');
 
       if (($this->hasPriceSet('from') || $this->hasPriceSet('to')) && (DISPLAY_PRICE_WITH_TAX == '1')) {
         $Qlisting->appendQuery(', sum(tr.tax_rate) as tax_rate');
@@ -294,22 +294,22 @@
 
       if (DISPLAY_PRICE_WITH_TAX == '1') {
         if ($this->_price_from > 0) {
-          $Qlisting->appendQuery('and (if(vs.status, vs.variants_speicals_price, if (s.status, s.specials_new_products_price, if (pv.products_price, pv.products_price, p.products_price))) * if(gz.geo_zone_id is null, 1, 1 + (tr.tax_rate / 100) ) >= :price_from)');
+          $Qlisting->appendQuery('and (if(vs.status, vs.variants_specials_price, if (s.status, s.specials_new_products_price, if (pv.products_price, pv.products_price, p.products_price))) * if(gz.geo_zone_id is null, 1, 1 + (tr.tax_rate / 100) ) >= :price_from)');
           $Qlisting->bindFloat(':price_from', $this->_price_from);
         }
 
         if ($this->_price_to > 0) {
-          $Qlisting->appendQuery('and (if(vs.status, vs.variants_speicals_price, if (s.status, s.specials_new_products_price, if (pv.products_price, pv.products_price, p.products_price))) * if(gz.geo_zone_id is null, 1, 1 + (tr.tax_rate / 100) ) <= :price_to)');
+          $Qlisting->appendQuery('and (if(vs.status, vs.variants_specials_price, if (s.status, s.specials_new_products_price, if (pv.products_price, pv.products_price, p.products_price))) * if(gz.geo_zone_id is null, 1, 1 + (tr.tax_rate / 100) ) <= :price_to)');
           $Qlisting->bindFloat(':price_to', $this->_price_to);
         }
       } else {
         if ($this->_price_from > 0) {
-          $Qlisting->appendQuery('and (if(vs.status, vs.variants_speicals_price, if (s.status, s.specials_new_products_price, if (pv.products_price, pv.products_price, p.products_price))) >= :price_from)');
+          $Qlisting->appendQuery('and (if(vs.status, vs.variants_specials_price, if (s.status, s.specials_new_products_price, if (pv.products_price, pv.products_price, p.products_price))) >= :price_from)');
           $Qlisting->bindFloat(':price_from', $this->_price_from);
         }
 
         if ($this->_price_to > 0) {
-          $Qlisting->appendQuery('and (if(vs.status, vs.variants_speicals_price, if (s.status, s.specials_new_products_price, if (pv.products_price, pv.products_price, p.products_price))) <= :price_to)');
+          $Qlisting->appendQuery('and (if(vs.status, vs.variants_specials_price, if (s.status, s.specials_new_products_price, if (pv.products_price, pv.products_price, p.products_price))) <= :price_to)');
           $Qlisting->bindFloat(':price_to', $this->_price_to);
         }
       }

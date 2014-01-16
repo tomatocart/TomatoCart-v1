@@ -92,7 +92,11 @@ var AjaxShoppingCart = new Class({
       $$('.ajaxAddToCart').each(function(addToCartButton) {
         addToCartButton.addEvent('click', function(e) {
           e.stop();
-
+          
+          if (addToCartButton.hasClass('disabled')) {
+            return false;
+          }
+          
           addToCartButton.set('disabled', 'disabled');
           
           var errors = [];
@@ -204,7 +208,7 @@ var AjaxShoppingCart = new Class({
               });
 
               floatImage.injectAfter($(document.body)).setStyles({position: 'absolute'}).set('morph', {
-                duration: 700,
+                duration: 300,
                 onComplete: function() {
                   floatImage.fade('out');
                   

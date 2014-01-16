@@ -275,7 +275,6 @@
         
         //sort the variants groups based on its its sort order or name (ASC direction)
         $variants_groups = $this->_data['variants_groups'];
-        usort($variants_groups, array('self', '_sortVariantsGroups'));
 
         foreach ($variants_groups as $group) {
           $values = array();
@@ -298,31 +297,6 @@
       }
       
       return false;
-    }
-    
-    /**
-     * sort the variants groups based on its its sort order or name (ASC direction)
-     *
-     * @access private
-     * @param array $group_a a
-     * @param array $group_b
-     *
-     * return int
-     *
-     */
-    function _sortVariantsGroups($group_a, $group_b) {
-     if ($group_a['sort_order'] < $group_b['sort_order']) {
-        return -1;
-      }
-      
-      if ($group_a['sort_order'] > $group_b['sort_order']) {
-        return 1;
-      }
-      
-      //sort order is equel. Compare their names
-      if ($group_a['sort_order'] == $group_b['sort_order']) {
-        return strnatcmp($group_a['groups_name'], $group_b['groups_name']);
-      }
     }
     
     /**
@@ -371,7 +345,7 @@
       $groups = array();
       $groups_values = array();
       while ($Qvariants->next()) {
-        $Qvalues = $osC_Database->query('select pve.products_variants_groups_id as groups_id, pve.products_variants_values_id as variants_values_id, pvg.products_variants_groups_name as groups_name, pvg.sort_order as groups_sort_order, pvv.products_variants_values_name as variants_values_name, pvv.sort_order as sort_order from :table_products_variants_entries pve, :table_products_variants_groups pvg, :table_products_variants_values pvv where pve.products_variants_groups_id = pvg.products_variants_groups_id and pve.products_variants_values_id = pvv.products_variants_values_id and pvg.language_id = pvv.language_id and pvg.language_id = :language_id and pve.products_variants_id = :products_variants_id order by pve.products_variants_groups_id');
+        $Qvalues = $osC_Database->query('select pve.products_variants_groups_id as groups_id, pve.products_variants_values_id as variants_values_id, pvg.products_variants_groups_name as groups_name, pvg.sort_order as groups_sort_order, pvv.products_variants_values_name as variants_values_name, pvv.sort_order as sort_order from :table_products_variants_entries pve, :table_products_variants_groups pvg, :table_products_variants_values pvv where pve.products_variants_groups_id = pvg.products_variants_groups_id and pve.products_variants_values_id = pvv.products_variants_values_id and pvg.language_id = pvv.language_id and pvg.language_id = :language_id and pve.products_variants_id = :products_variants_id order by pvg.sort_order, pvg.products_variants_groups_name, pve.products_variants_groups_id');
         $Qvalues->bindTable(':table_products_variants_entries', TABLE_PRODUCTS_VARIANTS_ENTRIES);
         $Qvalues->bindTable(':table_products_variants_groups', TABLE_PRODUCTS_VARIANTS_GROUPS);
         $Qvalues->bindTable(':table_products_variants_values', TABLE_PRODUCTS_VARIANTS_VALUES);
@@ -401,7 +375,7 @@
         }
         $Qvalues->freeResult();
         $product_id_string = osc_get_product_id_string($this->getID(), $variants);
-
+        
         $products_variants[$product_id_string]['variants_id'] = $Qvariants->valueInt('products_variants_id');
         $products_variants[$product_id_string]['is_default'] = $Qvariants->valueInt('is_default');
         $products_variants[$product_id_string]['sku'] = $Qvariants->value('products_sku');
@@ -430,7 +404,7 @@
       }
       
       $Qvariants->freeResult();
-
+      
       $this->_data['variants'] = $products_variants;
       $this->_data['variants_groups'] = $groups;
       $this->_data['variants_groups_values'] = $groups_values;
@@ -749,16 +723,23 @@
       }
     }
 
-    function getImage() {
+    function getImage($variants = null) {
       $default_image = null;
       $default_variant_image = null;
+      $current_variants = null;
       
       if (isset($this->_data['images']) && is_array($this->_data['images'])) {
         foreach ($this->_data['images'] as $image) {
           //get variant default image
           if ($this->hasVariants()) {
-            if (!osc_empty($this->_current_variants)) {
-              $product_id_string = osc_get_product_id_string($this->getID(), $this->_current_variants);
+          	if (!osc_empty($this->_current_variants)) {
+          		$current_variants = $this->_current_variants;
+          	}else if ($variants !== null) {
+          		$current_variants = $variants;
+          	}
+          	
+            if ($current_variants !== null) {
+              $product_id_string = osc_get_product_id_string($this->getID(), $current_variants);
               $product_variant = $this->_data['variants'][$product_id_string];
               
               $default_variant_image = $product_variant['image'];
@@ -976,7 +957,7 @@
     function &getListingNew() {
       global $osC_Database, $osC_Language;
 
-      $Qproducts = $osC_Database->query('select p.products_id, p.products_price, p.products_tax_class_id, p.products_date_added, pd.products_name, pd.products_keyword, m.manufacturers_name, i.image from :table_products p left join :table_manufacturers m on (p.manufacturers_id = m.manufacturers_id) left join :table_products_images i on (p.products_id = i.products_id and i.default_flag = :default_flag), :table_products_description pd where p.products_status = 1 and p.products_id = pd.products_id and pd.language_id = :language_id order by p.products_date_added desc, pd.products_name');
+      $Qproducts = $osC_Database->query('select p.products_id, p.products_price, p.products_type, p.products_tax_class_id, p.products_date_added, pd.products_name, pd.products_keyword, m.manufacturers_name, i.image from :table_products p left join :table_manufacturers m on (p.manufacturers_id = m.manufacturers_id) left join :table_products_images i on (p.products_id = i.products_id and i.default_flag = :default_flag), :table_products_description pd where p.products_status = 1 and p.products_id = pd.products_id and pd.language_id = :language_id order by p.products_date_added desc, pd.products_name');
       $Qproducts->bindTable(':table_products', TABLE_PRODUCTS);
       $Qproducts->bindTable(':table_manufacturers', TABLE_MANUFACTURERS);
       $Qproducts->bindTable(':table_products_images', TABLE_PRODUCTS_IMAGES);

@@ -23,8 +23,12 @@
 <title><?php echo ($osC_Template->hasMetaPageTitle() ? $osC_Template->getMetaPageTitle() . ' - ' : '') . STORE_NAME; ?></title>
 <base href="<?php echo osc_href_link(null, null, 'AUTO', false); ?>" />
 
+<?php if ($osC_Services->isStarted('debug') && defined('SERVICE_DEBUG_SHOW_CSS_JAVASCRIPT') && SERVICE_DEBUG_SHOW_CSS_JAVASCRIPT == 1) { ?>
 <link rel="stylesheet" type="text/css" href="templates/<?php echo $osC_Template->getCode(); ?>/stylesheet.css" />
 <link rel="stylesheet" type="text/css" href="ext/autocompleter/Autocompleter.css" />
+<?php }else {?>
+<link rel="stylesheet" type="text/css" href="templates/<?php echo $osC_Template->getCode(); ?>/all.min.css" />
+<?php } ?>
 
 <?php
   if ($osC_Template->hasPageTags()) {
@@ -299,27 +303,67 @@
   }
 ?>
 
-
+<?php if ($osC_Services->isStarted('debug') && defined('SERVICE_DEBUG_SHOW_CSS_JAVASCRIPT') && SERVICE_DEBUG_SHOW_CSS_JAVASCRIPT == 1) { ?>
+<script type="text/javascript" src="includes/javascript/pop_dialog.js"></script>
 <script type="text/javascript" src="ext/autocompleter/Autocompleter.js"></script>
 <script type="text/javascript" src="ext/autocompleter/Autocompleter.Request.js"></script>
 <script type="text/javascript" src="ext/autocompleter/Observer.js"></script>
 <script type="text/javascript" src="includes/javascript/auto_completer.js"></script>
 <script type="text/javascript" src="includes/javascript/popup_cart.js"></script>
 <script type="text/javascript" src="includes/javascript/bookmark.js"></script>
+<?php }else { ?>
+<script type="text/javascript" src="templates/<?php echo $osC_Template->getCode(); ?>/javascript/all.min.js"></script>
+<?php }?>
 
 <script type="text/javascript">
   window.addEvent('domready', function() {
     new PopupCart({
       template: '<?php echo $osC_Template->getCode(); ?>',
+      enableDelete: '<?php 
+      	$box_modules = $osC_Template->osC_Modules_Boxes->_modules;
+      	
+      	$flag = 'yes';
+      	foreach($box_modules as $box_group => $modules) {
+      		foreach ($modules as $module_code) {
+      			if ($module_code == 'shopping_cart') {
+      				$flag = 'no';
+      				
+      				break 2;
+      			}
+      		}
+      	}
+      	
+      	echo $flag;
+      ?>',
+      <?php 
+      	if (defined('ENABLE_CONFIRMATION_DIALOG') && (ENABLE_CONFIRMATION_DIALOG == '1')) {
+      ?>
+      dlgConfirmStatus: true,
+      <?php 
+				}else {
+      ?>
+      dlgConfirmStatus: false,
+      <?php 
+				}
+      ?>
       sessionName: '<?php echo $osC_Session->getName(); ?>',
-      sessionId: '<?php echo $osC_Session->getID(); ?>'
+      sessionId: '<?php echo $osC_Session->getID(); ?>',
+      error_sender_name_empty: '<?php echo $osC_Language->get("error_sender_name_empty"); ?>',
+      error_sender_email_empty: '<?php echo $osC_Language->get("error_sender_email_empty"); ?>',
+      error_recipient_name_empty: '<?php echo $osC_Language->get("error_recipient_name_empty"); ?>',
+      error_recipient_email_empty: '<?php echo $osC_Language->get("error_recipient_email_empty"); ?>',
+      error_message_empty: '<?php echo $osC_Language->get("error_message_empty"); ?>',
+      error_message_open_gift_certificate_amount: '<?php echo $osC_Language->get('error_message_open_gift_certificate_amount'); ?>'
     });
     
     new TocAutoCompleter('keywords', {
       sessionName: '<?php echo $osC_Session->getName(); ?>',
       sessionId: '<?php echo $osC_Session->getID(); ?>',
       template: '<?php echo $osC_Template->getCode(); ?>',
-      width: 300
+      maxChoices: <?php echo defined('MAX_DISPLAY_AUTO_COMPLETER_RESULTS') ? MAX_DISPLAY_AUTO_COMPLETER_RESULTS : 10;?>,
+			width: <?php echo defined('WIDTH_AUTO_COMPLETER') ? WIDTH_AUTO_COMPLETER : 400; ?>,
+      moreBtnText: '<?php echo $osC_Language->get('button_get_more'); ?>',
+      imageGroup: '<?php echo defined('IMAGE_GROUP_AUTO_COMPLETER') ? IMAGE_GROUP_AUTO_COMPLETER : 'thumbnail'; ?>',
     });
   });
   new TocBookmark({

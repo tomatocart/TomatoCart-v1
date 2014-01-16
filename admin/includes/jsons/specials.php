@@ -118,7 +118,7 @@
                            'products_id' => $special_product['products_id'],
                            'products_name' => $special_product['products_name'],
                            'products_price' => $special_product['products_price'],
-                           'specials_new_products_price' => '<span class="oldPrice">' . $osC_Currencies->format($special_product['products_price']) . '</span> <span class="specialPrice">' . $osC_Currencies->format($special_product['variants_speicals_price']) . '</span>');
+                           'specials_new_products_price' => '<span class="oldPrice">' . $osC_Currencies->format($special_product['products_price']) . '</span> <span class="specialPrice">' . $osC_Currencies->format($special_product['variants_specials_price']) . '</span>');
       }
     }
     

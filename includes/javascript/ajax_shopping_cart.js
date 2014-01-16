@@ -92,9 +92,11 @@ var AjaxShoppingCart = new Class({
       $$('.ajaxAddToCart').each(function(addToCartButton) {
         addToCartButton.addEvent('click', function(e) {
           e.stop();
-
-          addToCartButton.set('disabled', 'disabled');
           
+          if (addToCartButton.hasClass('disabled')) {
+            return false;
+          }
+
           var errors = [];
 
           //send request
@@ -108,20 +110,33 @@ var AjaxShoppingCart = new Class({
           if ( $defined($('quantity')) ) {
             params.pQty = $('quantity').get('value');  
           }
+          
+          if ($('qty_' + pID) != null) {
+              params.pQty = $('qty_' + pID).get('value');  
+          }
 
           //variants
+          var options = null;
           var selects = $$('tr.variantCombobox select');
-          if ($defined(selects)) {
+          var listSelects = $$('.variants_' + pID + ' select');
+          
+          if (selects.length > 0) {
+              options = selects;
+          }else if (listSelects.length > 0) {
+              options = listSelects;
+          }
+          
+          if (options !== null) {
             var variants = '';
             
-				    selects.each(function(select) {
-				      var id = select.id.toString();
-				      var groups_id = id.substring(9, id.indexOf(']'));
-				      
-				      variants += groups_id + ':' + select.value + ';';
-				    }.bind(this));
-				    
-				    params.variants = variants; 
+            options.each(function(select) {
+		      var id = select.id.toString();
+		      var groups_id = id.substring(9, id.indexOf(']'));
+		      
+		      variants += groups_id + ':' + select.value + ';';
+		    }.bind(this));
+		    
+		    params.variants = variants; 
           }
           
           //gift certificate
@@ -163,7 +178,6 @@ var AjaxShoppingCart = new Class({
           
           if (errors.length > 0) {
             alert(errors.join('\n'));
-            addToCartButton.erase('disabled');
             return;
           }
           
@@ -204,7 +218,7 @@ var AjaxShoppingCart = new Class({
               });
 
               floatImage.injectAfter($(document.body)).setStyles({position: 'absolute'}).set('morph', {
-                duration: 700,
+                duration: 300,
                 onComplete: function() {
                   floatImage.fade('out');
                   
@@ -223,8 +237,6 @@ var AjaxShoppingCart = new Class({
               if ($defined(result.feedback)) {
                 alert(result.feedback);
               }
-              
-              addToCartButton.erase('disabled');
             }
           });
         }.bind(this));

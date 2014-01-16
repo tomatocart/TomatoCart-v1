@@ -101,7 +101,7 @@
          '        <td valign="top">' . $product['name'];
 
     if (isset($product['type']) && ($product['type'] == PRODUCT_TYPE_DOWNLOADABLE) && (isset($product['downloads_status']) && ($product['downloads_status'] == 1))) {
-      echo osc_link_object(osc_href_link(FILENAME_DOWNLOAD, 'id=' . $product['orders_products_download_id'] . '&order=' . $_GET['orders']), '&nbsp;<b>(' . $osC_Language->get('download_file') . ')</b>');
+      echo osc_link_object(osc_href_link(FILENAME_DOWNLOAD, 'id=' . $product['orders_products_download_id'] . '&order=' . $_GET['orders']), $osC_Language->get('download_file'), 'data-max="' . $product['number_of_downloads'] * $product['qty'] . '" data-downloads="0" class="downloadable button"');
     }
     
     if (isset($product['type']) && ($product['type'] == PRODUCT_TYPE_GIFT_CERTIFICATE)) {
@@ -217,3 +217,31 @@
 <div class="submitFormButtons">
   <?php echo osc_link_object(osc_href_link(FILENAME_ACCOUNT, 'orders' . (isset($_GET['page']) ? '&page=' . $_GET['page'] : ''), 'SSL'), osc_draw_image_button('button_back.gif', $osC_Language->get('button_back'))); ?>
 </div>
+
+<script type="text/javascript">
+	window.addEvent('domready', function() {
+		if ($$('.downloadable').length > 0) {
+    	$$('.downloadable').each(function(item) {
+       	var downlodableMax = item.getProperty('data-max').toInt(),
+       			downloadedCounts,
+       			dlgWaring;
+			
+        item.addEvent('click', function(e) {
+					downloadedCounts = item.getProperty('data-downloads').toInt();
+					
+					//check whether it is allowed to be downloaded
+					if (downloadedCounts < downlodableMax) {
+						item.setProperty('data-downloads', downloadedCounts + 1);
+
+						return true;
+					}else {
+						dlgWaring = new popDialog('<?php echo '<p><strong>' . $osC_Language->get('error_download_max_num_of_times') . '</strong></p>';?>');
+						dlgWaring.show();
+
+						return false;
+					}
+        });
+    	});
+		}
+	});
+</script>

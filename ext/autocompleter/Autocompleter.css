@@ -1,39 +1,40 @@
 ul.autocompleter-choices
 {
+  width: 370px;
 	position: absolute;
 	margin: 0;
-	padding: 0;
+	padding: 5px;
 	list-style:	none;
-	border:	1px solid #7c7c7c;
-	border-left-color: #c3c3c3;
-	border-right-color: #c3c3c3;
-	border-bottom-color: #ddd;
-	background-color: #303A4B;
+	border-top:	1px solid #7c7c7c;
+	background-color: #FFFFFF;
 	text-align: left;
 	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
-	z-index: 50;
+	box-shadow: 2px 2px 2px 2px #CCCCCC;
+	overflow:hidden;  
 }
+ul.autocompleter-choices.useThumbnail {width: 420px;}
+ul.autocompleter-choices.useThumbnail .details {margin-top:20px;}
+ul.autocompleter-choices li .details, ul.autocompleter-choices li .image {display:block;float:left;}
+ul.autocompleter-choices li .details .price {display:block;margin-top:5px;}
 
 ul.autocompleter-choices li
 {
 	position: relative;
-	margin: -2px 0 0 0;
-	padding: 0.2em 1.5em 0.2em 1em;
+	margin: 5px 0;
+	padding: 6px;
 	display: block;
+	cursor: pointer;
 	float: none !important; 
-	cursor:	pointer;
 	font-weight: normal;
 	white-space: nowrap;
-	font-size: 1em;
-	line-height: 1.5em;
-	color: #fff;
+	font-size: 12px;
+	color: #616060;
+	border-bottom: 1px dashed #DDDDDD;
 }
 
-ul.autocompleter-choices li.autocompleter-selected
-{
-	background-color: #444;
-}
-
+ul.autocompleter-choices li img {vertical-align: middle;margin-right:20px;border:0;}
+ul.autocompleter-choices li.autocompleter-selected a {color:#6D7B94;}
+ul.autocompleter-choices li.autocompleter-selected a:hover {text-decoration:none;}
 ul.autocompleter-choices span.autocompleter-queried
 {
 	display: inline;
@@ -43,8 +44,17 @@ ul.autocompleter-choices span.autocompleter-queried
   padding: 0;
 	color: #6D7B94;
 }
-
 ul.autocompleter-choices li.autocompleter-selected span.autocompleter-queried
 {
 	color: #6D7B94;
 }
+
+ul.autocompleter-choices .more{
+  text-align:center;
+  margin: 20px 0;
+  height: 20px;
+  z-index: 1000; 
+}
+
+input.auto-loading {background:#FFFFFF url("../../images/indicator.gif") no-repeat 80% center;}
+input.auto-loaded {background:#FFFFFF;}

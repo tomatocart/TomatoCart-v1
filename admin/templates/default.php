@@ -19,6 +19,11 @@
     require('templates/default/login/login.php');
     exit;
   }
+  
+  //enable the IE compatible mode
+  if (stripos($_SERVER['HTTP_USER_AGENT'], 'msie 9') !== false || stripos($_SERVER['HTTP_USER_AGENT'], 'msie 10') !== false || stripos($_SERVER['HTTP_USER_AGENT'], 'msie') !== false) {
+  	header('X-UA-Compatible: IE=7');
+  }
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html dir="<?php echo $osC_Language->getTextDirection();?>" xml:lang="<?php echo $osC_Language->getCode();?>" lang="<?php echo $osC_Language->getCode();?>">
@@ -97,9 +102,9 @@
 
 <?php if (USE_WYSIWYG_TINYMCE_EDITOR == '1') { ?>  
 
-  <script type="text/javascript" src="external/tinymec/miframe-min.js"></script>
-  <script type="text/javascript" src="external/tinymec/tiny_mce/tiny_mce.js"></script>
-  <script type="text/javascript" src="external/tinymec/Ext.ux.TinyMCE.min.js"></script>
+  <script type="text/javascript" src="external/tinymce/miframe-min.js"></script>
+  <script type="text/javascript" src="external/tinymce/tiny_mce/tiny_mce.js"></script>
+  <script type="text/javascript" src="external/tinymce/Ext.ux.TinyMCE.min.js"></script>
 
 <?php } ?>
   

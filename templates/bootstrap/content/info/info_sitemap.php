@@ -23,7 +23,7 @@
 
 <div class="moduleBox" id="sitemap">
 
-	<div class="content">
+	<div class="content btop">
 		<div class="row-fluid">
             <div class="span6">
                 <?php echo $osC_CategoryTree->buildTree(); ?>
@@ -46,28 +46,42 @@
                     <li><?php echo osc_link_object(osc_href_link(FILENAME_PRODUCTS, 'specials'), $osC_Language->get('sitemap_specials')); ?></li>
                     <li><?php echo osc_link_object(osc_href_link(FILENAME_PRODUCTS, 'reviews'), $osC_Language->get('sitemap_reviews')); ?></li>
                     <li><?php echo osc_link_object(osc_href_link(FILENAME_INFO), $osC_Language->get('box_information_heading')); ?>
-                    <ul>
-                        <?php
-                            while($Qarticles_listing->next()) {
-                        ?>
-                        <li><?php echo osc_link_object(osc_href_link(FILENAME_INFO, 'articles&articles_id=' . $Qarticles_listing->valueInt('articles_id')), $Qarticles_listing->value('articles_name')); ?></li>
-                        <?php
-                            }
-                        ?>
-                      </ul>
-                    </li>
-                    <li>
-                        <?php echo osc_link_object(osc_href_link(FILENAME_INFO, 'faqs'), $osC_Language->get('info_faqs_heading'));?>
-                        <ul>
-                        <?php
-                            while($Qfaqs_listing->next()) {
-                        ?>
-                        <li><?php echo osc_link_object(osc_href_link(FILENAME_INFO, 'faqs&faqs_id=' . $Qfaqs_listing->valueInt('faqs_id')), $Qfaqs_listing->value('faqs_question')); ?></li>
-                        <?php
-                            }
-                        ?>
-                        </ul>
-                    </li>
+			          <ul>
+			            <?php
+			                while($Qinformation_listing->next()) {
+			            ?>
+			            <li><?php echo osc_link_object(osc_href_link(FILENAME_INFO, 'articles&articles_id=' . $Qinformation_listing->valueInt('articles_id')), $Qinformation_listing->value('articles_name')); ?></li>
+			            <?php
+			                }
+			            ?>
+			          </ul>
+			        </li>
+					<?php if ($articles_categories !== null): ?>
+						<?php foreach ($articles_categories as $article_category): ?>
+						<li>
+							<?php echo osc_link_object(osc_href_link(FILENAME_INFO, 'articles_categories&articles_categories_id=' . $article_category['articles_categories_id']), $article_category['articles_categories_name']); ?>
+							<?php if (count($article_category['articles']) > 0): ?>
+							<ul>
+								<?php foreach ($article_category['articles'] as $article): ?>
+								<li><?php echo osc_link_object(osc_href_link(FILENAME_INFO, 'articles&articles_id=' . $article['articles_id']), $article['articles_name']); ?></li>
+								<?php endforeach; ?>
+							</ul>
+							<?php endif; ?>
+						</li>
+				        <?php endforeach; ?>
+			        <?php endif; ?>
+			        <li>
+			          <?php echo osc_link_object(osc_href_link(FILENAME_INFO, 'faqs'), $osC_Language->get('info_faqs_heading'));?>
+			          <ul>
+			            <?php
+			                while($Qfaqs_listing->next()) {
+			            ?>
+			            <li><?php echo osc_link_object(osc_href_link(FILENAME_INFO, 'faqs&faqs_id=' . $Qfaqs_listing->valueInt('faqs_id')), $Qfaqs_listing->value('faqs_question')); ?></li>
+			            <?php
+			                }
+			            ?>
+			          </ul>
+			        </li>
                 </ul>
             </div>
 		</div>

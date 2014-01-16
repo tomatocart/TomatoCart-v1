@@ -69,16 +69,16 @@
         }
 
         $this->_content .= '</div>';
+        
+        //add the css block for this module
+        $osC_Template->addStyleDeclaration('.clearLeft{clear:left;}
+	                                          .upcomingProductsModule{overflow: auto; height: 100%;}
+	                                          .upcomingProductsModule .productItem{width: 32%; float: left; text-align: center; padding: 2px;}
+	                                          .upcomingProductsModule .productItem .productName{height:30px;}
+	                                          .upcomingProductsModule .productItem div {margin:3px 0;}');
       }
       
       $Qupcoming->freeResult();
-      
-      //add the css block for this module
-      $osC_Template->addStyleDeclaration('.clearLeft{clear:left;}
-                                          .upcomingProductsModule{overflow: auto; height: 100%;}
-                                          .upcomingProductsModule .productItem{width: 32%; float: left; text-align: center; padding: 2px;}
-                                          .upcomingProductsModule .productItem .productName{height:30px;}
-                                          .upcomingProductsModule .productItem div {margin:3px 0;}');
     }
 
     function install() {

@@ -62,9 +62,9 @@
       $this->_pdf->SetY(TOC_PDF_POS_PRODUCTS_TABLE_HEADING_Y);
       $this->_pdf->Cell(8, 6, '', 'TB', 0, 'R', 0);
       $this->_pdf->Cell(78, 6, $osC_Language->get('table_heading_products'), 'TB', 0, 'C', 0);
-      $this->_pdf->Cell(35, 6,  $osC_Language->get('table_heading_quantity'), 'TB', 0, 'C', 0);
-      $this->_pdf->Cell(30, 6, $osC_Language->get('table_heading_price'), 'TB', 0, 'R', 0);
-      $this->_pdf->Cell(30, 6, $osC_Language->get('table_heading_total'), 'TB', 0, 'R', 0);
+      $this->_pdf->Cell(40, 6,  $osC_Language->get('table_heading_quantity'), 'TB', 0, 'C', 0);
+      $this->_pdf->Cell(30, 6, $osC_Language->get('table_heading_price'), 'TB', 0, 'C', 0);
+      $this->_pdf->Cell(30, 6, $osC_Language->get('table_heading_total'), 'TB', 0, 'C', 0);
       $this->_pdf->Ln();
       
       $i = 0;
@@ -118,21 +118,21 @@
         //Quantity
         $this->_pdf->SetY($y_table_position);
         $this->_pdf->SetX( 110 );
-        $this->_pdf->MultiCell(5, 4, $products['quantity'], 0, 'C');
+        $this->_pdf->MultiCell(10, 4, $products['quantity'], 0, 'C');
         
         //Price
         $this->_pdf->SetY($y_table_position);
         $this->_pdf->SetX(135);
         $price = $osC_Currencies->displayPriceWithTaxRate($products['final_price'], $products['tax'], 1, $this->_order->getCurrency(), $this->_order->getCurrencyValue());
         $price = str_replace('&nbsp;',' ',$price);
-        $this->_pdf->MultiCell(20, 4, $price, 0, 'R');
+        $this->_pdf->MultiCell(30, 4, $price, 0, 'C');
         
         //Total
         $this->_pdf->SetY($y_table_position);
         $this->_pdf->SetX(165);
         $total = $osC_Currencies->displayPriceWithTaxRate($products['final_price'], $products['tax'], $products['quantity'], $this->_order->getCurrency(), $this->_order->getCurrencyValue());
         $total = str_replace('&nbsp;', ' ', $total);
-        $this->_pdf->MultiCell(20, 4, $total, 0, 'R');
+        $this->_pdf->MultiCell(30, 4, $total, 0, 'C');
         
         $y_table_position += $rowspan * TOC_PDF_TABLE_CONTENT_HEIGHT;
         
@@ -145,15 +145,15 @@
           $this->_pdf->SetY(TOC_PDF_POS_CONTENT_Y);
           $this->_pdf->Cell(8, 6, '', 'TB', 0, 'R', 0);
           $this->_pdf->Cell(78, 6, $osC_Language->get('table_heading_products'), 'TB', 0, 'C', 0);
-          $this->_pdf->Cell(35, 6,  $osC_Language->get('table_heading_quantity'), 'TB', 0, 'C', 0);
-          $this->_pdf->Cell(30, 6, $osC_Language->get('table_heading_price'), 'TB', 0, 'R', 0);
-          $this->_pdf->Cell(30, 6, $osC_Language->get('table_heading_total'), 'TB', 0, 'R', 0);
+          $this->_pdf->Cell(40, 6,  $osC_Language->get('table_heading_quantity'), 'TB', 0, 'C', 0);
+          $this->_pdf->Cell(30, 6, $osC_Language->get('table_heading_price'), 'TB', 0, 'C', 0);
+          $this->_pdf->Cell(30, 6, $osC_Language->get('table_heading_total'), 'TB', 0, 'C', 0);
           $this->_pdf->Ln();
         }      
         $i++;
       }
       $this->_pdf->SetY($y_table_position + 1);
-      $this->_pdf->Cell(180, 7, '', 'T', 0, 'C', 0);
+      $this->_pdf->Cell(186, 7, '', 'T', 0, 'C', 0);
 
       //Order Totals
       $this->_pdf->SetFont(TOC_PDF_FONT, 'B', TOC_PDF_TABLE_CONTENT_FONT_SIZE);

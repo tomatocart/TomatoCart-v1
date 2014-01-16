@@ -229,7 +229,7 @@
           $special_product = array('specials_id' => $Qspecials->valueInt('variants_specials_id'),
                                    'products_id' => $Qspecials->valueInt('products_variants_id'),
                                    'products_price' => $Qspecials->value('products_price'),
-                                   'variants_speicals_price' => $Qspecials->value('variants_speicals_price'));
+                                   'variants_specials_price' => $Qspecials->value('variants_specials_price'));
           
           //attach the group and value for the products name
           $special_product['products_name'] = $Qspecials->value('products_name');
@@ -265,7 +265,7 @@
     function getVariantsData($id) {
       global $osC_Database, $osC_Language;
       
-      $Qvariants_special = $osC_Database->query('select pd.products_name, pv.products_price, vs.variants_specials_id as specials_id, vs.products_variants_id as products_id, vs.variants_speicals_price as specials_new_products_price, vs.specials_date_added, vs.specials_last_modified, vs.start_date, vs.expires_date, vs.date_status_change, vs.status from :table_variants_specials vs inner join :table_products_variants pv on vs.products_variants_id = pv.products_variants_id inner join :table_original_products p on pv.products_id = p.products_id inner join :table_products_description pd on (p.products_id = pd.products_id and pd.language_id = :language_id) where vs.variants_specials_id = :specials_id');
+      $Qvariants_special = $osC_Database->query('select pd.products_name, pv.products_price, vs.variants_specials_id as specials_id, vs.products_variants_id as products_id, vs.variants_specials_price as specials_new_products_price, vs.specials_date_added, vs.specials_last_modified, vs.start_date, vs.expires_date, vs.date_status_change, vs.status from :table_variants_specials vs inner join :table_products_variants pv on vs.products_variants_id = pv.products_variants_id inner join :table_original_products p on pv.products_id = p.products_id inner join :table_products_description pd on (p.products_id = pd.products_id and pd.language_id = :language_id) where vs.variants_specials_id = :specials_id');
       $Qvariants_special->bindTable(':table_variants_specials', TABLE_VARIANTS_SPECIALS);
       $Qvariants_special->bindTable(':table_original_products', TABLE_PRODUCTS);
       $Qvariants_special->bindTable(':table_products_description', TABLE_PRODUCTS_DESCRIPTION);
@@ -352,7 +352,7 @@
         if ( is_numeric($id) ) {
           //update variants specials
           if ($data['variants'] == 'on') {
-            $Qspecial = $osC_Database->query('update :table_variants_specials set variants_speicals_price = :specials_new_products_price, specials_last_modified = now(), expires_date = :expires_date, start_date = :start_date, status = :status where variants_specials_id = :specials_id');
+            $Qspecial = $osC_Database->query('update :table_variants_specials set variants_specials_price = :specials_new_products_price, specials_last_modified = now(), expires_date = :expires_date, start_date = :start_date, status = :status where variants_specials_id = :specials_id');
             $Qspecial->bindTable(':table_variants_specials', TABLE_VARIANTS_SPECIALS);
           }else {
             $Qspecial = $osC_Database->query('update :table_specials set specials_new_products_price = :specials_new_products_price, specials_last_modified = now(), expires_date = :expires_date, start_date = :start_date, status = :status where specials_id = :specials_id');
@@ -363,7 +363,7 @@
         } else {
           //insert variants specials
           if ($data['variants'] == 'on') {
-            $Qspecial = $osC_Database->query('insert into :table_variants_specials (products_variants_id, variants_speicals_price, specials_date_added, expires_date, start_date, status) values (:products_id, :specials_new_products_price, now(), :expires_date, :start_date, :status)');
+            $Qspecial = $osC_Database->query('insert into :table_variants_specials (products_variants_id, variants_specials_price, specials_date_added, expires_date, start_date, status) values (:products_id, :specials_new_products_price, now(), :expires_date, :start_date, :status)');
             $Qspecial->bindTable(':table_variants_specials', TABLE_VARIANTS_SPECIALS);
           }else {
             $Qspecial = $osC_Database->query('insert into :table_specials (products_id, specials_new_products_price, specials_date_added, expires_date, start_date, status) values (:products_id, :specials_new_products_price, now(), :expires_date, :start_date, :status)');

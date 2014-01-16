@@ -353,7 +353,7 @@
           $Qopd->bindValue(':orders_products_filename', $variants_filename);
           $Qopd->bindValue(':orders_products_cache_filename', $variants_cache_filename);
           $Qopd->bindValue(':download_maxdays', $Qdownloadable->valueInt('number_of_accessible_days'));
-          $Qopd->bindValue(':download_count', $Qdownloadable->valueInt('number_of_downloads'));
+          $Qopd->bindValue(':download_count', $Qdownloadable->valueInt('number_of_downloads') * $products['quantity']);
           $Qopd->execute();
         }
 
@@ -879,6 +879,16 @@
               $this->products[$index]['products_cache_filename'] = $Qdownloadable->value('orders_products_cache_filename');
             }
           }
+          
+          //get the max number of downloads
+		    	$Qmax_downloads = $osC_Database->query('select number_of_downloads from :table_products_downloadables where products_id = :products_id');
+		    	$Qmax_downloads->bindTable(':table_products_downloadables', TABLE_PRODUCTS_DOWNLOADABLES);
+		    	$Qmax_downloads->bindInt(':products_id', $Qproducts->valueInt('products_id'));
+		    	$Qmax_downloads->execute();
+		    	
+		    	$this->products[$index]['number_of_downloads'] = $Qmax_downloads->valueInt('number_of_downloads');
+		    	
+		    	$Qmax_downloads->freeResult();
         }
 
         if ($Qproducts->valueInt('products_type') == PRODUCT_TYPE_GIFT_CERTIFICATE) {

@@ -129,9 +129,6 @@ function output_javascripts() {
         } 
     }
     
-    //add ajax_shopping_cart.js
-    $js_files .= '<script type="text/javascript" src="templates/' . $osC_Template->getCode() . '/javascript/ajax_shopping_cart.js"></script>' . "\n";
-
     echo $js_files;
     
     //output header php javascript
@@ -244,4 +241,36 @@ function get_filters_params() {
   }
   
   return $params;
+}
+
+/**
+ * Show the product images for the product listing page
+ *
+ * @access public
+ *
+ * @return string
+ */
+function show_products_listing_image($image, $title, $parameters = '', $group = '', $type = 'products') {
+	global $osC_Image;
+	
+	if (empty($group) || !$osC_Image->exists($group)) {
+		$group = $osC_Image->getCode(DEFAULT_IMAGE_GROUP_ID);
+	}
+	
+	$group_id = $osC_Image->getID($group);
+	
+	$width = $height = '';
+	
+	if ( ($osC_Image->_groups[$group_id]['force_size'] == '1') || empty($image) ) {
+		$width = $osC_Image->_groups[$group_id]['size_width'];
+		$height = $osC_Image->_groups[$group_id]['size_height'];
+	}
+	
+	if (empty($image)) {
+		$image = 'no_image.png';
+	} else {
+		$image = $type . '/' . $osC_Image->_groups[$group_id]['code'] . '/' . $image;
+	}
+	
+	return osc_image(DIR_WS_IMAGES . $image, $title, $width, $height, $parameters);
 }

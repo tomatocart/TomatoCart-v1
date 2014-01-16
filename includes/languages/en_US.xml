@@ -381,6 +381,11 @@
       <group>general</group>
     </definition>
     <definition>
+      <key>button_get_more</key>
+      <value><![CDATA[Get More]]></value>
+      <group>general</group>
+    </definition>
+    <definition>
       <key>button_add</key>
       <value><![CDATA[Add]]></value>
       <group>general</group>
@@ -393,6 +398,11 @@
     <definition>
       <key>button_compare_now</key>
       <value><![CDATA[Compare Now]]></value>
+      <group>general</group>
+    </definition>
+    <definition>
+      <key>add_to_cart_confirmation</key>
+      <value><![CDATA[Success: You have added %s to your shopping cart!]]></value>
       <group>general</group>
     </definition>
     <definition>
@@ -456,6 +466,11 @@
       <group>general</group>
     </definition>
     <definition>
+      <key>button_return</key>
+      <value><![CDATA[Return]]></value>
+      <group>general</group>
+    </definition>
+    <definition>
       <key>button_sign_in</key>
       <value><![CDATA[Sign In]]></value>
       <group>general</group>
@@ -463,6 +478,11 @@
     <definition>
       <key>button_add_to_cart</key>
       <value><![CDATA[Add to Shopping Cart]]></value>
+      <group>general</group>
+    </definition>
+    <definition>
+      <key>button_cart</key>
+      <value><![CDATA[Cart]]></value>
       <group>general</group>
     </definition>
     <definition>

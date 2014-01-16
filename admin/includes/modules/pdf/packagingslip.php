@@ -127,7 +127,7 @@
         //Quantity
         $this->_pdf->SetY($y_table_position);
         $this->_pdf->SetX(164);
-        $this->_pdf->MultiCell(5, 4, $products['quantity'], 0, 'C');
+        $this->_pdf->MultiCell(10, 4, $products['quantity'], 0, 'C');
         
         $y_table_position += $rowspan * TOC_PDF_TABLE_CONTENT_HEIGHT;
         

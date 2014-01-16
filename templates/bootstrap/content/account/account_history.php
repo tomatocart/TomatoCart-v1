@@ -40,7 +40,7 @@
             <tr>
                 <td valign="top"><?php echo '<b>' . $osC_Language->get('order_date') . '</b> ' . osC_DateTime::getLong($Qhistory->value('date_purchased')) . '<br /><b>' . $order_type . '</b> ' . osc_output_string_protected($order_name); ?></td>
                 <td width="150" valign="top"><?php echo '<b>' . $osC_Language->get('order_products') . '</b> ' . osC_Order::numberOfProducts($Qhistory->valueInt('orders_id')) . '<br /><b>' . $osC_Language->get('order_cost') . '</b> ' . strip_tags($Qhistory->value('order_total')); ?></td>
-                <td width="100" align="center" class="btn-toolbar">
+                <td width="150" align="center" class="btn-toolbar">
 					<a href="<?php echo osc_href_link(FILENAME_ACCOUNT, 'orders=' . $Qhistory->valueInt('orders_id') . (isset($_GET['page']) ? '&page=' . $_GET['page'] : ''), 'SSL'); ?>" class="btn btn-mini" id="btnSaveShippingMethod"><?php echo $osC_Language->get('button_view'); ?></a>
                 	<a href="<?php echo osc_href_link(FILENAME_PDF, 'module=account&pdf=print_order&orders_id=' . $Qhistory->valueInt('orders_id')); ?>" class="btn btn-mini" id="btnSaveShippingMethod"><?php echo $osC_Language->get('button_print'); ?></a>
                     <?php 
@@ -49,9 +49,7 @@
                         
                             if ($order->hasNotReturnedProduct()) {
                     ?>
-                	<div style = "padding: 2px;">
 						<a href="<?php echo osc_href_link(FILENAME_ACCOUNT, 'orders=new_return_request&orders_id=' . $Qhistory->valueInt('orders_id'), 'SSL'); ?>" class="btn btn-mini" id="btnSaveShippingMethod"><?php echo $osC_Language->get('button_return'); ?></a>
-                	</div>
                     <?php 
                             }
                         } 

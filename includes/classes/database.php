@@ -592,7 +592,10 @@
     }
 
     function setLogging($module, $id = null) {
-      $this->logging = true;
+      if (defined('ENABLE_ADMINISTRATORS_LOG') && ENABLE_ADMINISTRATORS_LOG == '1') {
+      	$this->logging = true;
+      }
+      
       $this->logging_module = $module;
       $this->logging_module_id = $id;
     }
@@ -683,24 +686,24 @@
     }
 
     function getBatchPageLinks($batch_keyword = 'page', $parameters = '', $with_pull_down_menu = true) {
-       if ($with_pull_down_menu === false) {
-           $string = '<div class="pagination">';
-       }
-        
-      $string .= $this->getBatchPreviousPageLink($batch_keyword, $parameters);
+    	$string = '';
+    	
+    	if ($with_pull_down_menu === false) {
+				$string .= '<div class="pagination">';
+      }
 
       if ( $with_pull_down_menu === true ) {
+      	$string .= $this->getBatchPreviousPageLink($batch_keyword, $parameters);
         $string .= $this->getBatchPagesPullDownMenu($batch_keyword, $parameters);
-      }else {        
+        $string .= $this->getBatchNextPageLink($batch_keyword, $parameters);
+      }else {
         $string .= $this->getBatchPagesList($batch_keyword, $parameters);       
       }
-          
-      $string .= $this->getBatchNextPageLink($batch_keyword, $parameters);
       
       if ($with_pull_down_menu === false) {
-          $string .= '</div>';
+				$string .= '</div>';
       }
-          
+      
       return $string;
     }
     
@@ -710,32 +713,94 @@
      * @access public
      * @param $batch_keyword [string] - the default url parameter for pagination
      * @param $parameters [string] - the parameters for each page link
+     * @param $max_links [int] - the maximum pages will be displayed in the list style
      * @return string
      */
-    function getBatchPagesList($batch_keyword = 'page', $parameters = '') {
+    function getBatchPagesList($batch_keyword = 'page', $parameters = '', $display_links = 6) {
       global $osC_Language;
       
       //calculte the total pages
       $total_pages = ceil($this->batch_size / $this->batch_rows);
       
       //output the pagination when total pages is greater than 1
+      
       if ($total_pages > 1) {
-        $string .= '<ul>';
-
-        for ( $i = 1; $i <= $total_pages; $i++ ) {
-          if ($i == $_GET[$batch_keyword] || ($i == 1 && empty($_GET[$batch_keyword]))) {
-            $string .= '<li><span>' . $i . '</span></li>';
-          }else {
-            $string .= '<li>' . osc_link_object(osc_href_link(basename($_SERVER['SCRIPT_FILENAME']), $parameters ? $parameters . '&' . $batch_keyword . '='  . $i : $batch_keyword . '='  . $i), $i) . '</li>';
-          }
-          
-        }
-        
+      	$string = '<ul>';
+      	
+      	$string .= '<li>' . $this->getBatchPreviousPageLink($batch_keyword, $parameters) . '</li>';
+      	
+      	if ($total_pages > $display_links) {
+      		//display the the links <= $display_links -1
+      		if ($_GET[$batch_keyword] <= $display_links -1) {
+      			//display the links with numbers
+      			for ( $i = 1; $i <= $display_links; $i++ ) {
+      				if ($i == $_GET[$batch_keyword] || ($i == 1 && empty($_GET[$batch_keyword]))) {
+      					$string .= '<li><span>' . $i . '</span></li>';
+      				}else {
+      					$string .= '<li>' . osc_link_object(osc_href_link(basename($_SERVER['SCRIPT_FILENAME']), $parameters ? $parameters . '&' . $batch_keyword . '='  . $i : $batch_keyword . '='  . $i), $i) . '</li>';
+      				}
+      			}
+      			
+      			//represent the more pages
+      			$string .= '<li><span>...</span></li>';
+      			
+      			//display the last page link
+      			$string .= '<li>' . osc_link_object(osc_href_link(basename($_SERVER['SCRIPT_FILENAME']), $parameters ? $parameters . '&' . $batch_keyword . '='  . $total_pages : $batch_keyword . '='  . $total_pages), $total_pages) . '</li>';
+      		//display the first page link && extra 5 page links&& the last page link
+      		}else {
+      			$string .= '<li>' . osc_link_object(osc_href_link(basename($_SERVER['SCRIPT_FILENAME']), $parameters ? $parameters . '&' . $batch_keyword . '='  . 1 : $batch_keyword . '='  . 1), 1) . '</li>';
+      			
+      			//represent the more pages
+      			$string .= '<li><span>...</span></li>';
+      			
+      			//display last five links
+      			if ($total_pages - $_GET[$batch_keyword] <= 3) {
+      				for ($i = $total_pages -4 ; $i <= $total_pages; $i++) {
+      						
+      					if ($i == $_GET[$batch_keyword]) {
+      						$string .= '<li><span>' . $i . '</span></li>';
+      					}else {
+      						$string .= '<li>' . osc_link_object(osc_href_link(basename($_SERVER['SCRIPT_FILENAME']), $parameters ? $parameters . '&' . $batch_keyword . '='  . $i : $batch_keyword . '='  . $i), $i) . '</li>';
+      					}
+      				}
+      			//display previous two pages, current page, latter two pages
+      			}else {
+      				for ($i = $_GET[$batch_keyword] -2; $i < $_GET[$batch_keyword] + 2; $i++) {
+      				
+      					if ($i == $_GET[$batch_keyword]) {
+      						$string .= '<li><span>' . $i . '</span></li>';
+      					}else {
+      						$string .= '<li>' . osc_link_object(osc_href_link(basename($_SERVER['SCRIPT_FILENAME']), $parameters ? $parameters . '&' . $batch_keyword . '='  . $i : $batch_keyword . '='  . $i), $i) . '</li>';
+      					}
+      				}
+      			}
+      			
+      			//represent the more pages
+      			if ($i < $total_pages) {
+      				$string .= '<li><span>...</span></li>';
+      				
+      				//display the last page link
+      				$string .= '<li>' . osc_link_object(osc_href_link(basename($_SERVER['SCRIPT_FILENAME']), $parameters ? $parameters . '&' . $batch_keyword . '='  . $total_pages : $batch_keyword . '='  . $total_pages), $total_pages) . '</li>';
+      			}
+      		}
+      		
+        //display total pages with number
+      	}else {
+      		for ( $i = 1; $i <= $total_pages; $i++ ) {
+      			if ($i == $_GET[$batch_keyword] || ($i == 1 && empty($_GET[$batch_keyword]))) {
+      				$string .= '<li><span>' . $i . '</span></li>';
+      			}else {
+      				$string .= '<li>' . osc_link_object(osc_href_link(basename($_SERVER['SCRIPT_FILENAME']), $parameters ? $parameters . '&' . $batch_keyword . '='  . $i : $batch_keyword . '='  . $i), $i) . '</li>';
+      			}
+      		}
+      	}
+      	
+      	$string .= '<li>' . $this->getBatchNextPageLink($batch_keyword, $parameters) . '</li>';
         $string .= '</ul>';
       }else {
         $string = sprintf($osC_Language->get('result_set_current_page'), 1, 1);
       }
-
+      
       return $string;
     }
 
@@ -804,22 +869,13 @@
       $number_of_pages = ceil($this->batch_size / $this->batch_rows);
       
       $string = '';
-      if ($number_of_pages > 1) {
-          $string .= '<span class="previous">';
-      }
 
       if ( $this->batch_number > 1 ) {
         $string .= osc_link_object(osc_href_link(basename($_SERVER['SCRIPT_FILENAME']), $get_parameter . $batch_keyword . '=' . ($this->batch_number - 1)), $back_string) . '</span>';
       } else {
-        $string .= $back_grey_string;
+        $string .= '<span>' . $back_grey_string . '</span>';
       }
       
-      $string .= '&nbsp;';
-      
-      if ($number_of_pages > 1) {
-          $string .= '</span>';
-      }
-            
       return $string;
     }
 
@@ -851,20 +907,11 @@
       }
 
       $string = '';
-      if ($number_of_pages > 1) {
-          $string .= '<span class="next">';
-      }
       
-      $string .= '&nbsp;';
-
       if ( ( $this->batch_number < $number_of_pages ) && ( $number_of_pages != 1 ) ) {
         $string .= osc_link_object(osc_href_link(basename($_SERVER['SCRIPT_FILENAME']), $get_parameter . $batch_keyword . '=' . ($this->batch_number + 1)), $forward_string);
       } else {
-        $string .= $forward_grey_string;
-      }
-      
-      if ($number_of_pages > 1) {
-          $string .= '</span>';
+        $string .= '<span>' . $forward_grey_string . '</span>';
       }
       
       return $string;

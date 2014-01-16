@@ -198,11 +198,33 @@ Ext.extend(Toc.languages.LanguagesGrid, Ext.grid.GridPanel, {
     
     Ext.MessageBox.confirm(
       TocLanguage.msgWarningTitle, 
-      TocLanguage.msgDeleteConfirm,
+      TocLanguage.msgDeleteLanguageFiles,
       
       function(btn) {
         if (btn == 'yes') {
           Ext.Ajax.request({
+            url: Toc.CONF.CONN_URL,
+            params: {
+              module: 'languages',
+              action: 'delete_language',
+              languages_id: languagesId,
+              code: code,
+              delFiles: 1
+            },
+            callback: function(options, success, response) {
+              var result = Ext.decode(response.responseText);
+              
+              if (result.success == true) {
+                this.owner.app.showNotification({title: TocLanguage.msgSuccessTitle, html: result.feedback});
+                window.location.reload();
+              } else {
+                Ext.MessageBox.alert(TocLanguage.msgErrTitle, result.feedback);
+              }
+            },
+            scope: this
+          });
+        }else {
+        	Ext.Ajax.request({
             url: Toc.CONF.CONN_URL,
             params: {
               module: 'languages',
@@ -234,11 +256,32 @@ Ext.extend(Toc.languages.LanguagesGrid, Ext.grid.GridPanel, {
 
       Ext.MessageBox.confirm(
         TocLanguage.msgWarningTitle, 
-        TocLanguage.msgDeleteConfirm,
+        TocLanguage.msgDeleteLanguageFiles,
         
         function(btn) {
           if (btn == 'yes') {
             Ext.Ajax.request({
+              url: Toc.CONF.CONN_URL,
+              params: {
+                module: 'languages',
+                action: 'delete_languages',
+                batch: batch,
+                delFiles: 1
+              },
+              callback: function(options, success, response) {
+                var result = Ext.decode(response.responseText);
+                
+                if (result.success == true) {
+                  this.owner.app.showNotification({title: TocLanguage.msgSuccessTitle, html: result.feedback});
+                  window.location.reload();
+                } else {
+                    Ext.MessageBox.alert(TocLanguage.msgErrTitle, result.feedback);
+                }
+              },
+              scope: this
+            });   
+          }else {
+          	Ext.Ajax.request({
               url: Toc.CONF.CONN_URL,
               params: {
                 module: 'languages',
@@ -256,7 +299,7 @@ Ext.extend(Toc.languages.LanguagesGrid, Ext.grid.GridPanel, {
                 }
               },
               scope: this
-            });   
+            });
           }
         }, this);
     } else {
