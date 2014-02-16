@@ -72,6 +72,11 @@
       $osC_Template->addStyleDeclaration($css);
       $osC_Template->addJavascriptFilename('includes/javascript/ajax_shopping_cart.js');
       
+      $enable_confirmation_dlg = false;
+      if (defined('ENABLE_CONFIRMATION_DIALOG') && (ENABLE_CONFIRMATION_DIALOG == '1')) {
+      	$enable_confirmation_dlg = true;
+      }
+      
       $js .= '<script type="text/javascript">
                 window.addEvent("domready",function() {
                   ajaxCart = new AjaxShoppingCart({
@@ -82,7 +87,8 @@
                     error_recipient_name_empty: "' . $osC_Language->get('error_recipient_name_empty') . '",
                     error_recipient_email_empty: "' . $osC_Language->get('error_recipient_email_empty') . '",
                     error_message_empty: "' . $osC_Language->get('error_message_empty') . '",
-                    error_message_open_gift_certificate_amount: "' . $osC_Language->get('error_message_open_gift_certificate_amount') . '"
+                    error_message_open_gift_certificate_amount: "' . $osC_Language->get('error_message_open_gift_certificate_amount') . '",
+                    dlgConfirmStatus: ' . $enable_confirmation_dlg . '
                   });
                 });
               </script>';

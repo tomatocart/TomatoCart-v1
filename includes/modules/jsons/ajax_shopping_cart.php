@@ -23,7 +23,7 @@
     }
     
     function addProduct() {
-      global $osC_ShoppingCart, $toC_Json, $osC_Language, $toC_Customization_Fields;
+      global $osC_ShoppingCart, $toC_Json, $osC_Language, $toC_Customization_Fields, $osC_Image, $osC_Currencies;
       
       $osC_Language->load('products');
       
@@ -73,6 +73,76 @@
           $content = self::_getShoppingCart();
           
           $response = array('success' => true, 'content' => $content);
+          
+          //build the dialog
+          if (defined('ENABLE_CONFIRMATION_DIALOG') && (ENABLE_CONFIRMATION_DIALOG == '1')) {
+          	$confirm_dialog = null;
+          	
+          	//build the content of the confirmation dialog
+          	$product_id_string = osc_get_product_id_string($_POST['pID'], $variants);
+          	 
+          	//find the added product
+          	$added_product = null;
+          	foreach ($osC_ShoppingCart->getProducts() as $id_string => $product) {
+          		if ($product_id_string == $id_string) {
+          			$added_product = $product;
+          			 
+          			break;
+          		}
+          	}
+          	
+          	if ($added_product !== null) {
+          		$confirm_dialog .= '<div class="dlgConfirm">' .
+          				'<div class="itemImage">' . $osC_Image->show($added_product['image'], $added_product['name'], '', 'thumbnail') . '</div>' .
+          				'<div class="itemDetail"><p>' . sprintf($osC_Language->get('add_to_cart_confirmation'), $added_product['quantity'] . ' x ' . osc_link_object(osc_href_link(FILENAME_CHECKOUT, null, 'SSL'), $added_product['name']));
+          		
+          		//gift certificates
+          		if ($added_product['type'] == PRODUCT_TYPE_GIFT_CERTIFICATE) {
+          			$confirm_dialog .= '<br />- ' . $osC_Language->get('senders_name') . ': ' . $product['gc_data']['senders_name'];
+          		
+          			if ($added_product['gc_data']['type'] == GIFT_CERTIFICATE_TYPE_EMAIL) {
+          				$confirm_dialog .= '<br />- ' . $osC_Language->get('senders_email')  . ': ' . $product['gc_data']['senders_email'];
+          			}
+          		
+          			$confirm_dialog .= '<br />- ' . $osC_Language->get('recipients_name') . ': ' . $product['gc_data']['recipients_name'];
+          		
+          			if ($added_product['gc_data']['type'] == GIFT_CERTIFICATE_TYPE_EMAIL) {
+          				$confirm_dialog .= '<br />- ' . $osC_Language->get('recipients_email')  . ': ' . $product['gc_data']['recipients_email'];
+          			}
+          		
+          			$confirm_dialog .= '<br />- ' . $osC_Language->get('message')  . ': ' . $product['gc_data']['message'];
+          		}
+          		
+          		$confirm_dialog .= '</p>';
+          		
+          		//variants products
+          		if ($osC_ShoppingCart->hasVariants($product['id'])) {
+          			foreach ($osC_ShoppingCart->getVariants($product['id']) as $variants) {
+          				$confirm_dialog .= '<div>';
+          		
+          				$confirm_dialog .=  '<strong>' . $variants['groups_name'] . ' - </strong><strong>' . $variants['values_name'] . '</strong></tr>';
+          		
+          				$confirm_dialog .= '</div>';
+          			}
+          		}
+          		
+          		$confirm_dialog .= '</div>';
+          		
+          		//cart total
+          		$confirm_dialog .= '<p><strong>' . $osC_ShoppingCart->numberOfItems() . ' ' . $osC_Language->get('text_items') . '</strong> - <strong>' . $osC_Currencies->format($osC_ShoppingCart->getTotal()) . '</strong></p>';
+          		
+          		//bottom buttons
+          		$confirm_dialog .=	'<div class="btns">' .
+          				osc_link_object(osc_href_link(FILENAME_CHECKOUT, 'checkout', 'SSL'), osc_draw_image_button('button_checkout.gif', $osC_Language->get('button_checkout'))) .
+          				osc_link_object(osc_href_link(FILENAME_CHECKOUT, 'cart', 'SSL'), osc_draw_image_button('button_ajax_cart.png')) .
+          				osc_link_object(osc_href_link(FILENAME_DEFAULT), osc_draw_image_button('button_continue.gif'), 'id="btnContinue"') .
+          				'</div>';
+          		
+          		$confirm_dialog .= '</div>';
+          		
+          		$response['confirm_dialog'] = $confirm_dialog;
+          	}
+          }
         }
       } else {
         $response = array('success' => false);
