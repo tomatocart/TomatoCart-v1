@@ -117,7 +117,7 @@ var AjaxShoppingCart = new Class({
 
           //variants
           var options = null;
-          var selects = $$('tr.variantCombobox select');
+          var selects = $$('.variantCombobox select');
           var listSelects = $$('.variants_' + pID + ' select');
           
           if (selects.length > 0) {
