@@ -756,6 +756,11 @@
       <group>account</group>
     </definition>
     <definition>
+      <key>error_wishlist_product_existed</key>
+      <value><![CDATA[Error: this product has already been added into your wishlist!]]></value>
+      <group>account</group>
+    </definition>
+    <definition>
       <key>breadcrumb_sign_in</key>
       <value><![CDATA[Sign In]]></value>
       <group>account</group>
