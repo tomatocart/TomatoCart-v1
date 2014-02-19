@@ -1503,9 +1503,9 @@ CREATE TABLE toc_wishlists_products (
 
 DROP TABLE IF EXISTS toc_wishlists_products_variants;
 create table toc_wishlists_products_variants(
-  wishlists_products_variants_id int(11) not null AUTO_INCREMENT,
-  whishlists_id int(11) not null,
-  whishlists_products_id int(11) not null,
+  wishlists_products_variants_id int(11) not null auto_increment,
+  ists_id int(11) not null,
+  lists_products_id int(11) not null,
   products_variants_groups_id int(11) not null,
   products_variants_groups varchar(32) not null,
   products_variants_values_id int(11) not null,
