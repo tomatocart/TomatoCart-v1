@@ -13,12 +13,15 @@
 
   class osC_Actions_wishlist_add {
     function execute() {
-      global $osC_Session, $toC_Wishlist, $osC_Product;
+      global $osC_Session, $toC_Wishlist, $osC_Product, $messageStack, $osC_Language;
+      
+      //load the language definitions in the account group
+      $osC_Language->load('account');
       
       $id = false;
 
       foreach ($_GET as $key => $value) {
-        if ( (ereg('^[0-9]+(_?([0-9]+:?[0-9]+)+(;?([0-9]+:?[0-9]+)+)*)*$', $key) || ereg('^[a-zA-Z0-9 -_]*$', $key)) && ($key != $osC_Session->getName()) ) {
+        if ( (preg_match('/^[0-9]+(_?([0-9]+:?[0-9]+)+(;?([0-9]+:?[0-9]+)+)*)*$/', $key) || preg_match('/^[a-zA-Z0-9 -_]*$/', $key)) && ($key != $osC_Session->getName()) ) {
           $id = $key;
         }
 
@@ -50,9 +53,15 @@
         }
         
         if (!osc_empty($variants)) {
-          $toC_Wishlist->add($osC_Product->getID(), $variants);  
+          $result = $toC_Wishlist->add($osC_Product->getID(), $variants);  
         }else {
-          $toC_Wishlist->add($osC_Product->getID());      
+          $result = $toC_Wishlist->add($osC_Product->getID());      
+        }
+        
+        if ($result === true) {
+        	$messageStack->add_session('wishlist', $osC_Language->get('success_wishlist_entry_updated'), 'success');
+        }else {
+        	$messageStack->add_session('wishlist', $osC_Language->get('error_wishlist_product_existed'));
         }
       }
 

@@ -44,6 +44,8 @@ var TocVariants = new Class({
       this.checkCompareProducts();
       this.checkWishlist();
       this.initializeComboBox();
+      
+      this.updateView();
     }
   },
   

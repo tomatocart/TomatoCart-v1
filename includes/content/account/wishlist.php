@@ -50,8 +50,8 @@
     function _delete() {
       global $osC_Language, $messageStack, $toC_Wishlist;
       
-      if (isset($_REQUEST['products_id']) && is_numeric($_REQUEST['products_id'])) {
-        if ($toC_Wishlist->deleteProduct($_REQUEST['products_id'])) {
+      if (isset($_GET['pid'])) {
+        if ($toC_Wishlist->deleteProduct($_GET['pid'])) {
           $messageStack->add_session($this->_module, $osC_Language->get('success_wishlist_entry_deleted'), 'success');
           
           osc_redirect(osc_href_link(FILENAME_ACCOUNT, 'wishlist', 'SSL'));

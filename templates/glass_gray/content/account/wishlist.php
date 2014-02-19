@@ -36,17 +36,19 @@
       $rows = 0;
       foreach($toC_Wishlist->getProducts() as $product) {    
         $rows++;
+        
+        $products_id_string = str_replace('#', '_', $product['products_id_string']);
 
   ?>
   
          <tr class="<?php echo ((($rows/2) == floor($rows/2)) ? 'productListing-even' : 'productListing-odd'); ?>">        
-           <td align="center"><?php echo osc_link_object(osc_href_link(FILENAME_PRODUCTS, (!osc_empty($product['variants']) ? str_replace('#', '_', osc_get_product_id_string($product['products_id'], $product['variants'])) : $product['products_id'])), $osC_Image->show($product['image'], $product['name'], 'hspace="5" vspace="5"')) . '<br />' . $product['name'] . '<br />' . $osC_Currencies->format($product['price']); ?></td>         
-           <td valign="top"><?php echo osc_draw_textarea_field('comments[' . $product['products_id'] . ']', $product['comments'], 20, 5, 'id="comments_' . $product['products_id'] . '"'); ?></td>
+           <td align="center"><?php echo osc_link_object(osc_href_link(FILENAME_PRODUCTS, $products_id_string), $osC_Image->show($product['image'], $product['name'], 'hspace="5" vspace="5"')) . '<br />' . $product['name'] . '<br />' . $osC_Currencies->format($product['price']); ?></td>         
+           <td valign="top"><?php echo osc_draw_textarea_field('comments[' . $products_id_string. ']', $product['comments'], 20, 5, 'id="comments_' . $products_id_string . '"'); ?></td>
            <td align="center" valign="top"><?php echo $product['date_added']; ?></td>
            <td align="center" valign="top">
-             <?php echo osc_link_object(osc_href_link(FILENAME_ACCOUNT, 'wishlist=delete&products_id=' . $product['products_id']), osc_draw_image_button('button_delete.gif', $osC_Language->get('button_delete'))); ?>
+             <?php echo osc_link_object(osc_href_link(FILENAME_ACCOUNT, 'wishlist=delete&pid=' . $products_id_string), osc_draw_image_button('button_delete.gif', $osC_Language->get('button_delete'))); ?>
              <br />&nbsp;<br/>
-             <?php echo osc_link_object(osc_href_link(FILENAME_PRODUCTS, $product['products_id'] . '&action=cart_add' . (!osc_empty($product['variants']) ? '&variants=' . osc_parse_variants_array($product['variants']) : '')), osc_draw_image_button('button_add_to_cart.png', $osC_Language->get('button_add_to_cart'))); ?>
+             <?php echo osc_link_object(osc_href_link(FILENAME_PRODUCTS, $products_id_string . '&action=cart_add'), osc_draw_image_button('button_add_to_cart.png', $osC_Language->get('button_add_to_cart'))); ?>
            </td>
          </tr>    
               
