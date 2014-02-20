@@ -107,23 +107,10 @@
           
           //process the variants products in the wishlist
           if ($osC_Product->hasVariants()) {
-						$product_name .= '<br />';
-	                
-						if (preg_match('/^[0-9]+(#?([0-9]+:?[0-9]+)+(;?([0-9]+:?[0-9]+)+)*)*$/', $products_id_string)) {
-						  $variants = osc_parse_variants_from_id_string($products_id_string);
-						}
-						
-						$variants_groups = $osC_Product->getData ( 'variants_groups' );
-						$products_variants = $osC_Product->getVariants ();
-						$products_variant = $products_variants [$products_id_string];
-						$variants_groups_name = $products_variant ['groups_name'];
-						
-						if (! osc_empty ( $variants_groups_name )) {
-							$product_name .= '<br />';
-							foreach ( $variants_groups_name as $group_name => $value_name ) {
-								$product_name .= '<em>' . $group_name . ': ' . $value_name . '</em>' . '<br />';
-							}
-						}
+          	$variant_product = $this->_updateProduct($products_id_string, $osC_Product, $product_name, false);
+						$product_name = $variant_product['name'];
+						$product_price = $variant_product['price'];
+						$product_image = $variant_product['image'];
           }
           
           $this->_contents [$products_id_string] = array (
@@ -201,35 +188,11 @@
 					
 					// if the product has variants, set the image, price etc according to the variants
 					if ($osC_Product->hasVariants ()) {
-						if (preg_match('/^[0-9]+(#?([0-9]+:?[0-9]+)+(;?([0-9]+:?[0-9]+)+)*)*$/', $products_id_string)) {
-						  $variants = osc_parse_variants_from_id_string($products_id_string);
-						}
+						$variant_product = $this->_updateProduct($products_id_string, $osC_Product, $product_name);
 						
-						$variants_groups = $osC_Product->getData ( 'variants_groups' );
-						$products_variants = $osC_Product->getVariants ();
-						
-						if (is_array ( $variants ) && ! osc_empty ( $variants )) {
-							$products_variant = $products_variants [$products_id_string];
-						} else {
-							$products_variant = $osC_Product->getDefaultVariant ();
-							
-							$default_variants_string = $products_variant ['product_id_string'];
-							$variants = osc_parse_variants_from_id_string ( $default_variants_string );
-						}
-						
-						$variants_groups_id = $products_variant ['groups_id'];
-						$variants_groups_name = $products_variant ['groups_name'];
-						
-						if (! osc_empty ( $variants_groups_name )) {
-							$product_name .= '<br />';
-							foreach ( $variants_groups_name as $group_name => $value_name ) {
-								$product_name .= '<em>' . $group_name . ': ' . $value_name . '</em>' . '<br />';
-							}
-						}
-						
-						// update product price and image according to the variants
-						$product_price = $osC_Product->getPrice ( $variants );
-						$product_image = $osC_Product->getImage ( $variants );
+						$product_name = $variant_product['name'];
+						$product_price = $variant_product['price'];
+						$product_image = $variant_product['image'];
 					}
 					
 					$this->_contents [$products_id_string] = array (
@@ -372,6 +335,53 @@
       }
       
       return false;
+    }
+    
+    /**
+     * Update the product information according to the variants
+     * 
+     * @access private
+     * @param string product id string with variants
+     * @param object product
+     * @param string original product name
+     * @param boolean flag to represent the new variant is adding into the wishlist
+     * @return string the new product name
+     */
+    function _updateProduct($products_id_string, $osC_Product, $product_name, $add = true) {
+    	$variant_product = array();
+    	
+    	if (preg_match('/^[0-9]+(#?([0-9]+:?[0-9]+)+(;?([0-9]+:?[0-9]+)+)*)*$/', $products_id_string)) {
+    		$variants = osc_parse_variants_from_id_string($products_id_string);
+    	}
+    	
+    	$variants_groups = $osC_Product->getData ( 'variants_groups' );
+    	$products_variants = $osC_Product->getVariants ();
+    	
+    	if (is_array ( $variants ) && ! osc_empty ( $variants )) {
+    		$products_variant = $products_variants [$products_id_string];
+    	} else if ($add) {
+    		$products_variant = $osC_Product->getDefaultVariant ();
+    			
+    		$default_variants_string = $products_variant ['product_id_string'];
+    		$variants = osc_parse_variants_from_id_string ( $default_variants_string );
+    	}
+    	
+    	$variants_groups_name = $products_variant ['groups_name'];
+    	
+    	//process products name
+    	if (! osc_empty ( $variants_groups_name )) {
+    		$product_name .= '<br />';
+    		foreach ( $variants_groups_name as $group_name => $value_name ) {
+    			$product_name .= '<em>' . $group_name . ': ' . $value_name . '</em>' . '<br />';
+    		}
+    	}
+    	$variant_product['name'] = $product_name;
+    	
+    	// process product price and image according to the variants
+    	$variant_product['price'] = $osC_Product->getPrice ( $variants );
+    	$variant_product['image'] = $osC_Product->getImage ( $variants );
+    	
+			return $variant_product;
     }
   }
 ?>
