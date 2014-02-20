@@ -58,16 +58,18 @@
         }        
       }
     }
-      
+
     function _update() {
       global $osC_Language, $messageStack, $toC_Wishlist;
       
-      if (isset($_REQUEST['comments'])) {
-        if ($toC_Wishlist->updateWishlist($_REQUEST['comments'])) {
+      if (isset($_POST['comments'])) {
+        if ($toC_Wishlist->updateWishlist($_POST['comments'])) {
           $messageStack->add_session($this->_module, $osC_Language->get('success_wishlist_entry_updated'), 'success');
-          
-          osc_redirect(osc_href_link(FILENAME_ACCOUNT, 'wishlist', 'SSL'));
-        }   
+        }else {
+        	$messageStack->add_session($this->_module, $osC_Language->get('failed_wishlist_entry_updated'));
+        }
+
+        osc_redirect(osc_href_link(FILENAME_ACCOUNT, 'wishlist', 'SSL'));
       }
     }
           

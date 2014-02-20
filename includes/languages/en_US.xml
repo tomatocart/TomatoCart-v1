@@ -746,6 +746,11 @@
       <group>account</group>
     </definition>
     <definition>
+      <key>failed_wishlist_entry_updated</key>
+      <value><![CDATA[Error: Failed to update your wishlist.]]></value>
+      <group>account</group>
+    </definition>
+    <definition>
       <key>success_share_wishlist_email_sent</key>
       <value><![CDATA[Your wishlist has been successfully sent to your friends.]]></value>
       <group>account</group>
