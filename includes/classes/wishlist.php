@@ -58,6 +58,12 @@
       return $token;
     }
     
+    /**
+     * Snychorize the wishlist data as the customer logged in
+     * 
+     * @access public
+     * @return boolean
+     */
 	  function synchronizeWithDatabase() {
       global $osC_Database, $osC_Services, $osC_Language, $osC_Customer, $osC_Image;
 
@@ -83,6 +89,8 @@
         $Qproducts->execute();      
         
         while ($Qproducts->next()) {
+        	$product_id_string = $Qproducts->value('products_id');
+        	
           $osC_Product = new osC_Product($Qproducts->value('products_id'));
           
           $product_price = $osC_Product->getPrice();
@@ -97,57 +105,68 @@
             }
           }
           
-          //the product has variants
-          $variants = array();
+          //process the variants products in the wishlist
           if ($osC_Product->hasVariants()) {
-            $Qvariants = $osC_Database->query('select products_variants_groups_id, products_variants_groups, products_variants_values_id, products_variants_values from :table_wishlists_products_variants where whishlists_id = :whishlists_id, whishlists_products_id = :whishlists_products_id');
+            $Qvariants = $osC_Database->query('select products_variants_groups_id, products_variants_groups, products_variants_values_id, products_variants_values from :table_wishlists_products_variants where lists_id = :whishlists_id and lists_products_id = :whishlists_products_id');
             $Qvariants->bindTable(':table_wishlists_products_variants', TABLE_WISHLISTS_PRODUCTS_VARIANTS);
             $Qvariants->bindInt(':whishlists_id', $this->_wishlists_id);
             $Qvariants->bindInt(':whishlists_products_id', $Qproducts->valueInt('wishlists_products_id'));
             $Qvariants->execute();
             
-            $products_variants = $osC_Product->getVariants();
-            $row_variants = array();
             if ($Qvariants->numberOfRows() > 0) {
               while($Qvariants->next()) {
-                $row_variants[] = array('groups_id' => $Qvariants->valueInt('products_variants_groups_id'), 
-                                        'values_id' => $Qvariants->valueInt('products_variants_values_id'), 
-                                        'groups_name' => $Qvariants->value('products_variants_groups'), 
-                                        'values_name' => $Qvariants->value('products_variants_values'));
+                $row_variants = array(
+									'groups_id' => $Qvariants->valueInt('products_variants_groups_id'), 
+									'values_id' => $Qvariants->valueInt('products_variants_values_id'), 
+									'groups_name' => $Qvariants->value('products_variants_groups'), 
+									'values_name' => $Qvariants->value('products_variants_values')
+                );
+                
+                //synchronize the variants products
+                if (!osc_empty($row_variants)) {
+                	$product_name .= '<br />';
+	                
+                	foreach($row_variants as $variant) {
+                		$variants = array();
+                		 
+                		$variants[$variant['groups_id']] = $variant['values_id'];
+                		$product_name .= '<em>' . $variant['groups_name'] . ': ' . $variant['values_name'] . '</em>' . '<br />';
+                	}
+                
+                	if (is_array($variants) && !osc_empty($variants)) {
+                		$product_id_string = osc_get_product_id_string($Qproducts->value('products_id'), $variants);
+                
+                		// update product price and image according to the variants
+                		$product_price = $osC_Product->getPrice ( $variants );
+                		$product_image = $osC_Product->getImage ( $variants );
+                	}
+                }
+                
+                $this->_contents[$product_id_string] = array(
+                		'product_id_string' => $product_id_string,
+                		'name' => $product_name,
+                		'image' => $product_image,
+                		'price' => $product_price,
+                		'date_added' => osC_DateTime::getShort($Qproducts->value('date_added')),
+                		'comments' => $Qproducts->value('comments')
+                );
               }
               
               $Qvariants->freeResult();
             }
-            
-            if (!osc_empty($row_variants)) {
-              $product_name .= '<br />';
-              
-              foreach($row_variants as $variant) {
-                $variants[$variant['groups_id']] = $variant['values_id'];
-                $product_name .= '<em>' . $variant['groups_name'] . ': ' . $variant['values_name'] . '</em>' . '<br />';
-              }
-              
-              if (is_array($variants) && !osc_empty($variants)) {
-                $product_id_string = osc_get_product_id_string($products_id, $variants);
-                
-                $products_variant = $products_variants[$product_id_string];
-              }else {
-                $products_variant = $osC_Product->getDefaultVariant();
-              }
-              
-              $product_price = $products_variant['price'];
-              $product_image = $products_variant['image'];
-            }
+          }else {
+          	$this->_contents[$product_id_string] = array(
+          			'product_id_string' => $product_id_string,
+          			'name' => $product_name,
+          			'image' => $product_image,
+          			'price' => $product_price,
+          			'date_added' => osC_DateTime::getShort($Qproducts->value('date_added')),
+          			'comments' => $Qproducts->value('comments')
+          	);
           }
-  
-          $this->_contents[$Qproducts->value('products_id')] = array('products_id' => $Qproducts->value('products_id'),
-                                                                     'name' => $product_name,
-                                                                     'image' => $product_image,
-                                                                     'price' => $product_price,
-                                                                     'variants' => $variants,
-                                                                     'date_added' => osC_DateTime::getShort($Qproducts->value('date_added')),
-                                                                     'comments' => $Qproducts->value('comments'));
         }
+        
+        $Qproducts->freeResult();
         
       } else {
         $token = $this->generateToken();
@@ -164,14 +183,13 @@
     }
     
     /**
-     * Add the product or variant product into the wishlist
+     * Add a product or variant product into the wishlist
      * 
      * @access public
-     * @param int products id
-     * @param array variants
+     * @param mixed products id or products id string including the variants such as 1#1:1;2:3
      * @return boolean
      */
-    function add($products_id, $variants = array()) {
+    function add($products_id_string) {
 			global $osC_Database, $osC_Services, $osC_Customer, $osC_Product;
 			
 			//flag to reprent the action performed or not
@@ -194,17 +212,10 @@
 			}
 			
 			if (! isset ( $osC_Product )) {
-				$osC_Product = new osC_Product ( $products_id );
+				$osC_Product = new osC_Product ( $products_id_string );
 			}
 			
 			if ($osC_Product->getID () > 0) {
-				// check whether the variants existing
-				if (! osc_empty ( $variants )) {
-					$products_id_string = osc_get_product_id_string ( $products_id, $variants );
-				} else {
-					$products_id_string = $products_id;
-				}
-				
 				if (! $this->exists ( $products_id_string )) {
 					$product_price = $osC_Product->getPrice ();
 					$product_name = $osC_Product->getTitle ();
@@ -222,6 +233,10 @@
 					if ($osC_Product->hasVariants ()) {
 						$variants_groups = $osC_Product->getData ( 'variants_groups' );
 						$variants_groups_values = $osC_Product->getData ( 'variants_groups_values' );
+						
+						if (preg_match('/^[0-9]+(#?([0-9]+:?[0-9]+)+(;?([0-9]+:?[0-9]+)+)*)*$/', $products_id_string)) {
+						  $variants = osc_parse_variants_from_id_string($products_id_string);
+						}
 						
 						$products_variants = $osC_Product->getVariants ();
 						
@@ -259,86 +274,25 @@
 					);
 					
 					// insert into wishlist products only if there isn't the same product existing in the table
-					$QnewCheck = $osC_Database->query('select * from :table_wishlist_products where products_id = :products_id limit 1');
+					$QnewCheck = $osC_Database->query('select * from :table_wishlist_products where products_id_string = :products_id_string limit 1');
 					$QnewCheck->bindTable(':table_wishlist_products', TABLE_WISHLISTS_PRODUCTS);
-					$QnewCheck->bindInt(':products_id', $products_id);
+					$QnewCheck->bindValue(':products_id_string', $products_id_string);
 					$QnewCheck->execute();
 					
 					if ($QnewCheck->numberOfRows() < 1) {
-						$Qnew = $osC_Database->query ( 'insert into :table_wishlist_products (wishlists_id, products_id, date_added, comments) values (:wishlists_id, :products_id, now(), :comments)' );
+						$Qnew = $osC_Database->query ( 'insert into :table_wishlist_products (wishlists_id, products_id_string, date_added, comments) values (:wishlists_id, :products_id_string, now(), :comments)' );
 						$Qnew->bindTable ( ':table_wishlist_products', TABLE_WISHLISTS_PRODUCTS );
 						$Qnew->bindInt ( ':wishlists_id', $this->_wishlists_id );
-						$Qnew->bindInt ( ':products_id', $products_id );
+						$Qnew->bindValue(':products_id_string', $products_id_string);
 						$Qnew->bindValue ( ':comments', '' );
 						$Qnew->execute ();
 							
 						$wishlists_products_id = $osC_Database->nextID ();
+					}else {
+						$wishlists_products_id = $QnewCheck->valueInt('wishlists_products_id');
 					}
 					
 					$QnewCheck->freeResult();
-					
-					// if the wishlists products has variants
-					if (isset ( $variants_groups_id )) {
-						$variants_groups_info = array ();
-						foreach ( $variants_groups_id as $groups_id => $values_id ) {
-							$variants_groups_info [$groups_id] = array (
-									'groups_id' => $groups_id,
-									'values_id' => $values_id 
-							);
-							
-							// find the variant group name
-							if (count ( $variants_groups ) > 0) {
-								foreach ( $variants_groups as $variant_group ) {
-									if ($variant_group ['groups_id'] == $groups_id) {
-										$variants_groups_info [$groups_id] ['groups_name'] = $variant_group ['groups_name'];
-										
-										break;
-									}
-								}
-							}
-							
-							// find the variant value name
-							if (count ( $variants_groups_values ) > 0) {
-								foreach ( $variants_groups_values as $variants_groups_id => $variants_groups_value ) {
-									if ($variants_groups_id == $groups_id) {
-										$variants_groups_info [$groups_id] ['values_name'] = $variants_groups_value [$values_id] ['variants_values_name'];
-										
-										break;
-									}
-								}
-							}
-						}
-					}
-					
-					//insert variants products into the wishlists
-					if (!osc_empty ( $variants_groups_info )) {
-						foreach ( $variants_groups_info as $groups_id => $groups_info ) {
-							//check whether the variants are already existed
-							$Cvariants = $osC_Database->query('select wishlists_products_variants_id from :table_wishlists_products_variants where lists_id = :wishlists_id and lists_products_id = :lists_products_id and products_variants_groups_id = :products_variants_groups_id and products_variants_values_id = :products_variants_values_id limit 1');
-							$Cvariants->bindTable ( ':table_wishlists_products_variants', TABLE_WISHLISTS_PRODUCTS_VARIANTS );
-							$Cvariants->bindInt ( ':wishlists_id', $this->_wishlists_id );
-							$Cvariants->bindInt ( ':wishlists_products_id', $wishlists_products_id );
-							$Cvariants->bindInt ( ':products_variants_groups_id', $groups_info ['groups_id'] );
-							$Cvariants->bindInt ( ':products_variants_values_id', $groups_info ['values_id'] );
-							$Cvariants->execute();
-							
-							if ($Cvariants->numberOfRows() < 1) {
-								$Qinsert = $osC_Database->query ( 'insert into :table_wishlists_products_variants (lists_id, lists_products_id, products_variants_groups_id, products_variants_groups, products_variants_values_id, products_variants_values) values (:wishlists_id, :wishlists_products_id, :products_variants_groups_id, :products_variants_groups, :products_variants_values_id, :products_variants_values)' );
-								$Qinsert->bindTable ( ':table_wishlists_products_variants', TABLE_WISHLISTS_PRODUCTS_VARIANTS );
-								$Qinsert->bindInt ( ':wishlists_id', $this->_wishlists_id );
-								$Qinsert->bindInt ( ':wishlists_products_id', $wishlists_products_id );
-								$Qinsert->bindInt ( ':products_variants_groups_id', $groups_info ['groups_id'] );
-								$Qinsert->bindInt ( ':products_variants_values_id', $groups_info ['values_id'] );
-								$Qinsert->bindValue ( ':products_variants_groups', $groups_info ['groups_name'] );
-								$Qinsert->bindValue ( ':products_variants_values', $groups_info ['values_name'] );
-								$Qinsert->execute ();
-							}else {
-							  $error = true;
-							}
-							
-							$Cvariants->freeResult();
-						}
-					}
 				}else {
 			  	$error = true;
 				}

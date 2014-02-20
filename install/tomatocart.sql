@@ -1495,25 +1495,11 @@ DROP TABLE IF EXISTS toc_wishlists_products;
 CREATE TABLE toc_wishlists_products (
   wishlists_products_id int(11) NOT NULL auto_increment,
   wishlists_id int(11) NOT NULL,
-  products_id int(11) NOT NULL,
+  products_id_string varchar(255) NOT NULL,
   date_added datetime NOT NULL,
   comments text NOT NULL,
   PRIMARY KEY  (wishlists_products_id)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
-DROP TABLE IF EXISTS toc_wishlists_products_variants;
-create table toc_wishlists_products_variants(
-  wishlists_products_variants_id int(11) not null auto_increment,
-  ists_id int(11) not null,
-  lists_products_id int(11) not null,
-  products_variants_groups_id int(11) not null,
-  products_variants_groups varchar(32) not null,
-  products_variants_values_id int(11) not null,
-  products_variants_values varchar(32) not null,
-  primary key (wishlists_products_variants_id)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
-
+) ENGINE=MyISAM DEFAULT CHARSET=utf8; 
 
 DROP TABLE IF EXISTS toc_zones;
 CREATE TABLE toc_zones (

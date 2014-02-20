@@ -41,22 +41,8 @@
         $osC_Product = new osC_Product($id);
       }
       
-      if (isset($osC_Product)) {
-        $variants = null;
-        
-        if (isset($_POST['variants']) && is_array($_POST['variants'])) {
-          $variants = $_POST['variants'];
-        } else if (isset($_GET['variants']) && !empty($_GET['variants'])) {
-          $variants = osc_parse_variants_string($_GET['variants']);
-        }else if (strpos($id, '#') !== false) {
-          $variants = osc_parse_variants_from_id_string($id);
-        }
-        
-        if (!osc_empty($variants)) {
-          $result = $toC_Wishlist->add($osC_Product->getID(), $variants);  
-        }else {
-          $result = $toC_Wishlist->add($osC_Product->getID());      
-        }
+      if (isset($osC_Product)) {       
+				$result = $toC_Wishlist->add($id);      
         
         if ($result === true) {
         	$messageStack->add_session('wishlist', $osC_Language->get('success_wishlist_entry_updated'), 'success');
