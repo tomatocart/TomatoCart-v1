@@ -335,59 +335,16 @@
     function deleteProduct($products_id_string) {
       global $osC_Customer, $osC_Database;
       
-      //parse products id and variants from product id string
+      //convert the product id string, replace '_' with '#'
       if (preg_match('/^[0-9]+(_?([0-9]+:?[0-9]+)+(;?([0-9]+:?[0-9]+)+)*)*$/', $products_id_string)) {
       	$products_id_string = str_replace('_', '#', $products_id_string);
-        $products_id = osc_get_product_id($products_id_string);
-        $variants = osc_parse_variants_from_id_string($products_id_string);
-      }else {
-      	$products_id = $products_id_string;
       }
       
-      $Qcheck = $osC_Database->query('select wishlists_products_id from :table_wishlist_products where products_id = :products_id and wishlists_id = :wishlists_id');
-      $Qcheck->bindTable(':table_wishlist_products', TABLE_WISHLISTS_PRODUCTS);
-      $Qcheck->bindInt(':products_id', $products_id);
-      $Qcheck->bindInt(':wishlists_id', $this->_wishlists_id);
-      $Qcheck->execute();
-      
-      if ($Qcheck->numberOfRows() > 0) {
-      	$row = $Qcheck->toArray();
-      
-      	$wishlists_products_id = $row['wishlists_products_id'];
-      }
-      $Qcheck->freeResult();
-      
-      //process the variants products in the wishlists
-      if (isset($variants)) {
-        foreach ($variants as $groups_id => $values_id) {
-        	if (isset($wishlists_products_id)) {
-        			$QdeleteVariants = $osC_Database->query('delete from :table_wishlists_products_variants where lists_id = :wishlists_id and lists_products_id = :wishlists_products_id and products_variants_groups_id = :products_variants_groups_id and products_variants_values_id = :products_variants_values_id');
-        			$QdeleteVariants->bindTable(':table_wishlists_products_variants', TABLE_WISHLISTS_PRODUCTS_VARIANTS);
-        			$QdeleteVariants->bindInt(':wishlists_id', $this->_wishlists_id);
-        			$QdeleteVariants->bindInt(':wishlists_products_id', $wishlists_products_id);
-        			$QdeleteVariants->bindInt(':products_variants_groups_id', $groups_id);
-        			$QdeleteVariants->bindInt(':products_variants_values_id', $values_id);
-        			$QdeleteVariants->execute();
-					}
-        }
-      }
-      
-      //delete the products only when there isn't any record in the variants wishlists table
-      $Qvariants_check = $osC_Database->query('select wishlists_products_variants_id from :table_wishlists_products_variants where lists_id = :wishlists_id and lists_products_id = :wishlists_products_id limit 1');
-      $Qvariants_check->bindTable(':table_wishlists_products_variants', TABLE_WISHLISTS_PRODUCTS_VARIANTS);
-      $Qvariants_check->bindInt(':wishlists_id', $this->_wishlists_id);
-			$Qvariants_check->bindInt(':wishlists_products_id', $wishlists_products_id);
-			$Qvariants_check->execute();
-			
-			if ($Qvariants_check->numberOfRows() < 1) {
-				$Qdelete = $osC_Database->query('delete from :table_wishlist_products where products_id = :products_id and wishlists_id = :wishlists_id');
-				$Qdelete->bindTable(':table_wishlist_products', TABLE_WISHLISTS_PRODUCTS);
-				$Qdelete->bindInt(':products_id', $products_id);
-				$Qdelete->bindInt(':wishlists_id', $this->_wishlists_id);
-				$Qdelete->execute();
-			}
-			
-			$Qvariants_check->freeResult();
+			$Qdelete = $osC_Database->query('delete from :table_wishlist_products where products_id_string = :products_id_string and wishlists_id = :wishlists_id');
+			$Qdelete->bindTable(':table_wishlist_products', TABLE_WISHLISTS_PRODUCTS);
+			$Qdelete->bindValue(':products_id_string', $products_id_string);
+			$Qdelete->bindInt(':wishlists_id', $this->_wishlists_id);
+			$Qdelete->execute();
       
       if (!$osC_Database->isError()) {
         if (isset($this->_contents[$products_id_string])) {
@@ -409,7 +366,9 @@
           $this->_token = null;
         }
         
-        return true;
+        if ($osC_Database->affectedRows() > 0) {
+        	return true;
+        }
       }
       
       return false;
