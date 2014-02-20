@@ -236,6 +236,12 @@
 			return true;
 		}
     
+		/**
+		 * Get all the products in current wishlist
+		 * 
+		 * @access public
+		 * @return mixed
+		 */
     function getProducts() {
       global $osC_Customer;
       
@@ -252,19 +258,31 @@
       return false;      
     }    
 	  
+    /**
+     * Update the comment for each wishlist product
+     * 
+     * @access pubic
+     * @param array
+     * @return boolean
+     */
     function updateWishlist($comments) {
       global $osC_Database, $osC_Customer;
       
       $error = false;
       
-      foreach($comments as $products_id => $comment) {
-        $this->_contents[$products_id]['comments'] = $comment;
+      foreach($comments as $products_id_string => $comment) {
+      	//processing variants products
+      	if (preg_match('/^[0-9]+(_?([0-9]+:?[0-9]+)+(;?([0-9]+:?[0-9]+)+)*)*$/', $products_id_string)) {
+      		$products_id_string = str_replace('_', '#', $products_id_string);
+      	}
+      	
+        $this->_contents[$products_id_string]['comments'] = $comment;
         
-        $Qupdate = $osC_Database->query('update :table_wishlist_products set comments = :comments where wishlists_id = :wishlists_id and products_id = :products_id');
+        $Qupdate = $osC_Database->query('update :table_wishlist_products set comments = :comments where wishlists_id = :wishlists_id and products_id_string = :products_id_string');
         $Qupdate->bindTable(':table_wishlist_products', TABLE_WISHLISTS_PRODUCTS);
         $Qupdate->bindValue(':comments', $comment);
         $Qupdate->bindInt(':wishlists_id', $this->_wishlists_id);
-        $Qupdate->bindInt(':products_id', $products_id);
+        $Qupdate->bindValue(':products_id_string', $products_id_string);
         $Qupdate->execute();
         
         if ($osC_Database->isError()) {       
