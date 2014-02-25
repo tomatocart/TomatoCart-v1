@@ -68,6 +68,12 @@ var TocVariants = new Class({
       if (this.linkCpHref.search(/cid=/) !== -1) {
         this.linkCpHref = this.linkCpHref.replace(/&cid=\d+/, '');
       }
+      
+      this.linkCp.addEvent('click', function() {
+        if (this.hasClass('disabled')) {
+          return false;
+        }
+      });
     }
   },
   
@@ -82,6 +88,12 @@ var TocVariants = new Class({
       if (this.linkWpHref.search(/wid=/) !== -1) {
         this.linkWpHref = this.linkWpHref.replace(/&wid=\d+/, '');
       }
+      
+      this.linkWp.addEvent('click', function() {
+        if (this.hasClass('disabled')) {
+          return false;
+        }
+      });
     }
   },
   
@@ -101,20 +113,6 @@ var TocVariants = new Class({
     var productsIdString = this.getProductsIdString(),
         btnAddToCart = $$(this.options.btnAddCls);
     
-    //if it is in the product info page and the product have any variants, add the variants into the compare products link
-    if (this.linkCp) {
-      var href = this.linkCpHref + '&cid=' + productsIdString.replace(/#/, '_');
-      
-      this.linkCp.setProperty('href', href);
-    }
-    
-    //handler the wishlist
-    if (this.linkWp) {
-      var href = this.linkWpHref + '&wid=' + productsIdString.replace(/#/, '_');
-      
-      this.linkWp.setProperty('href', href);
-    }
-    
     var product = this.options.variants[productsIdString];
     
     if (product == undefined || (product['status'] == 0)) {
@@ -126,8 +124,34 @@ var TocVariants = new Class({
         btnAddToCart[0].addClass('disabled');
       }
       
+      //disable the compare and wishlist link because the variant product is not available
+      if (this.linkCp) {
+        this.linkCp.addClass('disabled');
+      }
+      
+      if (this.linkWp) {
+        this.linkWp.addClass('disabled');
+      }
     } else {
       btnAddToCart[0].removeClass('disabled');
+      
+      //if it is in the product info page and the product have any variants, add the variants into the compare products link
+      if (this.linkCp) {
+        var href = this.linkCpHref + '&cid=' + productsIdString.replace(/#/, '_');
+        
+        this.linkCp.setProperty('href', href);
+        
+        this.linkCp.removeClass('disabled');
+      }
+      
+      //handler the wishlist
+      if (this.linkWp) {
+        var href = this.linkWpHref + '&wid=' + productsIdString.replace(/#/, '_');
+        
+        this.linkWp.setProperty('href', href);
+        
+        this.linkWp.removeClass('disabled');
+      }
       
       if (this.options.hasSpecial == 0) {
         // get the formatted price of the variants product by ajax requst
