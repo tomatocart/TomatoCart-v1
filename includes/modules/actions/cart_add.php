@@ -89,7 +89,7 @@
         }
       }
 
-      osc_redirect(osc_href_link(FILENAME_CHECKOUT));
+      osc_redirect(osc_href_link(FILENAME_CHECKOUT, 'cart'));
     }
   }
 ?>

@@ -490,26 +490,31 @@ var AjaxShoppingCart = new Class({
               rowEl.grab(gcEl);
             }
   
-				//delete product
-		    deleteEl.addEvent('click', function(e) {
+    				//delete product
+    		    deleteEl.addEvent('click', function(e) {
   			      e.stop();
   
   			      this.sendRequest({action: 'remove_product', pID: product.id}, function(response) {
   				      var result = JSON.decode(response);
   
   					    if (result.success == true) {
-  					    	//if on the checkout page or shopping cart page
-				    	if (this.options.currentUrl.indexOf('checkout') > 0) {
-				    	  if (result.hasContents == false) {
-				    	      window.location = this.options.currentUrl;
-				    	    }else {
-				    	    	if ($defined(checkout) && (checkout.steps[checkout.openedForm] >= checkout.steps['shippingMethodForm'])) {
-				    	    		checkout.loadPreviousForms('shippingMethodForm');
-                    checkout.gotoPanel('shippingMethodForm');
+  					    	//if on the checkout page
+    				    	if (this.options.currentUrl.indexOf('checkout.php?checkout') > 0) {
+    				    	  if (result.hasContents == false) {
+  				    	      window.location = this.options.currentUrl;
+  				    	    }else {
+				    	        if ($defined(checkout) && (checkout.steps[checkout.openedForm] >= checkout.steps['shippingMethodForm'])) {
+                        checkout.loadPreviousForms('shippingMethodForm');
+                        checkout.gotoPanel('shippingMethodForm');
                       }
 				    	      }
   					    	}
-  					    	
+    				    	
+    				    	//shopping cart page
+    				    	if (this.options.currentUrl.indexOf('checkout.php?cart') > 0) {
+    				    	  window.location = this.options.currentUrl;
+    				    	}
+      					    	
   			          this.loadCart();
   					    }
   				    });
