@@ -22,8 +22,8 @@
 	    $this->_contents =& $_SESSION['toC_Compare_Products_data'];
 	  }
 	    
-    function exists($products_id) {
-      return isset($this->_contents[$products_id]);   
+    function exists($products_id_string) {
+      return isset($this->_contents[$products_id_string]);   
     }
     
     function hasContents() {
@@ -34,15 +34,15 @@
       $this->_contents = array();
     }
     
-	  function addProduct($products_id) {
-	    if (!$this->exists($products_id)) {
-        $this->_contents[$products_id] = $products_id;
+	  function addProduct($products_id_string) {
+	    if (!$this->exists($products_id_string)) {
+        $this->_contents[$products_id_string] = $products_id_string;
 	    }
 	  }
 	  
-	  function deleteProduct($products_id) {
-	    if (isset($this->_contents[$products_id])) {
-        unset($this->_contents[$products_id]);
+	  function deleteProduct($products_id_string) {
+	    if (isset($this->_contents[$products_id_string])) {
+        unset($this->_contents[$products_id_string]);
       }
 	  }
 	  
@@ -100,10 +100,10 @@
             
             //if the product have any variants, get the group_name:value_name string
             if (isset($products_variant) && isset($products_variant['groups_name']) && is_array($products_variant['groups_name']) && !empty($products_variant['groups_name'])) {
-              $products_variants[$products_id]['variants'] = array();
+              $products_variants[$products_id_string]['variants'] = array();
               
               foreach($products_variant['groups_name'] as $groups_name => $value_name) {
-                $products_variants[$products_id]['variants'][] = array('name' => $groups_name, 'value' => $value_name);
+                $products_variants[$products_id_string]['variants'][] = array('name' => $groups_name, 'value' => $value_name);
               }
             }
             
@@ -257,11 +257,11 @@
           $content .= '<tr class="' . $row_class . '">' .
                       '<th>' . $osC_Language->get('field_products_variants') . '</th>';
           
-          foreach($this->getProducts() as $k => $products_id) {
-            if (isset($products_variants[$products_id]['variants']) && !osc_empty($products_variants[$products_id]['variants'])) {
+          foreach($this->getProducts() as $k => $products_id_string) {
+            if (isset($products_variants[$products_id_string]['variants']) && !osc_empty($products_variants[$products_id_string]['variants'])) {
               
               $content .= '<td' . ($k == (count($this->getProducts()) - 1) ? ' class="last"' : '') . '>';
-              foreach($products_variants[$products_id]['variants'] as $variant) {
+              foreach($products_variants[$products_id_string]['variants'] as $variant) {
                 $content .= '<span class="variant">' . $variant['name'] . ': ' . $variant['value'] . '</span>';
               }
               $content .= '</td>';
@@ -278,11 +278,11 @@
           $content .= '<tr class="' . $row_class . '">' .
                       '<th>' . $osC_Language->get('field_products_attributes') . '</th>';
           
-          foreach($this->getProducts() as $k => $products_id) {
-            if (isset($products_attributes[$products_id]['attributes']) && !osc_empty($products_attributes[$products_id]['attributes'])) {
+          foreach($this->getProducts() as $k => $products_id_string) {
+            if (isset($products_attributes[$products_id_string]['attributes']) && !osc_empty($products_attributes[$products_id_string]['attributes'])) {
               
               $content .= '<td' . ($k == (count($this->getProducts()) - 1) ? ' class="last"' : '') . '>';
-              foreach($products_attributes[$products_id]['attributes'] as $attribute) {
+              foreach($products_attributes[$products_id_string]['attributes'] as $attribute) {
                 $content .= '<span class="attribute">' . $attribute['name'] . ': ' . $attribute['value'] . '</span>';
               }
               $content .= '</td>';
