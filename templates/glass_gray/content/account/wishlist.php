@@ -37,18 +37,28 @@
       foreach($toC_Wishlist->getProducts() as $product) {    
         $rows++;
         
+        $products_id = osc_get_product_id($products_id_string);
+        $ac_products_id_string = $product['products_id_string'];
         $products_id_string = str_replace('#', '_', $product['products_id_string']);
-
   ?>
   
          <tr class="<?php echo ((($rows/2) == floor($rows/2)) ? 'productListing-even' : 'productListing-odd'); ?>">        
-           <td align="center"><?php echo osc_link_object(osc_href_link(FILENAME_PRODUCTS, $products_id_string), $osC_Image->show($product['image'], $product['name'], 'hspace="5" vspace="5"')) . '<br />' . $product['name'] . '<br />' . $osC_Currencies->format($product['price']); ?></td>         
+           <td align="center"><?php echo osc_link_object(osc_href_link(FILENAME_PRODUCTS, $products_id_string), $osC_Image->show($product['image'], $product['name'], 'hspace="5" vspace="5" id="product_image" class="productImage"'), 'id="img_ac_wishlist_' . $ac_products_id_string . '"') . '<br />' . $product['name'] . '<br />' . $osC_Currencies->format($product['price']); ?></td>         
            <td valign="top"><?php echo osc_draw_textarea_field('comments[' . $products_id_string. ']', $product['comments'], 20, 5, 'id="comments_' . $products_id_string . '"'); ?></td>
            <td align="center" valign="top"><?php echo $product['date_added']; ?></td>
            <td align="center" valign="top">
              <?php echo osc_link_object(osc_href_link(FILENAME_ACCOUNT, 'wishlist=delete&pid=' . $products_id_string), osc_draw_image_button('button_delete.gif', $osC_Language->get('button_delete'))); ?>
              <br />&nbsp;<br/>
-             <?php echo osc_link_object(osc_href_link(FILENAME_PRODUCTS, $products_id_string . '&action=cart_add'), osc_draw_image_button('button_add_to_cart.png', $osC_Language->get('button_add_to_cart'))); ?>
+             
+					<?php 
+						//used to fix bug [#209 - Compare / wishlist variant problem]
+						if (isset($osC_Services) && $osC_Services->isStarted('sefu')) { 
+							echo osc_link_object(osc_href_link(FILENAME_PRODUCTS, $products_id . '&pid=' . $products_id_string . '&action=cart_add'), osc_draw_image_button('button_add_to_cart.png', $osC_Language->get('button_add_to_cart'), 'class="ajaxAddToCart" id="ac_wishlist_' . $ac_products_id_string . '"'));
+						}else {
+						  echo osc_link_object(osc_href_link(FILENAME_PRODUCTS, $products_id_string  . '&action=cart_add'), osc_draw_image_button('button_add_to_cart.png', $osC_Language->get('button_add_to_cart'), 'class="ajaxAddToCart" id="ac_wishlist_' . $ac_products_id_string . '"'));
+						}
+					?>
+             
            </td>
          </tr>    
               

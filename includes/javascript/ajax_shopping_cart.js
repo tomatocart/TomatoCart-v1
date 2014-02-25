@@ -103,10 +103,38 @@ var AjaxShoppingCart = new Class({
           //send request
           var btnId = addToCartButton.get('id');
           
+          //used to fix bug [#209 - Compare / wishlist variant problem]
+          var variants = '';
           if (btnId.test("^ac_[a-z]+_[0-9]+$", "i")) {
             var pID = btnId.split('_').getLast();
+            
+            var options = null;
+            var selects = $$('.variantCombobox select');
+            var listSelects = $$('.variants_' + pID + ' select');
+            
+            if (selects.length > 0) {
+              options = selects;
+            }else if (listSelects.length > 0) {
+              options = listSelects;
+            }
+            
+            if (options !== null) {
+              var variants = '';
+              
+              options.each(function(select) {
+                var id = select.id.toString();
+                var groups_id = id.substring(9, id.indexOf(']'));
+              
+                variants += groups_id + ':' + select.value + ';';
+              }.bind(this));
+            }
+          }else if (btnId.test("^ac_[a-z]+_[0-9]+(?:#(?:[0-9]+:?[0-9]+)+(?:;?(?:[0-9]+:?[0-9]+)+)*)*$", "i")) {
+            var pIdString = btnId.split('_').getLast(),
+                pIdParts = pIdString.split('#'),
+                pID = pIdParts[0],
+                variants = pIdParts[1];
           }
-          
+                  
           var params = {action: 'add_product', pID: pID};
           if ( $defined($('quantity')) ) {
             params.pQty = $('quantity').get('value');  
@@ -117,26 +145,7 @@ var AjaxShoppingCart = new Class({
           }
 
           //variants
-          var options = null;
-          var selects = $$('.variantCombobox select');
-          var listSelects = $$('.variants_' + pID + ' select');
-          
-          if (selects.length > 0) {
-            options = selects;
-          }else if (listSelects.length > 0) {
-            options = listSelects;
-          }
-          
-          if (options !== null) {
-            var variants = '';
-            
-            options.each(function(select) {
-              var id = select.id.toString();
-              var groups_id = id.substring(9, id.indexOf(']'));
-  		      
-    		      variants += groups_id + ':' + select.value + ';';
-    		    }.bind(this));
-  		    
+          if (variants) {
             params.variants = variants; 
           }
           

@@ -13,27 +13,34 @@
 
   class osC_Actions_cart_add {
     function execute() {
-      global $osC_Session, $osC_ShoppingCart, $osC_Product, $osC_Language, $messageStack, $toC_Customization_Fields;
-
-      if (!isset($osC_Product)) {
-        $id = false;
-        
-        foreach ($_GET as $key => $value) {
-          if ( (ereg('^[0-9]+(_?([0-9]+:?[0-9]+)+(;?([0-9]+:?[0-9]+)+)*)*$', $key) || ereg('^[a-zA-Z0-9 -_]*$', $key)) && ($key != $osC_Session->getName()) ) {
-            $id = $key;
-          }
-
-          break;
-        }
-        
-        if (strpos( $id, '_') !== false) {
-          $id = str_replace('_', '#', $id);
-        }
-        
-        if (($id !== false) && osC_Product::checkEntry($id)) {
-          $osC_Product = new osC_Product($id);
-        }
-      }
+      global $osC_Session, $osC_ShoppingCart, $osC_Language, $messageStack, $toC_Customization_Fields;
+      
+      //get the product id or product id string including the variants
+			$id = false;
+			
+			//used to fix bug [#209 - Compare / wishlist variant problem]
+			if (isset($_GET['pid']) && (preg_match ( '/^[0-9]+(_?([0-9]+:?[0-9]+)+(;?([0-9]+:?[0-9]+)+)*)*$/', $_GET['pid'] ) || preg_match ( '/^[a-zA-Z0-9 -_]*$/', $_GET['pid']))) {
+			  $id = $_GET['pid'];
+			}else {
+				foreach ( $_GET as $key => $value ) {
+					if ((preg_match ( '/^[0-9]+(_?([0-9]+:?[0-9]+)+(;?([0-9]+:?[0-9]+)+)*)*$/', $key ) || preg_match ( '/^[a-zA-Z0-9 -_]*$/', $key )) && ($key != $osC_Session->getName ())) {
+						$id = $key;
+					}
+				
+					break;
+				}
+			}
+			
+			//processing variants products
+			$variants = null;
+			if (strpos ( $id, '_' ) !== false) {
+				$id = str_replace ( '_', '#', $id );
+				$variants = osc_parse_variants_from_id_string ( $id );
+			}
+			
+			if (($id !== false) && osC_Product::checkEntry ( $id )) {
+				$osC_Product = new osC_Product ( $id );
+			}
 
       if (isset($osC_Product)) {
         //customization fields check
@@ -45,14 +52,6 @@
             
             osc_redirect(osc_href_link(FILENAME_PRODUCTS, $osC_Product->getID()));  
           }
-        }
-        
-        $variants = null;
-        
-        if (isset($_POST['variants']) && is_array($_POST['variants'])) {
-          $variants = $_POST['variants'];
-        } else if (isset($_GET['variants']) && !empty($_GET['variants'])) {
-          $variants = osc_parse_variants_string($_GET['variants']);
         }
         
         $gift_certificate_data = null;
