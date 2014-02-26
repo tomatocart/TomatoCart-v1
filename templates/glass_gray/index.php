@@ -82,7 +82,15 @@
   <div id="headerBar">
     <ul>
       <li>
-        <?php echo osc_link_object(osc_href_link(FILENAME_ACCOUNT, 'wishlist', 'SSL'), $osC_Language->get('my_wishlist')); ?>
+        <?php 
+	        if ($toC_Wishlist->hasContents()) {
+						$wishlists_products = $toC_Wishlist->getProducts();
+						
+						echo osc_link_object(osc_href_link(FILENAME_ACCOUNT, 'wishlist', 'SSL'), $osC_Language->get('my_wishlist') . ' <strong>(' . count($wishlists_products) . ')</strong>');
+					}else {
+					  echo osc_link_object(osc_href_link(FILENAME_ACCOUNT, 'wishlist', 'SSL'), $osC_Language->get('my_wishlist'));
+					}
+				?>
       </li>
     <?php if ($osC_Customer->isLoggedOn()) { ?>
       <li>
