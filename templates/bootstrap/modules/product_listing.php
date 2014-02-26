@@ -130,8 +130,23 @@ if ($Qlisting->numberOfRows() > 0) {
                 $image_link = osc_link_object($href, $image, 'id="img_ac_productlisting_'. $Qlisting->value('products_id') . '"');
                 
                 $buy_now_link = osc_href_link(basename($_SERVER['SCRIPT_FILENAME']), $Qlisting->value('products_id') . '&' . osc_get_all_get_params(array('action')) . '&action=cart_add');
-                $compare_link = osc_href_link(basename($_SERVER['SCRIPT_FILENAME']), osc_get_all_get_params(array('action')) . '&cid=' . $Qlisting->value('products_id') . '&action=compare_products_add', 'class="compare"');
-                $wishlist_link = osc_href_link(basename($_SERVER['SCRIPT_FILENAME']), $Qlisting->value('products_id') . '&' . osc_get_all_get_params(array('action')) . '&action=wishlist_add', 'class="wishlist"');
+                
+                //used to fix bug [#209] - support variants products for the wishlist
+                if ($variants_enabled) {
+                	if ($osC_Product->hasVariants()) {
+                		$default_variant = $osC_Product->getDefaultVariant();
+                		$product_id_string = str_replace('#', '_', $default_variant['product_id_string']);
+                
+                		$compare_link = osc_href_link(basename($_SERVER['SCRIPT_FILENAME']), 'cid=' . $product_id_string . '&' . osc_get_all_get_params(array('action')) . '&action=compare_products_add');
+                		$wishlist_link = osc_href_link(basename($_SERVER['SCRIPT_FILENAME']), $Qlisting->value('products_id') . '&' . osc_get_all_get_params(array('action')) . '&wid=' . $product_id_string . '&action=wishlist_add');
+                	}else {
+                		$compare_link = osc_href_link(basename($_SERVER['SCRIPT_FILENAME']), 'cid=' . $Qlisting->value('products_id') . '&' . osc_get_all_get_params(array('action')) . '&action=compare_products_add');
+                		$wishlist_link = osc_href_link(basename($_SERVER['SCRIPT_FILENAME']), $Qlisting->value('products_id') . '&' . osc_get_all_get_params(array('action')) . '&action=wishlist_add');
+                	}
+                }else {
+                	$compare_link = osc_href_link(basename($_SERVER['SCRIPT_FILENAME']), 'cid=' . $Qlisting->value('products_id') . '&' . osc_get_all_get_params(array('action')) . '&action=compare_products_add');
+                	$wishlist_link = oosc_href_link(basename($_SERVER['SCRIPT_FILENAME']), $Qlisting->value('products_id') . '&' . osc_get_all_get_params(array('action')) . '&action=wishlist_add');
+                }
         ?>
     		<li class="clearfix">
                 <div class="left">
