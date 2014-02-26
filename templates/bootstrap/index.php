@@ -81,11 +81,15 @@ require_once 'helper.php';
                 	<div class="top-nav clearfix">
                         <ul>
                             <li>
-                            	<?php echo osc_link_object(osc_href_link(FILENAME_ACCOUNT, 'wishlist', 'SSL'), $osC_Language->get('my_wishlist')); ?>
-                            	
-                            	<?php if ($toC_Wishlist->hasContents()) {?>
-                            	<span class="label label-info"><?php $wishlists_products = $toC_Wishlist->getProducts(); echo count($wishlists_products); ?></span>
-                            	<?php }?>
+                            	<?php 
+                            		if ($toC_Wishlist->hasContents()) {
+																	$wishlists_products = $toC_Wishlist->getProducts();
+																	
+																	echo osc_link_object(osc_href_link(FILENAME_ACCOUNT, 'wishlist', 'SSL'), $osC_Language->get('my_wishlist') . ' <span class="label label-info">' . count($wishlists_products) . '</span>');
+                            		}else {
+                            		  echo osc_link_object(osc_href_link(FILENAME_ACCOUNT, 'wishlist', 'SSL'), $osC_Language->get('my_wishlist'));
+                            		}
+                            	?>
                             </li>
                             <?php 
                                 if (!$osC_Customer->isLoggedOn()) { 
