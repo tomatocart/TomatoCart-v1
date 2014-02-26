@@ -130,8 +130,8 @@ if ($Qlisting->numberOfRows() > 0) {
                 $image_link = osc_link_object($href, $image, 'id="img_ac_productlisting_'. $Qlisting->value('products_id') . '"');
                 
                 $buy_now_link = osc_href_link(basename($_SERVER['SCRIPT_FILENAME']), $Qlisting->value('products_id') . '&' . osc_get_all_get_params(array('action')) . '&action=cart_add');
-                $compare_link = osc_href_link(basename($_SERVER['SCRIPT_FILENAME']), osc_get_all_get_params(array('action')) . '&cid=' . $Qlisting->value('products_id') . '&action=compare_products_add');
-                $wishlist_link = osc_href_link(basename($_SERVER['SCRIPT_FILENAME']), $Qlisting->value('products_id') . '&' . osc_get_all_get_params(array('action')) . '&action=wishlist_add');
+                $compare_link = osc_href_link(basename($_SERVER['SCRIPT_FILENAME']), osc_get_all_get_params(array('action')) . '&cid=' . $Qlisting->value('products_id') . '&action=compare_products_add', 'class="compare"');
+                $wishlist_link = osc_href_link(basename($_SERVER['SCRIPT_FILENAME']), $Qlisting->value('products_id') . '&' . osc_get_all_get_params(array('action')) . '&action=wishlist_add', 'class="wishlist"');
         ?>
     		<li class="clearfix">
                 <div class="left">
@@ -169,8 +169,8 @@ if ($Qlisting->numberOfRows() > 0) {
                         	<i class="icon-shopping-cart icon-white "></i> 
                         	<?php echo $osC_Language->get('button_buy_now'); ?>
                         </a><br />
-                        <?php echo osc_link_object($compare_link, $osC_Language->get('add_to_compare')); ?><br />
-                        <?php echo osc_link_object($wishlist_link, $osC_Language->get('add_to_wishlist')); ?>
+                        <?php echo osc_link_object($compare_link, $osC_Language->get('add_to_compare'), 'class="compare"'); ?><br />
+                        <?php echo osc_link_object($wishlist_link, $osC_Language->get('add_to_wishlist'), 'class="wishlist"'); ?>
                     </span>
                 </div>
                 

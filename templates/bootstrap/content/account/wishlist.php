@@ -44,15 +44,25 @@
       $rows = 0;
       foreach($toC_Wishlist->getProducts() as $product) {    
         $rows++;
+        
+        $products_id = osc_get_product_id($products_id_string);
+        $ac_products_id_string = $product['products_id_string'];
+        $products_id_string = str_replace('#', '_', $product['products_id_string']);
 
   ?>
                 <tr>        
-                    <td class="center" width="150"><?php echo osc_link_object(osc_href_link(FILENAME_PRODUCTS, (!osc_empty($product['variants']) ? str_replace('#', '_', osc_get_product_id_string($product['products_id'], $product['variants'])) : $product['products_id'])), $osC_Image->show($product['image'], $product['name'], 'hspace="5" vspace="5"')) . '<br />' . $product['name'] . '<br />' . $osC_Currencies->format($product['price']); ?></td>         
-                    <td><?php echo osc_draw_textarea_field('comments[' . $product['products_id'] . ']', $product['comments'], 20, 5, 'id="comments_' . $product['products_id'] . '"'); ?></td>
-                    <td width="96" class="visible-desktop"><?php echo $product['date_added']; ?></td>
-                    <td class="center btn-toolbar visible-desktop">
-            			<a href="<?php echo osc_href_link(FILENAME_ACCOUNT, 'wishlist=delete&products_id=' . $product['products_id']); ?>" class="btn btn-mini btn-inverse pull-left"><?php echo $osC_Language->get('button_delete'); ?></a>&nbsp;
-						<a href="<?php echo osc_href_link(FILENAME_PRODUCTS, $product['products_id'] . '&action=cart_add' . (!osc_empty($product['variants']) ? '&variants=' . osc_parse_variants_array($product['variants']) : '')); ?>" class="btn btn-mini btn-inverse"><?php echo $osC_Language->get('button_buy_now'); ?></a>
+                    <td class="center"><?php echo osc_link_object(osc_href_link(FILENAME_PRODUCTS, $products_id_string), $osC_Image->show($product['image'], $product['name'], 'hspace="5" vspace="5" id="product_image" class="productImage"'), 'id="img_ac_wishlist_' . $ac_products_id_string . '"') . '<br />' . $product['name'] . '<br />' . $osC_Currencies->format($product['price']); ?></td>         
+                    <td><?php echo osc_draw_textarea_field('comments[' . $products_id_string . ']', $product['comments'], 15, 5, 'id="comments_' . $products_id_string . '"'); ?></td>
+                    <td class="visible-desktop"><?php echo $product['date_added']; ?></td>
+                    <td width="130" class="center btn-toolbar visible-desktop">
+            			<p><a href="<?php echo osc_href_link(FILENAME_ACCOUNT, 'wishlist=delete&pid=' . $products_id_string); ?>" class="btn btn-mini btn-inverse"><?php echo $osC_Language->get('button_delete'); ?></a>&nbsp;</p>
+            			<p>
+            			<?php if (isset($osC_Services) && $osC_Services->isStarted('sefu')): ?>
+            			<a href="<?php echo osc_href_link(FILENAME_PRODUCTS, $products_id . '&pid=' . $products_id_string . '&action=cart_add'); ?>" class="ajaxAddToCart btn btn-mini btn-inverse" id="ac_wishlist_<?php echo $ac_products_id_string; ?>"><?php echo $osC_Language->get('button_add_to_cart'); ?></a>
+            			<?php else: ?>
+            			<a href="<?php echo osc_href_link(FILENAME_PRODUCTS, $products_id_string  . '&action=cart_add'); ?>" class="ajaxAddToCart btn btn-mini btn-inverse" id="ac_wishlist_<?php echo $ac_products_id_string; ?>"><?php echo $osC_Language->get('button_add_to_cart'); ?></a>
+            			<?php endif; ?>>
+            			</p>
                     </td>
                 </tr>    
   <?php    
