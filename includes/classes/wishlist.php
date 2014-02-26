@@ -390,7 +390,7 @@
     	if (! osc_empty ( $variants_groups_name )) {
     		$product_name .= '<br />';
     		foreach ( $variants_groups_name as $group_name => $value_name ) {
-    			$product_name .= '<em>' . $group_name . ': ' . $value_name . '</em>' . '<br />';
+    			$product_name .= '<em class="label label-info">' . $group_name . ': ' . $value_name . '</em>' . '<br />';
     		}
     	}
     	$variant_product['name'] = $product_name;
