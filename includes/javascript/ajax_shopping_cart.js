@@ -613,7 +613,11 @@ var AjaxShoppingCart = new Class({
   sendRequest: function(data, fnSuccess) {
     data.module = 'ajax_shopping_cart';
     data[this.options.sessionName] = this.options.sessionId;
-
+    
+    if (this.options.template) {
+      data.template = this.options.template;
+    }
+    
     new Request({
       url: this.options.jsonUrl,
       method: 'post',

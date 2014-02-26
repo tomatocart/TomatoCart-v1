@@ -48,6 +48,7 @@ global $osC_Session, $osC_Language;
 		<script type="text/javascript">
             window.addEvent("domready",function() {
                 ajaxCart = new AjaxShoppingCart({
+                  	template: "bootstrap",
                     sessionId : "<?php echo $osC_Session->getID(); ?>",
                     currentUrl: "<?php echo osc_get_current_url(); ?>",
                     error_sender_name_empty: "<?php echo $osC_Language->get('error_sender_name_empty'); ?>",
