@@ -26,7 +26,7 @@
 
 <?php 
 function output_compare_products_table() {
-    global $osC_Language, $osC_Image, $osC_Weight, $osC_Currencies, $toC_Compare_Products;
+    global $osC_Language, $osC_Image, $osC_Weight, $osC_Currencies, $toC_Compare_Products, $osC_Services;
     
     $content = '';
     
@@ -44,10 +44,11 @@ function output_compare_products_table() {
     $col_width = round(80 / count($toC_Compare_Products->getProducts()));
     
     if ($toC_Compare_Products->hasContents()) {
-        foreach ($toC_Compare_Products->getProducts() as $products_id) {
+        foreach ($toC_Compare_Products->getProducts() as $products_id_string) {
             $cols[] = '<col width="' . $col_width . '%">';
             
-            $osC_Product = new osC_Product($products_id);
+            $osC_Product = new osC_Product($products_id_string);
+            $products_id = osc_get_product_id($products_id_string);
             
             $image = $osC_Product->getImages();
             $product_title = $osC_Product->getTitle();
@@ -59,22 +60,22 @@ function output_compare_products_table() {
             $variants = array();
             if ($osC_Product->hasVariants()) {
                 $product_variants = $osC_Product->getVariants();
-                if (preg_match('/^[0-9]+(#?([0-9]+:?[0-9]+)+(;?([0-9]+:?[0-9]+)+)*)+$/', $products_id)) {
-                    $products_variant = $product_variants[$products_id];
-                    
-                    $variants = osc_parse_variants_from_id_string($products_id);
-                }else {
-                    $products_variant = $osC_Product->getDefaultVariant();
-                    
-                    $variants = $products_variant['groups_id'];
-                }
+		            if (preg_match('/^[0-9]+(?:#?(?:[0-9]+:?[0-9]+)+(?:;?([0-9]+:?[0-9]+)+)*)+$/', $products_id_string)) {
+		              $products_variant = $product_variants[$products_id_string];
+		              
+		              $variants = osc_parse_variants_from_id_string($products_id_string);
+		            }else {
+		              $products_variant = $osC_Product->getDefaultVariant();
+		              
+		              $variants = $products_variant['groups_id'];
+		            }
                 
                 //if the product have any variants, get the group_name:value_name string
                 if (isset($products_variant) && isset($products_variant['groups_name']) && is_array($products_variant['groups_name']) && !empty($products_variant['groups_name'])) {
-                    $products_variants[$products_id]['variants'] = array();
+                    $products_variants[$products_id_string]['variants'] = array();
                     
                     foreach($products_variant['groups_name'] as $groups_name => $value_name) {
-                        $products_variants[$products_id]['variants'][] = array('name' => $groups_name, 'value' => $value_name);
+                        $products_variants[$products_id_string]['variants'][] = array('name' => $groups_name, 'value' => $value_name);
                     }
                 }
                 
@@ -114,10 +115,16 @@ function output_compare_products_table() {
                 }
             }
             
-            $products_id = str_replace('#', '_', $products_id);
+            $products_id_string = str_replace('#', '_', $products_id_string);
             
-            $products_images[] = '<div>' . osc_link_object(osc_href_link(FILENAME_PRODUCTS, $products_id), $osC_Image->show($image, $osC_Product->getTitle())) . '</div>' .
-                                 '<div class="button"><a class="btn btn-mini" href="' . osc_href_link(FILENAME_PRODUCTS, $products_id . '&action=cart_add' . (osc_empty(osc_parse_variants_array($variants)) ? '' : '&variants=' . osc_parse_variants_array($variants))) . '"><i class="icon-shopping-cart icon-white"></i> ' . $osC_Language->get('button_add_to_cart') . '</a>' . '</div>';
+            //used to fix bug [#209 - Compare / wishlist variant problem]
+            if (isset($osC_Services) && $osC_Services->isStarted('sefu') && count($variants) > 0) {
+            	$products_images[] = '<div class="image">' . osc_link_object(osc_href_link(FILENAME_PRODUCTS, $products_id), $osC_Image->show($image, $osC_Product->getTitle())) . '</div>' .
+            											 '<div class="button">' . osc_link_object(osc_href_link(FILENAME_PRODUCTS, $products_id . '&pid=' . $products_id_string . '&action=cart_add'), '<i class="icon-shopping-cart icon-white"></i> ' . $osC_Language->get('button_add_to_cart'), 'class="btn btn-mini"') . '</div>';
+            }else {
+            	$products_images[] = '<div class="image">' . osc_link_object(osc_href_link(FILENAME_PRODUCTS, $products_id), $osC_Image->show($image, $osC_Product->getTitle())) . '</div>' .
+            											 '<div class="button">' . osc_link_object(osc_href_link(FILENAME_PRODUCTS, $products_id_string . '&action=cart_add'), '<i class="icon-shopping-cart icon-white"></i> ' . $osC_Language->get('button_add_to_cart'), 'class="btn btn-mini"') . '</div>';
+            }
         }
         
         $content .= '<table class="table table-hover table-striped">';
@@ -222,12 +229,11 @@ function output_compare_products_table() {
             $content .= '<tr class="' . $row_class . '">' .
                       '<th>' . $osC_Language->get('field_products_variants') . '</th>';
             
-            foreach($toC_Compare_Products->getProducts() as $k => $products_id) {
-                if (isset($products_variants[$products_id]['variants']) && !osc_empty($products_variants[$products_id]['variants'])) {
-                    
+            foreach($toC_Compare_Products->getProducts() as $k => $products_id_string) {
+                if (isset($products_variants[$products_id_string]['variants']) && !osc_empty($products_variants[$products_id_string]['variants'])) {
                     $content .= '<td' . ($k == (count($toC_Compare_Products->getProducts()) - 1) ? ' class="last"' : '') . '>';
-                    foreach($products_variants[$products_id]['variants'] as $variant) {
-                    $content .= '<span class="variant">' . $variant['name'] . ': ' . $variant['value'] . '</span>';
+                    foreach($products_variants[$products_id_string]['variants'] as $variant) {
+                    	$content .= '<span class="variant label label-info">' . $variant['name'] . ': ' . $variant['value'] . '</span>&nbsp;&nbsp;';
                     }
                     $content .= '</td>';
                 }
@@ -243,11 +249,11 @@ function output_compare_products_table() {
             $content .= '<tr class="' . $row_class . '">' .
                       '<th>' . $osC_Language->get('field_products_attributes') . '</th>';
             
-            foreach($toC_Compare_Products->getProducts() as $k => $products_id) {
-                if (isset($products_attributes[$products_id]['attributes']) && !osc_empty($products_attributes[$products_id]['attributes'])) {
+            foreach($toC_Compare_Products->getProducts() as $k => $products_id_string) {
+                if (isset($products_attributes[$products_id_string]['attributes']) && !osc_empty($products_attributes[$products_id_string]['attributes'])) {
                   
                     $content .= '<td' . ($k == (count($toC_Compare_Products->getProducts()) - 1) ? ' class="last"' : '') . '>';
-                    foreach($products_attributes[$products_id]['attributes'] as $attribute) {
+                    foreach($products_attributes[$products_id_string]['attributes'] as $attribute) {
                         $content .= '<span class="attribute">' . $attribute['name'] . ': ' . $attribute['value'] . '</span>';
                     }
                     $content .= '</td>';

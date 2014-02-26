@@ -79,7 +79,7 @@ var TocListVariants = new Class({
         this.linkCpHref = this.linkCp.getProperty('href');
 
         if (this.linkCpHref.search(/cid=/) !== -1) {
-            this.linkCpHref = this.linkCpHref.replace(/&cid=\d+/, '');
+            this.linkCpHref = this.linkCpHref.replace(/&?cid=[0-9]+(_[0-9]+:[0-9]+(;[0-9]+:[0-9]+)*)*/, '');
         }
         
         this.linkCp.addEvent('click', function() {
@@ -104,7 +104,7 @@ var TocListVariants = new Class({
       this.linkWpHref = this.linkWp.getProperty('href');
 
       if (this.linkWpHref.search(/wid=/) !== -1) {
-          this.linkWpHref = this.linkWpHref.replace(/&wid=\d+/, '');
+          this.linkWpHref = this.linkWpHref.replace(/&?wid=[0-9]+(_[0-9]+:[0-9]+(;[0-9]+:[0-9]+)*)*/, '');
       }
       
       this.linkWp.addEvent('click', function() {
