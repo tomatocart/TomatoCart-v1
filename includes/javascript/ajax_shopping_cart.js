@@ -119,8 +119,6 @@ var AjaxShoppingCart = new Class({
             }
             
             if (options !== null) {
-              var variants = '';
-              
               options.each(function(select) {
                 var id = select.id.toString();
                 var groups_id = id.substring(9, id.indexOf(']'));
