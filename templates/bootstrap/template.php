@@ -53,14 +53,15 @@ class osC_Template_bootstrap extends osC_TemplateInfo {
         $id = $osC_Database->nextID();
 
         $data = array('categories' => array('boxes', '*', 'left', '100'),
-                      'manufacturers' => array('boxes', '*', 'left', '200'),
-                      'manufacturer_info' => array('boxes', 'products/info', 'left', '300'),
-                      'order_history' => array('boxes', '*', 'left', '400'),
-                      'best_sellers' => array('boxes', '*', 'left', '500'),
-                      'product_notifications' => array('boxes', 'products/info', 'left', '600'),
-                      'tell_a_friend' => array('boxes', 'products/info', 'left', '700'),
-                      'reviews' => array('boxes', '*', 'left', '800'),
-                      'currencies' => array('boxes', '*', 'left', '900'),
+        							'compare_products' => array('boxes', '*', 'left', '200'),
+                      'manufacturers' => array('boxes', '*', 'left', '300'),
+                      'manufacturer_info' => array('boxes', 'products/info', 'left', '400'),
+                      'order_history' => array('boxes', '*', 'left', '500'),
+                      'best_sellers' => array('boxes', '*', 'left', '600'),
+                      'product_notifications' => array('boxes', 'products/info', 'left', '700'),
+                      'tell_a_friend' => array('boxes', 'products/info', 'left', '800'),
+                      'reviews' => array('boxes', '*', 'left', '900'),
+                      'currencies' => array('boxes', '*', 'left', '1000'),
                       
                       'new_products' => array('content', 'index/category_listing', 'after', 100),
                       'new_products' => array('content', 'index/index', 'after', 200),
