@@ -13,7 +13,13 @@
 
   class osC_Actions_wishlist_add {
     function execute() {
-      global $osC_Session, $toC_Wishlist, $osC_Product, $messageStack, $osC_Language;
+      global $osC_Session, $toC_Wishlist, $osC_Product, $messageStack, $osC_Language, $osC_Customer, $osC_NavigationHistory;
+      
+      if ($osC_Customer->isLoggedOn() === false) {
+      	$osC_NavigationHistory->setSnapshot();
+      
+      	osc_redirect(osc_href_link(FILENAME_ACCOUNT, 'login', 'SSL'));
+      }
       
       //load the language definitions in the account group
       $osC_Language->load('account');
