@@ -390,13 +390,13 @@
 
     function bindReplace($place_holder, $value) {
       $pos = strpos($this->sql_query, $place_holder);
-
+      $val = str_replace(':','&#x3a;',$value);
       if ($pos !== false) {
         $length = strlen($place_holder);
         $character_after_place_holder = substr($this->sql_query, $pos+$length, 1);
 
         if (($character_after_place_holder === false) || ereg('[ ,)"]', $character_after_place_holder)) {
-          $this->sql_query = substr_replace($this->sql_query, $value, $pos, $length);
+          $this->sql_query = substr_replace($this->sql_query, $val, $pos, $length);
         }
       }
     }
