@@ -3,4 +3,5 @@ Disallow: /admin/
 Disallow: /images/
 Disallow: /includes/
 Disallow: /templates/ 
+Disallow: /log
 Sitemap: /sitemapsIndex.xml
