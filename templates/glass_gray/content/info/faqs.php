@@ -63,6 +63,7 @@ window.addEvent('domready',function(){
 
     <?php
       if (isset($_GET['faqs_id']) && !empty($_GET['faqs_id'])) {
+        $_GET['faqs_id'] = htmlentities($_GET['faqs_id'], ENT_QUOTES, 'UTF-8');
     ?>
       if(question.getParent().id == 'faq<?php echo $_GET['faqs_id']; ?>')
         question.getNext().setStyle('display', '');
